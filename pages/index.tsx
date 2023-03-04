@@ -1,24 +1,15 @@
 import MenuComponent from '@/components/menu/Menu';
 import { Container, Row } from '@/styles/globalStyles';
+import { navBarHeight } from '@/utils/constants';
 import styled from 'styled-components';
 
 // our-domain.com/
-const HomeContainer = styled(Container)`
+const HomeContainer = styled(Container)<{ barheight: number }>`
   background-color: pink;
-  height: 100vh;
+  height: ${({ barheight }) => 100 - barheight}vh;
   flex-direction: column;
   display: flex;
   justify-content: space-evenly;
-`;
-
-const TitleContainer = styled(Container)`
-  //background-color: coral;
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
-  font-weight: bolder;
 `;
 
 const HouseContainer = styled(Container)`
@@ -39,9 +30,9 @@ const MenuContainer = styled(Container)`
 
 const HomePage = () => {
   const mainTopics = ['Bills', 'Invoices', 'Cars', 'Shoping List'];
+
   return (
-    <HomeContainer>
-      <TitleContainer>Title</TitleContainer>
+    <HomeContainer barheight={navBarHeight}>
       <Row>
         <HouseContainer>House here</HouseContainer>
         <MenuContainer>

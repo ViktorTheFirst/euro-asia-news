@@ -1,5 +1,4 @@
-import { Container } from '@/styles/globalStyles';
-import Link from 'next/link';
+import { StyledLink } from '@/styles/globalStyles';
 import styled from 'styled-components';
 
 type MenuItemProps = {
@@ -7,7 +6,7 @@ type MenuItemProps = {
   mode: string;
 };
 
-const MenuLink = styled(Link)<{ mode: string }>`
+const MenuLink = styled(StyledLink)<{ mode: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,8 +21,6 @@ const MenuLink = styled(Link)<{ mode: string }>`
   color: white;
   font-size: 20px;
   font-weight: bolder;
-  text-decoration: none;
-  color: inherit;
 `;
 
 const MenuItemComponent = ({ name, mode }: MenuItemProps) => {
