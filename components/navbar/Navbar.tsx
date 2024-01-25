@@ -1,6 +1,9 @@
 import { Container, StyledLink } from '@/styles/globalStyles';
 import styled from 'styled-components';
 import { navBarHeight } from '@/utils/constants';
+import { useRouter } from 'next/router';
+import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
+import { useMemo } from 'react';
 
 type NavbarProps = {};
 
@@ -29,12 +32,20 @@ const NavbarLink = styled(StyledLink)<{ barheight: number }>`
 `;
 
 const NavbarComponent = (props: NavbarProps) => {
+  const router = useRouter();
+
+  const routeString = useMemo(() => {
+    return isEmptyObject(router.query)
+      ? router.route
+      : (router.query.billType as string);
+  }, [router]);
+
   return (
     <NavbarContainer barheight={navBarHeight}>
       <NavbarLink barheight={navBarHeight} href={'/'}>
         Home
       </NavbarLink>
-      <div>TEREMOK</div>
+      <div>{getNavbarHeader(routeString)}</div>
     </NavbarContainer>
   );
 };

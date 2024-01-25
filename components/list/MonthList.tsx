@@ -6,20 +6,34 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components';
+import { MouseEventHandler, useState } from 'react';
 
-type MonthListProps = {};
+const MonthListContainer = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+interface MonthListProps {
+  getSelectedMonths: (months: string[]) => void;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
+      height: '90vh',
       maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: '#c2c0ff',
+      margin: '0px 20px',
     },
   })
 );
 
-const MonthListComponent = (props: MonthListProps) => {
+const MonthListComponent = ({ getSelectedMonths }: MonthListProps) => {
+  const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
+
   const classes = useStyles();
   const months = [
     'January',
@@ -36,36 +50,50 @@ const MonthListComponent = (props: MonthListProps) => {
     'December',
   ];
 
-  const handleToggle = () => {};
+  const handleToggle = ({ target }: any, index: number) => {
+    const selected: boolean = target?.checked;
+
+    const newSelected = [...selectedMonths];
+    if (!!selected) {
+      newSelected.push(months[index]);
+    }
+    if (selected === false) {
+      // if value exist in list, unselect it
+      newSelected.splice(selectedMonths.indexOf(months[index]), 1);
+    }
+    setSelectedMonths(newSelected);
+    getSelectedMonths(newSelected);
+  };
+
   return (
-    <Container>
+    <MonthListContainer>
       <List className={classes.root}>
-        {months.map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
+        {months.map((month, index) => {
+          const labelId = `checkbox-list-label-${month}`;
 
           return (
             <ListItem
-              key={value}
+              key={month}
               role={undefined}
               dense
               button
-              onClick={handleToggle}
+              onClick={(val) => handleToggle(val, index)}
             >
               <ListItemIcon>
                 <Checkbox
                   edge='start'
-                  //checked={checked.indexOf(value) !== -1}
+                  checked={selectedMonths.includes(month)}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
+              <ListItemText id={labelId} primary={month} />
             </ListItem>
           );
         })}
       </List>
-    </Container>
+    </MonthListContainer>
   );
 };
 

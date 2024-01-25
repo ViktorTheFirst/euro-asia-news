@@ -17,7 +17,13 @@ const MenuComponent = ({ topics, mode }: MenuProps) => {
   return (
     <MenuContainer>
       {topics.map((menuItem: string, index: number) => {
-        return <MenuItem key={index} name={menuItem} mode={mode} />;
+        return (
+          <MenuItem
+            key={`${index} - ${menuItem}`}
+            name={menuItem}
+            mode={mode}
+          />
+        );
       })}
     </MenuContainer>
   );

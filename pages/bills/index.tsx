@@ -2,6 +2,7 @@
 import MenuComponent from '@/components/menu/Menu';
 import { Container } from '@/styles/globalStyles';
 import { navBarHeight } from '@/utils/constants';
+import { MOCK_BILLS_TOPICS } from '@/utils/mocks';
 import styled from 'styled-components';
 
 const BillsContainer = styled(Container)<{ barheight: number }>`
@@ -14,10 +15,9 @@ const BillsContainer = styled(Container)<{ barheight: number }>`
 `;
 
 const BillsPage = () => {
-  const billsTopics = ['Water', 'Electricity', 'Arnona', 'Other'];
   return (
     <BillsContainer barheight={navBarHeight}>
-      <MenuComponent mode='bills-menu' topics={billsTopics} />
+      <MenuComponent mode='bills-menu' topics={MOCK_BILLS_TOPICS} />
     </BillsContainer>
   );
 };

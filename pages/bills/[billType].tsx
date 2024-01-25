@@ -2,7 +2,9 @@
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, StyledForm } from '@/styles/globalStyles';
 import { navBarHeight } from '@/utils/constants';
+import { onFormSubmit } from '@/utils/functions';
 import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const AddBillContainer = styled(Container)<{ barheight: number }>`
@@ -13,25 +15,31 @@ const AddBillContainer = styled(Container)<{ barheight: number }>`
 `;
 
 const FormContainer = styled(StyledForm)`
-  width: 50%;
+  width: 100%;
   background-color: #28a6cc;
   height: 50vh;
   padding: 10px;
+  margin: 0 70px;
 `;
 
 const AddBillPage = () => {
   const router = useRouter();
-  const routeName = router.query.billType;
-  console.log('router.query.billType', router.query.billType);
+  const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (event: any) => {
+    const values = onFormSubmit(event);
+  };
+
+  const handleSelectedMonths = (months: string[]) => {
+    setSelectedMonths(months);
+  };
 
   return (
     <AddBillContainer barheight={navBarHeight}>
-      <MonthListComponent />
+      <MonthListComponent getSelectedMonths={handleSelectedMonths} />
       <FormContainer onSubmit={handleSubmit}>
         <label htmlFor='meshalem'>Mispar meshalem</label>
-        <input type='text' id='meshalem' name='meshalem' />
+        <input type='text' id='meshalem' name='meshalem' required />
 
         <label htmlFor='last'>Last Name</label>
         <input type='text' id='last' name='last' />

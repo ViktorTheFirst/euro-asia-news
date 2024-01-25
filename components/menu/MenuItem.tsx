@@ -27,7 +27,7 @@ const MenuItemComponent = ({ name, mode }: MenuItemProps) => {
   // when rendering bills menu add bills to url
   const getHref = () => {
     if (mode === 'main-menu') return `/${name.toLowerCase()}`;
-    else return `/bills/${name.toLowerCase()}`;
+    return `/bills/${name.toLowerCase()}`;
   };
 
   return (
