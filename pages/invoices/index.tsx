@@ -52,9 +52,12 @@ const UploadInvoiceContainer = styled(Container)`
 `;
 
 const InvoicesPage = () => {
-  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceData | null>(
+    null
+  );
 
   const handleSelectedInvoice = (invoice: InvoiceData) => {
+    setSelectedInvoice(invoice);
     console.log('handleSelectedInvoice', invoice);
   };
 
@@ -76,7 +79,7 @@ const InvoicesPage = () => {
         </UploadInvoiceContainer>
       </LeftSide>
       <RightSide>
-        <InvoicePlaceHolder />
+        {selectedInvoice ? <div>SHOW PDF HERE</div> : <InvoicePlaceHolder />}
       </RightSide>
     </InvoicesContainer>
   );
