@@ -5,8 +5,9 @@ import CategoriesAccordion from '@/components/accordion/Accordion';
 import { Button, Typography } from '@material-ui/core';
 import { MOCK_CATEGORIES_DATA } from '@/utils/mocks';
 import InvoicePlaceHolder from './InvoicePlaceHolder';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InvoiceData } from '@/utils/interfaces';
+import PdfViewer from '@/components/pdfViwer/PdfViewer';
 
 // our-domain.com/invoices
 const InvoicesContainer = styled(Container)<{ barheight: number }>`
@@ -55,6 +56,7 @@ const InvoicesPage = () => {
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceData | null>(
     null
   );
+  const [selectedPDF, setSelectedPDF] = useState<string>('');
 
   const handleSelectedInvoice = (invoice: InvoiceData) => {
     setSelectedInvoice(invoice);
@@ -79,7 +81,11 @@ const InvoicesPage = () => {
         </UploadInvoiceContainer>
       </LeftSide>
       <RightSide>
-        {selectedInvoice ? <div>SHOW PDF HERE</div> : <InvoicePlaceHolder />}
+        {selectedInvoice ? (
+          <PdfViewer pdfURL={selectedPDF} />
+        ) : (
+          <InvoicePlaceHolder />
+        )}
       </RightSide>
     </InvoicesContainer>
   );
