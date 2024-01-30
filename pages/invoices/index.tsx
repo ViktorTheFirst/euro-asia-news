@@ -1,6 +1,5 @@
 import { Container } from '@/styles/globalStyles';
 import styled from 'styled-components';
-import { navBarHeight } from '@/utils/constants';
 import CategoriesAccordion from '@/components/accordion/Accordion';
 import { Button, Typography } from '@material-ui/core';
 import { MOCK_CATEGORIES_DATA } from '@/utils/mocks';
@@ -10,8 +9,8 @@ import { InvoiceData } from '@/utils/interfaces';
 import PdfViewer from '@/components/pdfViwer/PdfViewer';
 
 // our-domain.com/invoices
-const InvoicesContainer = styled(Container)<{ barheight: number }>`
-  height: ${({ barheight }) => 100 - barheight}vh;
+const InvoicesContainer = styled(Container)`
+  height: ${(props) => 100 - props.theme.appBarHeight}vh;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -64,7 +63,7 @@ const InvoicesPage = () => {
   };
 
   return (
-    <InvoicesContainer barheight={navBarHeight}>
+    <InvoicesContainer>
       <LeftSide>
         <CategoriesContainer>
           <Typography>Categories</Typography>

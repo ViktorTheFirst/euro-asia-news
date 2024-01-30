@@ -1,7 +1,11 @@
-import { Container } from '@/styles/globalStyles';
+import { useMemo } from 'react';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { AppBar as MuiAppBar } from '@material-ui/core';
 import { Button, Toolbar, Typography } from '@material-ui/core';
-import styled from 'styled-components';
+
+import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
+import { Container, StyledLink } from '@/styles/globalStyles';
 
 const AppBarContainer = styled(Container)`
   flex-direction: row;
@@ -10,15 +14,36 @@ const AppBarContainer = styled(Container)`
   height: ${(props) => props.theme.appBarHeight}vh;
 `;
 
+const StyledAppBar = styled(MuiAppBar)`
+  & .MuiToolbar-regular {
+    min-height: ${(props) => props.theme.appBarHeight}vh;
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const AppBarLink = styled(StyledLink)`
+  cursor: pointer;
+`;
+
 const AppBar = () => {
+  const router = useRouter();
+
+  const routeString = useMemo(() => {
+    return isEmptyObject(router.query)
+      ? router.route
+      : (router.query.billType as string);
+  }, [router]);
+
   return (
     <AppBarContainer>
-      <MuiAppBar position='static' /* sx={{ minHeight: 50px }} */>
+      <StyledAppBar position='static'>
         <Toolbar>
-          <Typography variant='h6'>News</Typography>
+          <AppBarLink href='/'>Home</AppBarLink>
+          <div>{getNavbarHeader(routeString)}</div>
           <Button color='inherit'>Login</Button>
         </Toolbar>
-      </MuiAppBar>
+      </StyledAppBar>
     </AppBarContainer>
   );
 };

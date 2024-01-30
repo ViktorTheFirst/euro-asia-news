@@ -1,6 +1,5 @@
-import MenuComponent from '@/components/menu/Menu';
+import MainMenu from '@/components/menu/MainMenu';
 import { Container, Row } from '@/styles/globalStyles';
-import { navBarHeight } from '@/utils/constants';
 import styled from 'styled-components';
 
 // our-domain.com/
@@ -36,7 +35,7 @@ const HomePage = () => {
       <Row>
         <HouseContainer>House here</HouseContainer>
         <MenuContainer>
-          <MenuComponent mode='main-menu' topics={mainTopics} />
+          <MainMenu topics={mainTopics} />
         </MenuContainer>
       </Row>
     </HomeContainer>

@@ -1,16 +1,16 @@
 // our-domain.com/bills/[billType]
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, StyledForm } from '@/styles/globalStyles';
-import { navBarHeight } from '@/utils/constants';
+
 import { onFormSubmit } from '@/utils/functions';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-const AddBillContainer = styled(Container)<{ barheight: number }>`
+const AddBillContainer = styled(Container)`
   align-items: center;
   justify-content: center;
-  height: ${({ barheight }) => 100 - barheight}vh;
+  height: ${(props) => 100 - props.theme.appBarHeight}vh;
   background-color: pink;
 `;
 
@@ -35,7 +35,7 @@ const AddBillPage = () => {
   };
 
   return (
-    <AddBillContainer barheight={navBarHeight}>
+    <AddBillContainer>
       <MonthListComponent getSelectedMonths={handleSelectedMonths} />
       <FormContainer onSubmit={handleSubmit}>
         <label htmlFor='meshalem'>Mispar meshalem</label>
