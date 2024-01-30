@@ -1,6 +1,11 @@
-import { createTheme } from '@material-ui/core/styles';
-
-export const muiTheme = createTheme({
+export interface CustomTheme {
+  appBarHeight: number;
+  spacing: number;
+  palette: any;
+  typography: any;
+  shape: { borderRadius: number };
+}
+export const customTheme: CustomTheme = {
   palette: {
     primary: {
       main: '#2ea1f8',
@@ -91,19 +96,8 @@ export const muiTheme = createTheme({
     },
   },
   spacing: 8,
-  appBarHeight: 9,
+  appBarHeight: 7,
   shape: {
     borderRadius: 4,
   },
-});
-
-declare module '@material-ui/core/styles' {
-  // fix the type error when referencing the Theme object in your styled component
-  interface Theme {
-    appBarHeight?: number;
-  }
-  // fix the type error when calling `createTheme()` with a custom theme option
-  interface ThemeOptions {
-    appBarHeight?: number;
-  }
-}
+};

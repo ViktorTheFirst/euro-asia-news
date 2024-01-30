@@ -1,12 +1,11 @@
 // our-domain.com/bills
 import MenuComponent from '@/components/menu/Menu';
 import { Container } from '@/styles/globalStyles';
-import { navBarHeight } from '@/utils/constants';
 import { MOCK_BILLS_TOPICS } from '@/utils/mocks';
 import styled from 'styled-components';
 
-const BillsContainer = styled(Container)<{ barheight: number }>`
-  height: ${({ barheight }) => 100 - barheight}vh;
+const BillsContainer = styled(Container)`
+  height: ${({ props }) => 100 - props.theme.appBarHeight}vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -16,7 +15,7 @@ const BillsContainer = styled(Container)<{ barheight: number }>`
 
 const BillsPage = () => {
   return (
-    <BillsContainer barheight={navBarHeight}>
+    <BillsContainer>
       <MenuComponent mode='bills-menu' topics={MOCK_BILLS_TOPICS} />
     </BillsContainer>
   );
