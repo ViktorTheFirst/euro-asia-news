@@ -1,6 +1,78 @@
-import { CategoriesData } from './interfaces';
+import {
+  BillsInfoPerYear,
+  CategoriesData,
+  Month,
+  SelectOption,
+} from './interfaces';
+
+export const MOCK_YEARS_OPTIONS: SelectOption[] = [
+  { label: '2022', value: '2022' },
+  { label: '2023', value: '2023' },
+  { label: '2024', value: '2024' },
+];
+
+export const MOCK_BILLS_INFO_PER_YEAR: BillsInfoPerYear = {
+  '2022': {
+    January: { confirmationNumber: '789012345', payedAmount: '387' },
+    February: { confirmationNumber: '456789012', payedAmount: '241' },
+    March: { confirmationNumber: '234567890', payedAmount: '413' },
+    April: { confirmationNumber: '901234567', payedAmount: '162' },
+    May: { confirmationNumber: '678901234', payedAmount: '499' },
+    June: { confirmationNumber: null, payedAmount: null },
+    July: { confirmationNumber: '012345678', payedAmount: '422' },
+    August: { confirmationNumber: '789012345', payedAmount: '177' },
+    September: { confirmationNumber: '456789012', payedAmount: '358' },
+    October: { confirmationNumber: null, payedAmount: null },
+    November: { confirmationNumber: null, payedAmount: null },
+    December: { confirmationNumber: null, payedAmount: null },
+  },
+  '2023': {
+    January: { confirmationNumber: '654321789', payedAmount: '415' },
+    February: { confirmationNumber: '321789456', payedAmount: '283' },
+    March: { confirmationNumber: '987654321', payedAmount: '392' },
+    April: { confirmationNumber: '654321987', payedAmount: '187' },
+    May: { confirmationNumber: '321987654', payedAmount: '458' },
+    June: { confirmationNumber: '987654321', payedAmount: '326' },
+    July: { confirmationNumber: '654321987', payedAmount: '291' },
+    August: { confirmationNumber: null, payedAmount: null },
+    September: { confirmationNumber: null, payedAmount: null },
+    October: { confirmationNumber: null, payedAmount: null },
+    November: { confirmationNumber: null, payedAmount: null },
+    December: { confirmationNumber: null, payedAmount: null },
+  },
+  '2024': {
+    January: { confirmationNumber: '789654321', payedAmount: '382' },
+    February: { confirmationNumber: '456321789', payedAmount: '268' },
+    March: { confirmationNumber: null, payedAmount: null },
+    April: { confirmationNumber: '987654321', payedAmount: '154' },
+    May: { confirmationNumber: '654321987', payedAmount: '478' },
+    June: { confirmationNumber: '321987654', payedAmount: '319' },
+    July: { confirmationNumber: '987654321', payedAmount: '411' },
+    August: { confirmationNumber: '654321987', payedAmount: '188' },
+    September: { confirmationNumber: '321987654', payedAmount: '377' },
+    October: { confirmationNumber: '987654321', payedAmount: '291' },
+    November: { confirmationNumber: '654321987', payedAmount: '432' },
+    December: { confirmationNumber: null, payedAmount: null },
+  },
+};
+
+export const MOCK_MONTHS: Month[] = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 export const MOCK_BILLS_TOPICS = ['Water', 'Electricity', 'Arnona', 'Other'];
+
 export const MOCK_CATEGORIES_DATA: CategoriesData[] = [
   {
     title: 'Electrical appliances',

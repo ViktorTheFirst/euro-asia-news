@@ -1,32 +1,28 @@
 import { Container, StyledLink } from '@/styles/globalStyles';
 import styled from 'styled-components';
-import { Button, ButtonGroup, makeStyles } from '@material-ui/core';
+import { Button, ButtonGroup, Icon } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 type MenuProps = {
   topics: string[];
 };
 
 const MenuContainer = styled(Container)`
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
   width: 60%;
+  padding: 8px;
 `;
 
-const BillsMenuButton = styled(Button)`
-  & .MuiButton-outlinedPrimary {
-    color: red;
+const AddButtonGroup = styled(ButtonGroup)`
+  margin-left: 8px;
+  & .MuiButtonGroup-grouped {
+    min-height: 44px;
   }
 `;
 
-const useStyles = makeStyles({
-  root: {
-    color: 'red',
-  },
-});
-
 const BillsMenu = ({ topics }: MenuProps) => {
-  const classes = useStyles();
-
   return (
     <MenuContainer>
       <ButtonGroup
@@ -41,13 +37,30 @@ const BillsMenu = ({ topics }: MenuProps) => {
               size='large'
               component={StyledLink}
               key={`${index} - ${menuItem}`}
-              className={classes.root}
             >
               {menuItem}
             </Button>
           );
         })}
       </ButtonGroup>
+      <AddButtonGroup
+        orientation='vertical'
+        color='primary'
+        aria-label='vertical contained primary button group'
+      >
+        {topics.map((menuItem: string, index: number) => {
+          return (
+            <Button
+              href={`bills/${menuItem.toLowerCase()}/add-bill/`}
+              size='large'
+              component={StyledLink}
+              key={`${index} - ${menuItem}`}
+            >
+              <Add />
+            </Button>
+          );
+        })}
+      </AddButtonGroup>
     </MenuContainer>
   );
 };

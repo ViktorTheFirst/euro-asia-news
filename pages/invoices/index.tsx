@@ -6,7 +6,7 @@ import { MOCK_CATEGORIES_DATA } from '@/utils/mocks';
 import InvoicePlaceHolder from './InvoicePlaceHolder';
 import { useEffect, useState } from 'react';
 import { InvoiceData } from '@/utils/interfaces';
-import PdfViewer from '@/components/pdfViwer/PdfViewer';
+import PdfViewer from '@/components/pdfViewer/PdfViewer';
 
 // our-domain.com/invoices
 const InvoicesContainer = styled(Container)`

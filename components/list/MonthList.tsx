@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Container, StyledLink } from '@/styles/globalStyles';
 import List from '@material-ui/core/List';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -6,60 +7,62 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components';
-import { MouseEventHandler, useState } from 'react';
+import { MOCK_MONTHS } from '@/utils/mocks';
 
 const MonthListContainer = styled(Container)`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: flex-start;
+  width: 35%;
+  background-color: #d6696981;
+  margin-left: 20px;
+  border-radius: 6px;
+  padding: 10px;
+`;
+
+const StyledList = styled(List)`
+  width: 140px;
+  height: 48vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0 20px;
 `;
 
 interface MonthListProps {
   getSelectedMonths: (months: string[]) => void;
+  isListDisabled: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+/* const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      width: '100%',
-      height: '90vh',
-      maxWidth: 360,
-      backgroundColor: '#c2c0ff',
+      width: '140px',
+      height: '48vh',
+      display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'wrap',
       margin: '0px 20px',
     },
   })
-);
+); */
 
-const MonthListComponent = ({ getSelectedMonths }: MonthListProps) => {
+const MonthListComponent = ({
+  getSelectedMonths,
+  isListDisabled,
+}: MonthListProps) => {
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
-
-  const classes = useStyles();
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
 
   const handleToggle = ({ target }: any, index: number) => {
     const selected: boolean = target?.checked;
 
     const newSelected = [...selectedMonths];
     if (!!selected) {
-      newSelected.push(months[index]);
+      newSelected.push(MOCK_MONTHS[index]);
     }
     if (selected === false) {
       // if value exist in list, unselect it
-      newSelected.splice(selectedMonths.indexOf(months[index]), 1);
+      newSelected.splice(selectedMonths.indexOf(MOCK_MONTHS[index]), 1);
     }
     setSelectedMonths(newSelected);
     getSelectedMonths(newSelected);
@@ -67,8 +70,8 @@ const MonthListComponent = ({ getSelectedMonths }: MonthListProps) => {
 
   return (
     <MonthListContainer>
-      <List className={classes.root}>
-        {months.map((month, index) => {
+      <StyledList>
+        {MOCK_MONTHS.map((month, index) => {
           const labelId = `checkbox-list-label-${month}`;
 
           return (
@@ -77,6 +80,7 @@ const MonthListComponent = ({ getSelectedMonths }: MonthListProps) => {
               role={undefined}
               dense
               button
+              disabled={isListDisabled}
               onClick={(val) => handleToggle(val, index)}
             >
               <ListItemIcon>
@@ -92,7 +96,7 @@ const MonthListComponent = ({ getSelectedMonths }: MonthListProps) => {
             </ListItem>
           );
         })}
-      </List>
+      </StyledList>
     </MonthListContainer>
   );
 };
