@@ -5,6 +5,7 @@ import { Add } from '@material-ui/icons';
 
 type MenuProps = {
   topics: string[];
+  onAddBillClick: (billType: string) => void;
 };
 
 const MenuContainer = styled(Container)`
@@ -22,7 +23,7 @@ const AddButtonGroup = styled(ButtonGroup)`
   }
 `;
 
-const BillsMenu = ({ topics }: MenuProps) => {
+const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
   return (
     <MenuContainer>
       <ButtonGroup
@@ -55,6 +56,7 @@ const BillsMenu = ({ topics }: MenuProps) => {
               size='large'
               component={StyledLink}
               key={`${index} - ${menuItem}`}
+              onClick={() => onAddBillClick(menuItem.toLowerCase())}
             >
               <Add />
             </Button>

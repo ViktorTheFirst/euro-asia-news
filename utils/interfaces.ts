@@ -32,9 +32,11 @@ export type Month =
   | 'November'
   | 'December';
 
-export interface BillsInfo {
-  [month: string]: MonthInfo;
-}
-export interface BillsInfoPerYear {
-  [year: string]: BillsInfo;
+export interface BillInfo {
+  id: string;
+  billType: string;
+  year: string;
+  months: Month[];
+  confirmationNumber: string;
+  payedAmount: string;
 }

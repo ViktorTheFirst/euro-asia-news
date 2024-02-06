@@ -1,21 +1,22 @@
 // our-domain.com/bills/[billType]/add-bill
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styled from 'styled-components';
-import MonthListComponent from '@/components/list/MonthList';
-import { Container, Row } from '@/styles/globalStyles';
-
-import { onFormSubmit } from '@/utils/functions';
 import {
   Button,
-  InputAdornment,
   Step,
   StepLabel,
   Stepper,
-  TextField,
   Typography,
 } from '@material-ui/core';
-import Link from 'next/link';
+
+import MonthListComponent from '@/components/list/MonthList';
+import { Container, Row } from '@/styles/globalStyles';
+import BillForm from '@/components/forms/BillForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelectedBill, setSelectedBillInfo } from '@/store/Bills';
+import { Month } from '@/utils/interfaces';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -27,7 +28,6 @@ const AddBillContainer = styled(Container)`
 
 const ContentWrapper = styled(Container)`
   width: 95%;
-  display: flex;
   background-color: #28a6cc;
   height: 75vh;
   padding: 10px;
@@ -35,34 +35,21 @@ const ContentWrapper = styled(Container)`
 
 const ContentContainer = styled(Container)`
   flex-direction: column;
-  display: flex;
   justify-content: space-around;
 `;
 
 const ButtonsContainer = styled(Container)`
-  display: flex;
   width: 220px;
   justify-content: space-evenly;
 `;
 
-const FormContainer = styled(Container)`
-  flex-direction: column;
-  width: 50%;
-  background-color: #c437bdac;
-  height: 50vh;
-  padding: 20px;
-  margin: 0 70px;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 50%;
-`;
-
 const StyledStepper = styled(Stepper)`
   width: 80%;
+`;
+
+const StyledRow = styled(Row)`
+  min-height: 50vh;
+  justify-content: space-around;
 `;
 
 const getSteps = () => {
@@ -84,10 +71,11 @@ function getStepContent(step: number) {
 
 const AddBillPage = () => {
   const router = useRouter();
-  const [confNumber, setConfNumber] = useState('');
-  const [payedAmount, setPayedAmount] = useState('');
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+
+  const selectedBill = useSelector(getSelectedBill);
 
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
@@ -109,11 +97,6 @@ const AddBillPage = () => {
 
     if (isLastStep) {
       // TODO: send data to BE
-      console.log({
-        selectedMonths,
-        confNumber,
-        payedAmount,
-      });
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -121,8 +104,13 @@ const AddBillPage = () => {
 
   const handleBack = () => {
     if (activeStep === 1) {
-      setConfNumber('');
-      setPayedAmount('');
+      dispatch(
+        setSelectedBillInfo({
+          ...selectedBill,
+          confirmationNumber: '',
+          payedAmount: '',
+        })
+      );
     }
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -145,21 +133,21 @@ const AddBillPage = () => {
   const handleReset = () => {
     setActiveStep(0);
   };
-  const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
 
-  const handleSelectedMonths = (months: string[]) => {
-    setSelectedMonths(months);
+  const handleSelectedMonths = (months: Month[]) => {
+    dispatch(setSelectedBillInfo({ ...selectedBill, months }));
   };
 
   const isNextBtnDisabled = useMemo(() => {
-    if (activeStep === 0 && selectedMonths.length === 0) return true;
+    if (activeStep === 0 && selectedBill.months.length === 0) return true;
     if (
       activeStep === 1 &&
-      (confNumber.length === 0 || payedAmount.length === 0)
+      (selectedBill.confirmationNumber.length === 0 ||
+        selectedBill.payedAmount.length === 0)
     )
       return true;
     return false;
-  }, [activeStep, selectedMonths, confNumber, payedAmount]);
+  }, [activeStep, selectedBill]);
 
   const isMonthListDisabled = useMemo(() => {
     return activeStep !== 0;
@@ -170,11 +158,18 @@ const AddBillPage = () => {
   }, [activeStep]);
 
   const handleConfNumberChange = (event: any) => {
-    setConfNumber(event.target.value);
+    dispatch(
+      setSelectedBillInfo({
+        ...selectedBill,
+        confirmationNumber: event.target.value,
+      })
+    );
   };
 
   const handlePayedAmountChange = (event: any) => {
-    setPayedAmount(event.target.value);
+    dispatch(
+      setSelectedBillInfo({ ...selectedBill, payedAmount: event.target.value })
+    );
   };
 
   return (
@@ -207,42 +202,21 @@ const AddBillPage = () => {
         ) : (
           <ContentContainer>
             <Typography variant='h6'>{getStepContent(activeStep)}</Typography>
-            <Row>
+            <StyledRow>
               <MonthListComponent
                 getSelectedMonths={handleSelectedMonths}
                 isListDisabled={isMonthListDisabled}
               />
               {activeStep > 0 && (
-                <FormContainer>
-                  <Typography>Confirmation number</Typography>
-                  <StyledTextField
-                    id='conf-number'
-                    label='Confirmation number'
-                    variant='outlined'
-                    margin='normal'
-                    value={confNumber}
-                    onChange={handleConfNumberChange}
-                    disabled={isInputsDisabled}
-                  />
-
-                  <Typography>Payed amount</Typography>
-                  <StyledTextField
-                    id='payed-amount'
-                    label='Payed amount'
-                    variant='outlined'
-                    margin='normal'
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>{`\u20aa`}</InputAdornment>
-                      ),
-                    }}
-                    value={payedAmount}
-                    onChange={handlePayedAmountChange}
-                    disabled={isInputsDisabled}
-                  />
-                </FormContainer>
+                <BillForm
+                  confirmationNumber={selectedBill.confirmationNumber}
+                  payedAmount={selectedBill.payedAmount}
+                  isInputsDisabled={isInputsDisabled}
+                  confNumberChangeHandler={handleConfNumberChange}
+                  payedAmountChangeHandler={handlePayedAmountChange}
+                />
               )}
-            </Row>
+            </StyledRow>
             <ButtonsContainer>
               <Button disabled={activeStep === 0} onClick={handleBack}>
                 Back

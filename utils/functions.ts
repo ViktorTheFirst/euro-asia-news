@@ -1,3 +1,5 @@
+import { BillInfo, Month, MonthInfo } from './interfaces';
+
 export const capitalizeFirstLetter = (s: string) =>
   (s && s[0].toUpperCase() + s.slice(1)) || '';
 
@@ -15,4 +17,22 @@ export const onFormSubmit = (event: any) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   return Object.fromEntries(data.entries());
+};
+
+export const extractBillInfoPerMonth = (
+  selectedMonth: Month,
+  billsDataPerYear: BillInfo[]
+): MonthInfo | undefined => {
+  return billsDataPerYear.find((bill: BillInfo) =>
+    bill.months.includes(selectedMonth)
+  );
+};
+
+export const extractRelatedMonthInBundle = (
+  selectedMonth: Month,
+  billsDataPerYear: BillInfo[]
+): Month[] | undefined => {
+  return billsDataPerYear.find((bill: BillInfo) =>
+    bill.months.includes(selectedMonth)
+  )?.months;
 };

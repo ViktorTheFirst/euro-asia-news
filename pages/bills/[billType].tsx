@@ -1,17 +1,19 @@
 // our-domain.com/bills/[billType]
-import MonthBox from '@/components/monthBox/MonthBox';
-import { Container, StyledForm } from '@/styles/globalStyles';
-import { SelectOption } from '@/utils/interfaces';
-import {
-  MOCK_BILLS_INFO_PER_YEAR,
-  MOCK_MONTHS,
-  MOCK_YEARS_OPTIONS,
-} from '@/utils/mocks';
-import { Grid, Paper, Select, Typography } from '@material-ui/core';
-
+import { ChangeEvent, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { Grid, Select, Typography } from '@material-ui/core';
+
+import MonthBox from '@/components/monthBox/MonthBox';
+import { Container } from '@/styles/globalStyles';
+import {
+  extractBillInfoPerMonth,
+  extractRelatedMonthInBundle,
+} from '@/utils/functions';
+import { BillInfo, Month, SelectOption } from '@/utils/interfaces';
+import { MOCK_MONTHS, MOCK_YEARS_OPTIONS, MOCK_BILLS } from '@/utils/mocks';
+import { setSelectedBillInfo, getSelectedBill } from '@/store/Bills';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
@@ -47,23 +49,46 @@ const StyledSelect = styled(Select)`
 `;
 
 const ViewBillsPage = () => {
-  const [selectedYear, setSelectedYear] = useState<SelectOption>({
-    value: '2024',
-    label: '2024',
-  });
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const selectedBill = useSelector(getSelectedBill);
+
+  useEffect(() => {
+    dispatch(
+      setSelectedBillInfo({
+        ...selectedBill,
+        year: '2024',
+        billType: router.query.billType as string,
+      })
+    );
+  }, [dispatch]);
+
   const handleSelectChange = (event: ChangeEvent<any>) => {
-    setSelectedYear(
-      MOCK_YEARS_OPTIONS.find((year) => year.value === event.target.value) || {
-        label: 'None',
-        value: '',
-      }
+    dispatch(
+      setSelectedBillInfo({ ...selectedBill, year: event.target.value })
     );
   };
 
-  const yearlyBillsData = useMemo(() => {
-    return MOCK_BILLS_INFO_PER_YEAR[selectedYear.value];
-  }, [selectedYear]);
+  const billsDataPerYear = useMemo(() => {
+    return MOCK_BILLS.filter(
+      (bill: BillInfo) =>
+        bill.year === selectedBill.year &&
+        bill.billType === selectedBill.billType
+    );
+  }, [selectedBill]);
+
+  const onEditBill = (monthToEdit: Month) => {
+    const monthsInBundle = extractRelatedMonthInBundle(
+      monthToEdit,
+      billsDataPerYear
+    );
+
+    const selectedBill = billsDataPerYear.find(
+      (bill) => bill.months === monthsInBundle
+    );
+    selectedBill && dispatch(setSelectedBillInfo(selectedBill));
+  };
 
   return (
     <ViewBillsContainer>
@@ -71,7 +96,7 @@ const ViewBillsPage = () => {
         <Typography>Year:</Typography>
         <StyledSelect
           native
-          value={selectedYear.label}
+          value={selectedBill.year}
           onChange={handleSelectChange}
         >
           {MOCK_YEARS_OPTIONS.map((option: SelectOption, index: number) => (
@@ -84,7 +109,11 @@ const ViewBillsPage = () => {
       <MonthsGrid container justifyContent='center' spacing={2}>
         {MOCK_MONTHS.map((month) => (
           <Grid key={month} item md={3}>
-            <MonthBox month={month} billData={yearlyBillsData[month]} />
+            <MonthBox
+              month={month}
+              billData={extractBillInfoPerMonth(month, billsDataPerYear)}
+              onEditBill={onEditBill}
+            />
           </Grid>
         ))}
       </MonthsGrid>

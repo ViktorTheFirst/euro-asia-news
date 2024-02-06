@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { Container, StyledLink } from '@/styles/globalStyles';
+import styled from 'styled-components';
 import List from '@material-ui/core/List';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import styled from 'styled-components';
+
+import { Container } from '@/styles/globalStyles';
 import { MOCK_MONTHS } from '@/utils/mocks';
+import { Month } from '@/utils/interfaces';
 
 const MonthListContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 35%;
+  width: 445px;
+  min-width: 445pxpx;
   background-color: #d6696981;
   margin-left: 20px;
   border-radius: 6px;
@@ -21,8 +23,8 @@ const MonthListContainer = styled(Container)`
 `;
 
 const StyledList = styled(List)`
-  width: 140px;
-  height: 48vh;
+  width: 210px;
+  height: 37vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -30,8 +32,9 @@ const StyledList = styled(List)`
 `;
 
 interface MonthListProps {
-  getSelectedMonths: (months: string[]) => void;
   isListDisabled: boolean;
+  preSelectedMonths?: Month[];
+  getSelectedMonths: (months: Month[]) => void;
 }
 
 /* const useStyles = makeStyles(() =>
@@ -48,10 +51,13 @@ interface MonthListProps {
 ); */
 
 const MonthListComponent = ({
-  getSelectedMonths,
   isListDisabled,
+  preSelectedMonths,
+  getSelectedMonths,
 }: MonthListProps) => {
-  const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
+  const [selectedMonths, setSelectedMonths] = useState<Month[]>(
+    preSelectedMonths ?? []
+  );
 
   const handleToggle = ({ target }: any, index: number) => {
     const selected: boolean = target?.checked;
