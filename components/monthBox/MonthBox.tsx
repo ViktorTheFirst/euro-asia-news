@@ -31,9 +31,15 @@ interface MonthBoxProps {
   month: Month;
   billData?: MonthInfo;
   onEditBill: (monthToEdit: Month) => void;
+  onDeleteBill: (monthToDelete: Month) => void;
 }
 
-const MonthBox = ({ billData, month, onEditBill }: MonthBoxProps) => {
+const MonthBox = ({
+  billData,
+  month,
+  onEditBill,
+  onDeleteBill,
+}: MonthBoxProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
 
@@ -56,7 +62,7 @@ const MonthBox = ({ billData, month, onEditBill }: MonthBoxProps) => {
             key='delete-btn'
             variant='contained'
             color='secondary'
-            onClick={() => console.log('DELETE BILL CLICKED')}
+            onClick={() => onDeleteBill(month)}
           >
             DELETE
           </Button>
@@ -71,7 +77,7 @@ const MonthBox = ({ billData, month, onEditBill }: MonthBoxProps) => {
         <Typography>{`${billData.payedAmount}\u20aa`}</Typography>
       </>
     );
-  }, [isHovering, billData, router.query.billType]);
+  }, [isHovering, billData, router.query.billType, onDeleteBill, onEditBill]);
 
   return (
     <StyledPaper

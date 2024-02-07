@@ -1,7 +1,10 @@
 // our-domain.com/bills/[billType]/edit-bill
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { Button, Typography } from '@material-ui/core';
 
 import { Container, Row } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';
@@ -12,7 +15,7 @@ import { Month } from '@/utils/interfaces';
 const EditBillContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
   background-color: pink;
 `;
@@ -22,8 +25,16 @@ const StyledRow = styled(Row)`
   justify-content: space-around;
 `;
 
+const ButtonsContainer = styled(Container)`
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: flex-end;
+`;
+
 const EditBillComponent = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const selectedBill = useSelector(getSelectedBill);
 
@@ -55,8 +66,26 @@ const EditBillComponent = () => {
     );
   };
 
+  const cancelButtonHandler = () => {
+    dispatch(
+      setSelectedBillInfo({
+        ...selectedBill,
+        id: '',
+        months: [],
+        confirmationNumber: '',
+        payedAmount: '',
+      })
+    );
+  };
+
+  const submitButtonHandler = () => {
+    // TODO: send selected bill from redux to BE
+  };
+
+  console.log('router', router);
   return (
     <EditBillContainer>
+      <Typography variant='h5'>Edit bill</Typography>
       <StyledRow>
         <MonthListComponent
           isListDisabled={false}
@@ -72,6 +101,28 @@ const EditBillComponent = () => {
           payedAmountChangeHandler={handlePayedAmountChange}
         />
       </StyledRow>
+      <ButtonsContainer>
+        <Button
+          href={`/bills/${router.query.billType}/`}
+          key='cancel edit'
+          component={Link}
+          variant='contained'
+          color='secondary'
+          onClick={cancelButtonHandler}
+        >
+          Cancel
+        </Button>
+        <Button
+          key='submit edit'
+          component={Link}
+          href={`/bills/${router.query.billType}/`}
+          variant='contained'
+          color='primary'
+          onClick={submitButtonHandler}
+        >
+          Submit
+        </Button>
+      </ButtonsContainer>
     </EditBillContainer>
   );
 };

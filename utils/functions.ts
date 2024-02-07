@@ -19,10 +19,10 @@ export const onFormSubmit = (event: any) => {
   return Object.fromEntries(data.entries());
 };
 
-export const extractBillInfoPerMonth = (
+export const extractBillInfoByMonth = (
   selectedMonth: Month,
   billsDataPerYear: BillInfo[]
-): MonthInfo | undefined => {
+) => {
   return billsDataPerYear.find((bill: BillInfo) =>
     bill.months.includes(selectedMonth)
   );

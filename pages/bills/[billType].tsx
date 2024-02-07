@@ -8,7 +8,7 @@ import { Grid, Select, Typography } from '@material-ui/core';
 import MonthBox from '@/components/monthBox/MonthBox';
 import { Container } from '@/styles/globalStyles';
 import {
-  extractBillInfoPerMonth,
+  extractBillInfoByMonth,
   extractRelatedMonthInBundle,
 } from '@/utils/functions';
 import { BillInfo, Month, SelectOption } from '@/utils/interfaces';
@@ -58,7 +58,7 @@ const ViewBillsPage = () => {
     dispatch(
       setSelectedBillInfo({
         ...selectedBill,
-        year: '2024',
+        year: selectedBill.year || new Date().getFullYear().toString(),
         billType: router.query.billType as string,
       })
     );
@@ -90,6 +90,16 @@ const ViewBillsPage = () => {
     selectedBill && dispatch(setSelectedBillInfo(selectedBill));
   };
 
+  const onDeleteBill = (monthToDelete: Month) => {
+    const billIdTodelete = extractBillInfoByMonth(
+      monthToDelete,
+      billsDataPerYear
+    )?.id;
+    // TODO:
+    // 1. load the bill info to redux and show confirmation modal
+    // 2. send request to BE in the modal
+  };
+
   return (
     <ViewBillsContainer>
       <SelectYearContainer>
@@ -111,8 +121,9 @@ const ViewBillsPage = () => {
           <Grid key={month} item md={3}>
             <MonthBox
               month={month}
-              billData={extractBillInfoPerMonth(month, billsDataPerYear)}
+              billData={extractBillInfoByMonth(month, billsDataPerYear)}
               onEditBill={onEditBill}
+              onDeleteBill={onDeleteBill}
             />
           </Grid>
         ))}
