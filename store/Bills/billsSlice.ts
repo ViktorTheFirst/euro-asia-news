@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
-import { resetSelectedBillInfo, setSelectedBillInfo } from './billsActions';
+import {
+  resetCreationBillInfo,
+  resetSelectedBillInfo,
+  setCreationBillInfo,
+  setSelectedBillInfo,
+} from './billsActions';
 import { BillInfo } from '@/utils/interfaces';
 import { emptyBill } from '@/utils/constants';
 
@@ -15,6 +20,12 @@ export const billsSlice = createSlice({
       })
       .addCase(resetSelectedBillInfo, (state, action) => {
         state.selectedBill = emptyBill;
+      })
+      .addCase(setCreationBillInfo, (state, action) => {
+        state.creationBill = action.payload;
+      })
+      .addCase(resetCreationBillInfo, (state, action) => {
+        state.creationBill = emptyBill;
       });
   },
 });

@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import axios from 'axios';
 import styled from 'styled-components';
 import {
   Button,
@@ -15,8 +16,13 @@ import MonthListComponent from '@/components/list/MonthList';
 import { Container, Row } from '@/styles/globalStyles';
 import BillForm from '@/components/forms/BillForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectedBill, setSelectedBillInfo } from '@/store/Bills';
-import { Month } from '@/utils/interfaces';
+import {
+  getCreationBill,
+  setCreationBillInfo,
+  resetCreationBillInfo,
+} from '@/store/Bills';
+import { BillInfo, Month } from '@/utils/interfaces';
+import { baseUrl } from '@/utils/constants';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -75,7 +81,7 @@ const AddBillPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
-  const selectedBill = useSelector(getSelectedBill);
+  const creationBill = useSelector(getCreationBill);
 
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
@@ -88,7 +94,7 @@ const AddBillPage = () => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -96,7 +102,22 @@ const AddBillPage = () => {
     }
 
     if (isLastStep) {
-      // TODO: send data to BE
+      try {
+        const postData = JSON.stringify(creationBill);
+
+        await axios({
+          method: 'post',
+          url: `${baseUrl}/bills/addBill`,
+          data: postData,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      } catch (err) {
+        console.warn('Bill creation failed on FE ' + err);
+      }
+
+      dispatch(resetCreationBillInfo());
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -105,8 +126,8 @@ const AddBillPage = () => {
   const handleBack = () => {
     if (activeStep === 1) {
       dispatch(
-        setSelectedBillInfo({
-          ...selectedBill,
+        setCreationBillInfo({
+          ...creationBill,
           confirmationNumber: '',
           payedAmount: '',
         })
@@ -135,19 +156,19 @@ const AddBillPage = () => {
   };
 
   const handleSelectedMonths = (months: Month[]) => {
-    dispatch(setSelectedBillInfo({ ...selectedBill, months }));
+    dispatch(setCreationBillInfo({ ...creationBill, months }));
   };
 
   const isNextBtnDisabled = useMemo(() => {
-    if (activeStep === 0 && selectedBill.months.length === 0) return true;
+    if (activeStep === 0 && creationBill.months.length === 0) return true;
     if (
       activeStep === 1 &&
-      (selectedBill.confirmationNumber.length === 0 ||
-        selectedBill.payedAmount.length === 0)
+      (creationBill.confirmationNumber.length === 0 ||
+        creationBill.payedAmount.length === 0)
     )
       return true;
     return false;
-  }, [activeStep, selectedBill]);
+  }, [activeStep, creationBill]);
 
   const isMonthListDisabled = useMemo(() => {
     return activeStep !== 0;
@@ -159,8 +180,8 @@ const AddBillPage = () => {
 
   const handleConfNumberChange = (event: any) => {
     dispatch(
-      setSelectedBillInfo({
-        ...selectedBill,
+      setCreationBillInfo({
+        ...creationBill,
         confirmationNumber: event.target.value,
       })
     );
@@ -168,7 +189,7 @@ const AddBillPage = () => {
 
   const handlePayedAmountChange = (event: any) => {
     dispatch(
-      setSelectedBillInfo({ ...selectedBill, payedAmount: event.target.value })
+      setCreationBillInfo({ ...creationBill, payedAmount: event.target.value })
     );
   };
 
@@ -209,8 +230,8 @@ const AddBillPage = () => {
               />
               {activeStep > 0 && (
                 <BillForm
-                  confirmationNumber={selectedBill.confirmationNumber}
-                  payedAmount={selectedBill.payedAmount}
+                  confirmationNumber={creationBill.confirmationNumber}
+                  payedAmount={creationBill.payedAmount}
                   isInputsDisabled={isInputsDisabled}
                   confNumberChangeHandler={handleConfNumberChange}
                   payedAmountChangeHandler={handlePayedAmountChange}
@@ -232,7 +253,7 @@ const AddBillPage = () => {
               )}
               {isLastStep ? (
                 <Button
-                  href={`/bills/`}
+                  href={`/bills/${router.query.billType}`}
                   variant='contained'
                   color='primary'
                   onClick={handleNext}

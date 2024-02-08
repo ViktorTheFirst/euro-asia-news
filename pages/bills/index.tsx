@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import BillsMenu from '@/components/menu/BillsMenu';
 import { Container } from '@/styles/globalStyles';
 import { MOCK_BILLS_TOPICS } from '@/utils/mocks';
-import { getSelectedBill, setSelectedBillInfo } from '@/store/Bills';
+import { getCreationBill, setCreationBillInfo } from '@/store/Bills';
 
 const BillsContainer = styled(Container)`
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
@@ -19,13 +19,13 @@ const BillsContainer = styled(Container)`
 
 const BillsPage = () => {
   const dispatch = useDispatch();
-  const selectedBill = useSelector(getSelectedBill);
+  const creationBill = useSelector(getCreationBill);
 
   const handleAddNewBill = (billType: string) => {
     dispatch(
-      setSelectedBillInfo({
-        ...selectedBill,
-        id: uuid(),
+      setCreationBillInfo({
+        ...creationBill,
+        //id: uuid(),
         billType,
         year: new Date().getFullYear().toString(),
       })

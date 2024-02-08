@@ -8,3 +8,11 @@ export const setSelectedBillInfo = createAction<BillInfo>(
 export const resetSelectedBillInfo = createAction(
   'bills/resetSelectedBillInfo'
 );
+
+export const setCreationBillInfo = createAction<BillInfo>(
+  'bills/setCreationBillInfo'
+);
+
+export const resetCreationBillInfo = createAction(
+  'bills/resetCreationBillInfo'
+);
