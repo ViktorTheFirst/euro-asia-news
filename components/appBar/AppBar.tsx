@@ -7,7 +7,10 @@ import { Button, Toolbar, Typography } from '@material-ui/core';
 
 import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
 import { Container, StyledLink } from '@/styles/globalStyles';
-import { resetCreationBillInfo, resetSelectedBillInfo } from '@/store/Bills';
+import {
+  resetCreationBillInfoAction,
+  resetSelectedBillInfoAction,
+} from '@/store/Bills';
 
 const AppBarContainer = styled(Container)`
   flex-direction: row;
@@ -39,8 +42,8 @@ const AppBar = () => {
   }, [router]);
 
   const onHomeClick = () => {
-    dispatch(resetSelectedBillInfo());
-    dispatch(resetCreationBillInfo());
+    dispatch(resetSelectedBillInfoAction());
+    dispatch(resetCreationBillInfoAction());
   };
 
   return (

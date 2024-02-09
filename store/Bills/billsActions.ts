@@ -1,18 +1,22 @@
 import { BillInfo } from '@/utils/interfaces';
 import { createAction } from '@reduxjs/toolkit';
 
-export const setSelectedBillInfo = createAction<BillInfo>(
+export const setSelectedBillInfoAction = createAction<BillInfo>(
   'bills/setSelectedBillInfo'
 );
 
-export const resetSelectedBillInfo = createAction(
+export const resetSelectedBillInfoAction = createAction(
   'bills/resetSelectedBillInfo'
 );
 
-export const setCreationBillInfo = createAction<BillInfo>(
+export const setCreationBillInfoAction = createAction<BillInfo>(
   'bills/setCreationBillInfo'
 );
 
-export const resetCreationBillInfo = createAction(
+export const resetCreationBillInfoAction = createAction(
   'bills/resetCreationBillInfo'
+);
+
+export const setBillsByTypeAction = createAction<BillInfo[]>(
+  'bills/setBillsByType'
 );

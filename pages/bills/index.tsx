@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import BillsMenu from '@/components/menu/BillsMenu';
 import { Container } from '@/styles/globalStyles';
 import { MOCK_BILLS_TOPICS } from '@/utils/mocks';
-import { getCreationBill, setCreationBillInfo } from '@/store/Bills';
+import { getCreationBill, setCreationBillInfoAction } from '@/store/Bills';
 
 const BillsContainer = styled(Container)`
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
@@ -23,7 +23,7 @@ const BillsPage = () => {
 
   const handleAddNewBill = (billType: string) => {
     dispatch(
-      setCreationBillInfo({
+      setCreationBillInfoAction({
         ...creationBill,
         //id: uuid(),
         billType,

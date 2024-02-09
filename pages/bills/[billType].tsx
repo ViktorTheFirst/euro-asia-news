@@ -12,8 +12,14 @@ import {
   extractRelatedMonthInBundle,
 } from '@/utils/functions';
 import { BillInfo, Month, SelectOption } from '@/utils/interfaces';
-import { MOCK_MONTHS, MOCK_YEARS_OPTIONS, MOCK_BILLS } from '@/utils/mocks';
-import { setSelectedBillInfo, getSelectedBill } from '@/store/Bills';
+import { MOCK_MONTHS, MOCK_YEARS_OPTIONS } from '@/utils/mocks';
+import {
+  setSelectedBillInfoAction,
+  getSelectedBill,
+  getBillsByType,
+  setBillsByTypeAction,
+} from '@/store/Bills';
+import { getBillsByTypeAPI } from '@/api/bills/billsAPI';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
@@ -53,10 +59,16 @@ const ViewBillsPage = () => {
   const dispatch = useDispatch();
 
   const selectedBill = useSelector(getSelectedBill);
+  const billsByType = useSelector(getBillsByType);
 
   useEffect(() => {
+    getBillsByTypeAPI(router.query.billType as string).then((result) => {
+      console.log('result', result);
+      dispatch(setBillsByTypeAction(result?.data));
+    });
+
     dispatch(
-      setSelectedBillInfo({
+      setSelectedBillInfoAction({
         ...selectedBill,
         year: selectedBill.year || new Date().getFullYear().toString(),
         billType: router.query.billType as string,
@@ -66,17 +78,17 @@ const ViewBillsPage = () => {
 
   const handleSelectChange = (event: ChangeEvent<any>) => {
     dispatch(
-      setSelectedBillInfo({ ...selectedBill, year: event.target.value })
+      setSelectedBillInfoAction({ ...selectedBill, year: event.target.value })
     );
   };
 
   const billsDataPerYear = useMemo(() => {
-    return MOCK_BILLS.filter(
+    return billsByType.filter(
       (bill: BillInfo) =>
         bill.year === selectedBill.year &&
         bill.billType === selectedBill.billType
     );
-  }, [selectedBill]);
+  }, [selectedBill, billsByType]);
 
   const onEditBill = (monthToEdit: Month) => {
     const monthsInBundle = extractRelatedMonthInBundle(
@@ -87,14 +99,14 @@ const ViewBillsPage = () => {
     const selectedBill = billsDataPerYear.find(
       (bill) => bill.months === monthsInBundle
     );
-    selectedBill && dispatch(setSelectedBillInfo(selectedBill));
+    selectedBill && dispatch(setSelectedBillInfoAction(selectedBill));
   };
 
   const onDeleteBill = (monthToDelete: Month) => {
     const billIdTodelete = extractBillInfoByMonth(
       monthToDelete,
       billsDataPerYear
-    )?.id;
+    )?._id;
     // TODO:
     // 1. load the bill info to redux and show confirmation modal
     // 2. send request to BE in the modal

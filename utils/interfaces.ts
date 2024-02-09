@@ -33,7 +33,7 @@ export type Month =
   | 'December';
 
 export interface BillInfo {
-  id: string;
+  _id: string;
   billType: string;
   year: string;
   months: Month[];

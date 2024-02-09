@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 import {
-  resetCreationBillInfo,
-  resetSelectedBillInfo,
-  setCreationBillInfo,
-  setSelectedBillInfo,
+  setBillsByTypeAction,
+  resetCreationBillInfoAction,
+  resetSelectedBillInfoAction,
+  setCreationBillInfoAction,
+  setSelectedBillInfoAction,
 } from './billsActions';
-import { BillInfo } from '@/utils/interfaces';
 import { emptyBill } from '@/utils/constants';
 
 export const billsSlice = createSlice({
@@ -15,17 +15,20 @@ export const billsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(setSelectedBillInfo, (state, action) => {
+      .addCase(setSelectedBillInfoAction, (state, action) => {
         state.selectedBill = action.payload;
       })
-      .addCase(resetSelectedBillInfo, (state, action) => {
+      .addCase(resetSelectedBillInfoAction, (state, action) => {
         state.selectedBill = emptyBill;
       })
-      .addCase(setCreationBillInfo, (state, action) => {
+      .addCase(setCreationBillInfoAction, (state, action) => {
         state.creationBill = action.payload;
       })
-      .addCase(resetCreationBillInfo, (state, action) => {
+      .addCase(resetCreationBillInfoAction, (state, action) => {
         state.creationBill = emptyBill;
+      })
+      .addCase(setBillsByTypeAction, (state, action) => {
+        state.billsByType = action.payload;
       });
   },
 });

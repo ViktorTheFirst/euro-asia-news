@@ -9,8 +9,9 @@ import { Button, Typography } from '@material-ui/core';
 import { Container, Row } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';
 import BillForm from '@/components/forms/BillForm';
-import { getSelectedBill, setSelectedBillInfo } from '@/store/Bills';
+import { getSelectedBill, setSelectedBillInfoAction } from '@/store/Bills';
 import { Month } from '@/utils/interfaces';
+import { editBillAPI } from '@/api/bills/billsAPI';
 
 const EditBillContainer = styled(Container)`
   flex-direction: column;
@@ -38,19 +39,13 @@ const EditBillComponent = () => {
 
   const selectedBill = useSelector(getSelectedBill);
 
-  /* useEffect(() => {
-    fetch('http://localhost:5000/api/bills/water/').then((res) =>
-      console.log('res', res)
-    );
-  }, []); */
-
   const handleSelectedMonths = (months: Month[]) => {
-    dispatch(setSelectedBillInfo({ ...selectedBill, months }));
+    dispatch(setSelectedBillInfoAction({ ...selectedBill, months }));
   };
 
   const handleConfirmationNumberChange = (event: any) => {
     dispatch(
-      setSelectedBillInfo({
+      setSelectedBillInfoAction({
         ...selectedBill,
         confirmationNumber: event.target.value,
       })
@@ -59,7 +54,7 @@ const EditBillComponent = () => {
 
   const handlePayedAmountChange = (event: any) => {
     dispatch(
-      setSelectedBillInfo({
+      setSelectedBillInfoAction({
         ...selectedBill,
         payedAmount: event.target.value,
       })
@@ -68,9 +63,9 @@ const EditBillComponent = () => {
 
   const cancelButtonHandler = () => {
     dispatch(
-      setSelectedBillInfo({
+      setSelectedBillInfoAction({
         ...selectedBill,
-        id: '',
+        _id: '',
         months: [],
         confirmationNumber: '',
         payedAmount: '',
@@ -80,6 +75,7 @@ const EditBillComponent = () => {
 
   const submitButtonHandler = () => {
     // TODO: send selected bill from redux to BE
+    editBillAPI(selectedBill);
   };
 
   console.log('router', router);

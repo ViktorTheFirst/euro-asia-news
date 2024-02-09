@@ -18,11 +18,12 @@ import BillForm from '@/components/forms/BillForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getCreationBill,
-  setCreationBillInfo,
-  resetCreationBillInfo,
+  setCreationBillInfoAction,
+  resetCreationBillInfoAction,
 } from '@/store/Bills';
 import { BillInfo, Month } from '@/utils/interfaces';
 import { baseUrl } from '@/utils/constants';
+import { addBillAPI } from '@/api/bills/billsAPI';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -102,22 +103,10 @@ const AddBillPage = () => {
     }
 
     if (isLastStep) {
-      try {
-        const postData = JSON.stringify(creationBill);
-
-        await axios({
-          method: 'post',
-          url: `${baseUrl}/bills/addBill`,
-          data: postData,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-      } catch (err) {
-        console.warn('Bill creation failed on FE ' + err);
-      }
-
-      dispatch(resetCreationBillInfo());
+      addBillAPI(creationBill).then((result) => {
+        console.log('Bill has been added: ', result?.data);
+        dispatch(resetCreationBillInfoAction());
+      });
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -126,7 +115,7 @@ const AddBillPage = () => {
   const handleBack = () => {
     if (activeStep === 1) {
       dispatch(
-        setCreationBillInfo({
+        setCreationBillInfoAction({
           ...creationBill,
           confirmationNumber: '',
           payedAmount: '',
@@ -156,7 +145,7 @@ const AddBillPage = () => {
   };
 
   const handleSelectedMonths = (months: Month[]) => {
-    dispatch(setCreationBillInfo({ ...creationBill, months }));
+    dispatch(setCreationBillInfoAction({ ...creationBill, months }));
   };
 
   const isNextBtnDisabled = useMemo(() => {
@@ -180,7 +169,7 @@ const AddBillPage = () => {
 
   const handleConfNumberChange = (event: any) => {
     dispatch(
-      setCreationBillInfo({
+      setCreationBillInfoAction({
         ...creationBill,
         confirmationNumber: event.target.value,
       })
@@ -189,7 +178,10 @@ const AddBillPage = () => {
 
   const handlePayedAmountChange = (event: any) => {
     dispatch(
-      setCreationBillInfo({ ...creationBill, payedAmount: event.target.value })
+      setCreationBillInfoAction({
+        ...creationBill,
+        payedAmount: event.target.value,
+      })
     );
   };
 

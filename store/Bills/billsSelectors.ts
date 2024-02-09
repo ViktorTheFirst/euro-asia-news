@@ -12,3 +12,8 @@ export const getCreationBill = createSelector(
   [billsSelector],
   (billsSelector) => billsSelector.creationBill
 );
+
+export const getBillsByType = createSelector(
+  [billsSelector],
+  (billsSelector) => billsSelector.billsByType
+);
