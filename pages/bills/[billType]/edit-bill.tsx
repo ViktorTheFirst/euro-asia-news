@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
-import { Container, Row } from '@/styles/globalStyles';
+import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';
 import BillForm from '@/components/forms/BillForm';
 import { getSelectedBill, setSelectedBillInfoAction } from '@/store/Bills';
@@ -27,7 +27,6 @@ const StyledRow = styled(Row)`
 `;
 
 const ButtonsContainer = styled(Container)`
-  display: flex;
   flex-direction: row;
   width: 80%;
   justify-content: flex-end;
@@ -81,7 +80,7 @@ const EditBillComponent = () => {
   console.log('router', router);
   return (
     <EditBillContainer>
-      <Typography variant='h5'>Edit bill</Typography>
+      <StyledTypography variant='h5'>Edit bill</StyledTypography>
       <StyledRow>
         <MonthListComponent
           isListDisabled={false}

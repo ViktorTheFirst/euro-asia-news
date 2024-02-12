@@ -1,12 +1,10 @@
-import { Container } from '@/styles/globalStyles';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 import { CategoriesData, InvoiceData } from '@/utils/interfaces';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography,
 } from '@material-ui/core';
-import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 const AccordionContainer = styled(Container)`
@@ -19,7 +17,7 @@ const InvoiceListContainer = styled(Container)`
   flex-direction: column;
 `;
 
-const InvoiceItem = styled(Typography)`
+const InvoiceItem = styled(StyledTypography)`
   cursor: pointer;
 `;
 
@@ -41,7 +39,7 @@ const CategoriesAccordion = ({
         return (
           <Accordion key={`${category.title} - ${index}`}>
             <AccordionSummary>
-              <Typography>{category.title}</Typography>
+              <StyledTypography>{category.title}</StyledTypography>
             </AccordionSummary>
             <AccordionDetails>
               <InvoiceListContainer>
@@ -63,17 +61,3 @@ const CategoriesAccordion = ({
 };
 
 export default CategoriesAccordion;
-
-/* 
-<Accordion>
-        <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
-          <Typography >Accordion 1</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-*/

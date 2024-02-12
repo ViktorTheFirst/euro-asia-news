@@ -37,7 +37,6 @@ export const editBillAPI = async (billInfo: BillInfo) => {
 };
 
 export const getBillsByTypeAPI = async (billType: string) => {
-  console.log('billType', billType);
   try {
     const billsByType = await axios({
       method: 'get',
@@ -50,5 +49,21 @@ export const getBillsByTypeAPI = async (billType: string) => {
     return billsByType;
   } catch (err) {
     console.warn('Fetching bills failed on FE ' + err);
+  }
+};
+
+export const deleteBillByIdAPI = async (billId: string) => {
+  try {
+    const deletedBill = await axios({
+      method: 'delete',
+      url: `${baseUrl}/bills/${billId}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return deletedBill;
+  } catch (err) {
+    console.warn('Bill deletion failed on FE ' + err);
   }
 };

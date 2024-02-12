@@ -1,5 +1,4 @@
-import { Container } from '@/styles/globalStyles';
-import { Typography } from '@material-ui/core';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 import styled from 'styled-components';
 
 const PlaceHolderContainer = styled(Container)`
@@ -9,7 +8,9 @@ const PlaceHolderContainer = styled(Container)`
 const InvoicePlaceHolder = () => {
   return (
     <PlaceHolderContainer>
-      <Typography>Select an Invoice to view or upload a new one</Typography>
+      <StyledTypography>
+        Select an Invoice to view or upload a new one
+      </StyledTypography>
     </PlaceHolderContainer>
   );
 };

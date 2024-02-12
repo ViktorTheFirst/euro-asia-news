@@ -1,5 +1,7 @@
+import { getUserToken } from '@/auth/utils/users';
 import MainMenu from '@/components/menu/MainMenu';
 import { Container, Row } from '@/styles/globalStyles';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 // our-domain.com/
@@ -28,7 +30,11 @@ const MenuContainer = styled(Container)`
 `;
 
 const HomePage = () => {
+  const router = useRouter();
+  const token = getUserToken();
   const mainTopics = ['Bills', 'Invoices', 'Cars', 'Shoping List'];
+
+  //console.log('token', token);
 
   return (
     <HomeContainer>

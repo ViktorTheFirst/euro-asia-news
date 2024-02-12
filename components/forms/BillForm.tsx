@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { InputAdornment, TextField, Typography } from '@material-ui/core';
-import { Container } from '@/styles/globalStyles';
+import { InputAdornment, TextField } from '@material-ui/core';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 
 const FormContainer = styled(Container)`
   flex-direction: column;
@@ -18,6 +18,7 @@ const FormContainer = styled(Container)`
 
 const StyledTextField = styled(TextField)`
   width: 50%;
+  caret-color: transparent;
 `;
 
 interface BillFormProps {
@@ -37,7 +38,7 @@ const BillForm = ({
 }: BillFormProps) => {
   return (
     <FormContainer>
-      <Typography>Confirmation number</Typography>
+      <StyledTypography>Confirmation number</StyledTypography>
       <StyledTextField
         id='conf-number'
         label='Confirmation number'
@@ -48,7 +49,7 @@ const BillForm = ({
         disabled={isInputsDisabled}
       />
 
-      <Typography>Payed amount</Typography>
+      <StyledTypography>Payed amount</StyledTypography>
       <StyledTextField
         id='payed-amount'
         label='Payed amount'

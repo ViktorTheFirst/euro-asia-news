@@ -2,27 +2,20 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
 import styled from 'styled-components';
-import {
-  Button,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from '@material-ui/core';
+import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
 
 import MonthListComponent from '@/components/list/MonthList';
-import { Container, Row } from '@/styles/globalStyles';
+import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import BillForm from '@/components/forms/BillForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getCreationBill,
   setCreationBillInfoAction,
   resetCreationBillInfoAction,
+  getBillsByType,
 } from '@/store/Bills';
-import { BillInfo, Month } from '@/utils/interfaces';
-import { baseUrl } from '@/utils/constants';
+import { BillInfo, Month, MonthDictionary } from '@/utils/interfaces';
 import { addBillAPI } from '@/api/bills/billsAPI';
 
 const AddBillContainer = styled(Container)`
@@ -77,15 +70,61 @@ function getStepContent(step: number) {
 }
 
 const AddBillPage = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const creationBill = useSelector(getCreationBill);
+  const billsByType = useSelector(getBillsByType);
 
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
+
+  const isNextBtnDisabled = useMemo(() => {
+    if (activeStep === 0 && creationBill.months.length === 0) return true;
+    if (
+      activeStep === 1 &&
+      (creationBill.confirmationNumber.length === 0 ||
+        creationBill.payedAmount.length === 0)
+    )
+      return true;
+    return false;
+  }, [activeStep, creationBill]);
+
+  const isMonthListDisabled = useMemo(() => {
+    return activeStep !== 0;
+  }, [activeStep]);
+
+  const isInputsDisabled = useMemo(() => {
+    return activeStep > 1;
+  }, [activeStep]);
+
+  const alreadyPopulatedMonths = useMemo(() => {
+    const disabledMonths: MonthDictionary = {
+      January: false,
+      February: false,
+      March: false,
+      April: false,
+      August: false,
+      December: false,
+      July: false,
+      June: false,
+      May: false,
+      October: false,
+      November: false,
+      September: false,
+    };
+
+    billsByType.forEach((bill) => {
+      bill.months.forEach((month) => {
+        disabledMonths[month] = true;
+      });
+    });
+
+    return disabledMonths;
+  }, [billsByType]);
 
   const isStepOptional = (step: number) => {
     return step === 1;
@@ -104,7 +143,6 @@ const AddBillPage = () => {
 
     if (isLastStep) {
       addBillAPI(creationBill).then((result) => {
-        console.log('Bill has been added: ', result?.data);
         dispatch(resetCreationBillInfoAction());
       });
     }
@@ -148,25 +186,6 @@ const AddBillPage = () => {
     dispatch(setCreationBillInfoAction({ ...creationBill, months }));
   };
 
-  const isNextBtnDisabled = useMemo(() => {
-    if (activeStep === 0 && creationBill.months.length === 0) return true;
-    if (
-      activeStep === 1 &&
-      (creationBill.confirmationNumber.length === 0 ||
-        creationBill.payedAmount.length === 0)
-    )
-      return true;
-    return false;
-  }, [activeStep, creationBill]);
-
-  const isMonthListDisabled = useMemo(() => {
-    return activeStep !== 0;
-  }, [activeStep]);
-
-  const isInputsDisabled = useMemo(() => {
-    return activeStep > 1;
-  }, [activeStep]);
-
   const handleConfNumberChange = (event: any) => {
     dispatch(
       setCreationBillInfoAction({
@@ -193,7 +212,7 @@ const AddBillPage = () => {
           const labelProps: { optional?: React.ReactNode } = {};
           if (isStepOptional(index)) {
             labelProps.optional = (
-              <Typography variant='caption'>Optional</Typography>
+              <StyledTypography variant='caption'>Optional</StyledTypography>
             );
           }
           if (isStepSkipped(index)) {
@@ -209,16 +228,21 @@ const AddBillPage = () => {
       <ContentWrapper>
         {activeStep === steps.length ? (
           <div>
-            <Typography>All steps completed - you&apos;re finished</Typography>
+            <StyledTypography>
+              All steps completed - you&apos;re finished
+            </StyledTypography>
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
           <ContentContainer>
-            <Typography variant='h6'>{getStepContent(activeStep)}</Typography>
+            <StyledTypography variant='h6'>
+              {getStepContent(activeStep)}
+            </StyledTypography>
             <StyledRow>
               <MonthListComponent
-                getSelectedMonths={handleSelectedMonths}
                 isListDisabled={isMonthListDisabled}
+                disabledItems={alreadyPopulatedMonths}
+                getSelectedMonths={handleSelectedMonths}
               />
               {activeStep > 0 && (
                 <BillForm

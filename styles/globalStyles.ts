@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -24,4 +25,8 @@ export const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyledTypography = styled(Typography)`
+  caret-color: transparent;
 `;

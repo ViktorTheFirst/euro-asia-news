@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import { Container } from '@/styles/globalStyles';
 import { MOCK_MONTHS } from '@/utils/mocks';
-import { Month } from '@/utils/interfaces';
+import { Month, MonthDictionary } from '@/utils/interfaces';
 
 const MonthListContainer = styled(Container)`
   display: flex;
@@ -34,25 +34,14 @@ const StyledList = styled(List)`
 interface MonthListProps {
   isListDisabled: boolean;
   preSelectedMonths?: Month[];
+  disabledItems?: MonthDictionary;
   getSelectedMonths: (months: Month[]) => void;
 }
-
-/* const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      width: '140px',
-      height: '48vh',
-      display: 'flex',
-      flexDirection: 'column',
-      flexWrap: 'wrap',
-      margin: '0px 20px',
-    },
-  })
-); */
 
 const MonthListComponent = ({
   isListDisabled,
   preSelectedMonths,
+  disabledItems,
   getSelectedMonths,
 }: MonthListProps) => {
   const [selectedMonths, setSelectedMonths] = useState<Month[]>(
@@ -86,7 +75,7 @@ const MonthListComponent = ({
               role={undefined}
               dense
               button
-              disabled={isListDisabled}
+              disabled={isListDisabled || disabledItems?.[month]}
               onClick={(val) => handleToggle(val, index)}
             >
               <ListItemIcon>

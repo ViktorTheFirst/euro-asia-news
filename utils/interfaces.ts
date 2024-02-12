@@ -13,6 +13,18 @@ export interface SelectOption {
   label: string;
 }
 
+export interface UserLoginData {
+  email: string;
+  password: string;
+}
+
+export interface UserRegistrationData extends UserLoginData {
+  name: string;
+  partnerName: string;
+  partnerEmail: string;
+}
+
+// -------------- BILLS INTERFACES ---------------------
 export interface MonthInfo {
   confirmationNumber: string | null;
   payedAmount: string | null;
@@ -40,3 +52,7 @@ export interface BillInfo {
   confirmationNumber: string;
   payedAmount: string;
 }
+
+export type MonthDictionary = {
+  [month in Month]: boolean;
+};

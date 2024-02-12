@@ -1,9 +1,11 @@
+import { getUserToken } from '@/auth/utils/users';
 import AppBar from '../appBar/AppBar';
 
 export default function Layout({ children }: any) {
+  const token = getUserToken();
   return (
     <>
-      <AppBar />
+      {token && <AppBar />}
       <main>{children}</main>
     </>
   );

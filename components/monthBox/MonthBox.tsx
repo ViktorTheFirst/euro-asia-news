@@ -2,9 +2,9 @@ import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 
-import { Container } from '@/styles/globalStyles';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 import { Month, MonthInfo } from '@/utils/interfaces';
 
 const StyledPaper = styled(Paper)`
@@ -71,10 +71,18 @@ const MonthBox = ({
     }
     return (
       <>
-        <Typography gutterBottom>Confirmation #</Typography>
-        <Typography>{billData.confirmationNumber}</Typography>
-        <Typography gutterBottom>Payed amount</Typography>
-        <Typography>{`${billData.payedAmount}\u20aa`}</Typography>
+        {billData.confirmationNumber && (
+          <>
+            <StyledTypography gutterBottom>Confirmation #</StyledTypography>
+            <StyledTypography>{billData.confirmationNumber}</StyledTypography>
+          </>
+        )}
+        {billData.payedAmount && (
+          <>
+            <StyledTypography gutterBottom>Payed amount</StyledTypography>
+            <StyledTypography>{`${billData.payedAmount}\u20aa`}</StyledTypography>
+          </>
+        )}
       </>
     );
   }, [isHovering, billData, router.query.billType, onDeleteBill, onEditBill]);
@@ -87,9 +95,9 @@ const MonthBox = ({
       onMouseLeave={() => setIsHovering(false)}
     >
       <ContentContainer billPayed={!!billData}>
-        <Typography variant='h6' gutterBottom>
+        <StyledTypography variant='h6' gutterBottom>
           {month}
-        </Typography>
+        </StyledTypography>
         {renderContent}
       </ContentContainer>
     </StyledPaper>

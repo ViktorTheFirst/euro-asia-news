@@ -1,12 +1,12 @@
 // our-domain.com/bills/[billType]
-import { ChangeEvent, useEffect, useMemo } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Grid, Select, Typography } from '@material-ui/core';
+import { Grid, Select } from '@material-ui/core';
 
 import MonthBox from '@/components/monthBox/MonthBox';
-import { Container } from '@/styles/globalStyles';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 import {
   extractBillInfoByMonth,
   extractRelatedMonthInBundle,
@@ -19,7 +19,8 @@ import {
   getBillsByType,
   setBillsByTypeAction,
 } from '@/store/Bills';
-import { getBillsByTypeAPI } from '@/api/bills/billsAPI';
+import { deleteBillByIdAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
+import DeleteItemModal from '@/components/modals/DeleteItemModal';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
@@ -55,6 +56,7 @@ const StyledSelect = styled(Select)`
 `;
 
 const ViewBillsPage = () => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -63,7 +65,6 @@ const ViewBillsPage = () => {
 
   useEffect(() => {
     getBillsByTypeAPI(router.query.billType as string).then((result) => {
-      console.log('result', result);
       dispatch(setBillsByTypeAction(result?.data));
     });
 
@@ -107,15 +108,52 @@ const ViewBillsPage = () => {
       monthToDelete,
       billsDataPerYear
     )?._id;
-    // TODO:
-    // 1. load the bill info to redux and show confirmation modal
-    // 2. send request to BE in the modal
+
+    const selectedBill = billsDataPerYear.find(
+      (bill) => bill._id === billIdTodelete
+    );
+    selectedBill && dispatch(setSelectedBillInfoAction(selectedBill));
+    setIsDeleteModalOpen(true);
   };
 
+  const handleDeleteClickInModal = async () => {
+    await deleteBillByIdAPI(selectedBill._id).then((result) => {
+      if (result?.data._id === selectedBill._id) {
+        setIsDeleteModalOpen(false);
+        selectedBill &&
+          dispatch(
+            setSelectedBillInfoAction({
+              ...selectedBill,
+              _id: '',
+              months: [],
+              confirmationNumber: '',
+              payedAmount: '',
+            })
+          );
+        getBillsByTypeAPI(router.query.billType as string).then((result) => {
+          dispatch(setBillsByTypeAction(result?.data));
+        });
+      }
+    });
+  };
+
+  const handleCncelDeletionInModal = () => {
+    setIsDeleteModalOpen(false);
+    selectedBill &&
+      dispatch(
+        setSelectedBillInfoAction({
+          ...selectedBill,
+          _id: '',
+          months: [],
+          confirmationNumber: '',
+          payedAmount: '',
+        })
+      );
+  };
   return (
     <ViewBillsContainer>
       <SelectYearContainer>
-        <Typography>Year:</Typography>
+        <StyledTypography>Year:</StyledTypography>
         <StyledSelect
           native
           value={selectedBill.year}
@@ -140,6 +178,14 @@ const ViewBillsPage = () => {
           </Grid>
         ))}
       </MonthsGrid>
+      {isDeleteModalOpen && (
+        <DeleteItemModal
+          isModalOpen={isDeleteModalOpen}
+          itemType='bill'
+          onDelete={handleDeleteClickInModal}
+          onClose={handleCncelDeletionInModal}
+        />
+      )}
     </ViewBillsContainer>
   );
 };

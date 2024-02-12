@@ -1,7 +1,7 @@
-import { Container } from '@/styles/globalStyles';
+import { Container, StyledTypography } from '@/styles/globalStyles';
 import styled from 'styled-components';
 import CategoriesAccordion from '@/components/accordion/Accordion';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { MOCK_CATEGORIES_DATA } from '@/utils/mocks';
 import InvoicePlaceHolder from './InvoicePlaceHolder';
 import { useEffect, useState } from 'react';
@@ -66,14 +66,14 @@ const InvoicesPage = () => {
     <InvoicesContainer>
       <LeftSide>
         <CategoriesContainer>
-          <Typography>Categories</Typography>
+          <StyledTypography>Categories</StyledTypography>
           <CategoriesAccordion
             categoriesList={MOCK_CATEGORIES_DATA}
             getSelectedInvoice={handleSelectedInvoice}
           />
         </CategoriesContainer>
         <UploadInvoiceContainer>
-          <Typography>Upload invoice</Typography>
+          <StyledTypography>Upload invoice</StyledTypography>
           <Button variant='contained' color='primary'>
             Upload
           </Button>
