@@ -1,5 +1,6 @@
 // our-domain.com/bills/[billType]/add-bill
 import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -8,7 +9,6 @@ import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import BillForm from '@/components/forms/BillForm';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getCreationBill,
   setCreationBillInfoAction,
@@ -17,6 +17,7 @@ import {
 } from '@/store/Bills';
 import { BillInfo, Month, MonthDictionary } from '@/utils/interfaces';
 import { addBillAPI } from '@/api/bills/billsAPI';
+import { getToken } from '@/store/Auth';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -78,6 +79,7 @@ const AddBillPage = () => {
 
   const creationBill = useSelector(getCreationBill);
   const billsByType = useSelector(getBillsByType);
+  const token = useSelector(getToken);
 
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
@@ -142,7 +144,7 @@ const AddBillPage = () => {
     }
 
     if (isLastStep) {
-      addBillAPI(creationBill).then((result) => {
+      addBillAPI(creationBill, token).then((result) => {
         dispatch(resetCreationBillInfoAction());
       });
     }

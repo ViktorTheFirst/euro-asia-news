@@ -11,7 +11,7 @@ import {
   resetCreationBillInfoAction,
   resetSelectedBillInfoAction,
 } from '@/store/Bills';
-import { removeUserToken } from '@/auth/utils/users';
+import { setHousholdIdAction, setTokenAction } from '@/store/Auth';
 
 const AppBarContainer = styled(Container)`
   flex-direction: row;
@@ -47,8 +47,9 @@ const AppBar = () => {
     dispatch(resetCreationBillInfoAction());
   };
 
-  const onLogoutClick = () => {
-    removeUserToken();
+  const onLogoutClick = async () => {
+    dispatch(setHousholdIdAction(''));
+    dispatch(setTokenAction(''));
     router.push('/login');
   };
 

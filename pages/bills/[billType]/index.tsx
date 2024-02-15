@@ -2,6 +2,9 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import fs from 'fs/promises';
+import path from 'path';
 import styled from 'styled-components';
 import { Grid, Select } from '@material-ui/core';
 
@@ -16,11 +19,11 @@ import { MOCK_MONTHS, MOCK_YEARS_OPTIONS } from '@/utils/mocks';
 import {
   setSelectedBillInfoAction,
   getSelectedBill,
-  getBillsByType,
   setBillsByTypeAction,
 } from '@/store/Bills';
 import { deleteBillByIdAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
 import DeleteItemModal from '@/components/modals/DeleteItemModal';
+import { getHouseholdId, getToken } from '@/store/Auth';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
@@ -55,18 +58,21 @@ const StyledSelect = styled(Select)`
   margin-left: 20px;
 `;
 
-const ViewBillsPage = () => {
+interface ViewBillsProps {
+  billsByType: BillInfo[];
+}
+
+const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const selectedBill = useSelector(getSelectedBill);
-  const billsByType = useSelector(getBillsByType);
+  const token = useSelector(getToken);
+  const householdId = useSelector(getHouseholdId);
 
   useEffect(() => {
-    getBillsByTypeAPI(router.query.billType as string).then((result) => {
-      dispatch(setBillsByTypeAction(result?.data));
-    });
+    dispatch(setBillsByTypeAction(billsByType));
 
     dispatch(
       setSelectedBillInfoAction({
@@ -117,7 +123,7 @@ const ViewBillsPage = () => {
   };
 
   const handleDeleteClickInModal = async () => {
-    await deleteBillByIdAPI(selectedBill._id).then((result) => {
+    await deleteBillByIdAPI(selectedBill._id, token).then((result) => {
       if (result?.data._id === selectedBill._id) {
         setIsDeleteModalOpen(false);
         selectedBill &&
@@ -188,6 +194,32 @@ const ViewBillsPage = () => {
       )}
     </ViewBillsContainer>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { params } = context;
+  const billsByType = await getBillsByTypeAPI(params?.billType as string);
+
+  return {
+    props: {
+      billsByType: billsByType?.data,
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const filePath = path.join(process.cwd(), 'data', 'billsTopics.json');
+  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
+  const data = JSON.parse(jsonData);
+
+  const acceptedPaths = data.topics.map((topic: { title: string }) => ({
+    params: { billType: topic.title.toLowerCase() },
+  }));
+
+  return {
+    paths: acceptedPaths,
+    fallback: false,
+  };
 };
 
 export default ViewBillsPage;

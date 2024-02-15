@@ -1,10 +1,12 @@
-import { Container, StyledLink } from '@/styles/globalStyles';
+import Link from 'next/link';
 import styled from 'styled-components';
-import { Button, ButtonGroup, Icon } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import { Button, ButtonGroup } from '@material-ui/core';
+
+import { Container } from '@/styles/globalStyles';
 
 type MenuProps = {
-  topics: string[];
+  topics: { title: string }[];
   onAddBillClick: (billType: string) => void;
 };
 
@@ -31,15 +33,15 @@ const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
         color='primary'
         aria-label='vertical contained primary button group'
       >
-        {topics.map((menuItem: string, index: number) => {
+        {topics.map((menuItem: { title: string }, index: number) => {
           return (
             <Button
-              href={`bills/${menuItem.toLowerCase()}/`}
+              href={`bills/${menuItem.title.toLowerCase()}/`}
               size='large'
-              component={StyledLink}
+              component={Link}
               key={`${index} - ${menuItem}`}
             >
-              {menuItem}
+              {menuItem.title}
             </Button>
           );
         })}
@@ -49,14 +51,14 @@ const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
         color='primary'
         aria-label='vertical contained primary button group'
       >
-        {topics.map((menuItem: string, index: number) => {
+        {topics.map((menuItem: { title: string }, index: number) => {
           return (
             <Button
-              href={`bills/${menuItem.toLowerCase()}/add-bill/`}
+              href={`bills/${menuItem.title.toLowerCase()}/add-bill/`}
               size='large'
-              component={StyledLink}
+              component={Link}
               key={`${index} - ${menuItem}`}
-              onClick={() => onAddBillClick(menuItem.toLowerCase())}
+              onClick={() => onAddBillClick(menuItem.title.toLowerCase())}
             >
               <Add />
             </Button>

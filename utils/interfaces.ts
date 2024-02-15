@@ -46,6 +46,7 @@ export type Month =
 
 export interface BillInfo {
   _id: string;
+  householdId: string;
   billType: string;
   year: string;
   months: Month[];

@@ -1,8 +1,9 @@
-import { baseUrl } from '@/utils/constants';
-import { BillInfo } from '@/utils/interfaces';
 import axios from 'axios';
+import { BillInfo } from '@/utils/interfaces';
 
-export const addBillAPI = async (billInfo: BillInfo) => {
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+export const addBillAPI = async (billInfo: BillInfo, token: string) => {
   try {
     const createdBill = await axios({
       method: 'post',
@@ -10,6 +11,7 @@ export const addBillAPI = async (billInfo: BillInfo) => {
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
     });
 
@@ -19,7 +21,7 @@ export const addBillAPI = async (billInfo: BillInfo) => {
   }
 };
 
-export const editBillAPI = async (billInfo: BillInfo) => {
+export const editBillAPI = async (billInfo: BillInfo, token: string) => {
   try {
     const editedBill = await axios({
       method: 'post',
@@ -27,6 +29,7 @@ export const editBillAPI = async (billInfo: BillInfo) => {
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
     });
 
@@ -52,13 +55,14 @@ export const getBillsByTypeAPI = async (billType: string) => {
   }
 };
 
-export const deleteBillByIdAPI = async (billId: string) => {
+export const deleteBillByIdAPI = async (billId: string, token: string) => {
   try {
     const deletedBill = await axios({
       method: 'delete',
       url: `${baseUrl}/bills/${billId}`,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
     });
 

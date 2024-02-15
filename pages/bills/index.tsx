@@ -1,11 +1,11 @@
 // our-domain.com/bills
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { v4 as uuid } from 'uuid';
+import fs from 'fs/promises';
+import path from 'path';
 
 import BillsMenu from '@/components/menu/BillsMenu';
 import { Container } from '@/styles/globalStyles';
-import { MOCK_BILLS_TOPICS } from '@/utils/mocks';
 import { getCreationBill, setCreationBillInfoAction } from '@/store/Bills';
 
 const BillsContainer = styled(Container)`
@@ -17,7 +17,11 @@ const BillsContainer = styled(Container)`
   width: 100%;
 `;
 
-const BillsPage = () => {
+interface BillsPageProps {
+  topics: { title: string }[];
+}
+
+const BillsPage = ({ topics }: BillsPageProps) => {
   const dispatch = useDispatch();
   const creationBill = useSelector(getCreationBill);
 
@@ -25,8 +29,8 @@ const BillsPage = () => {
     dispatch(
       setCreationBillInfoAction({
         ...creationBill,
-        //id: uuid(),
         billType,
+        householdId: '1',
         year: new Date().getFullYear().toString(),
       })
     );
@@ -34,9 +38,21 @@ const BillsPage = () => {
 
   return (
     <BillsContainer>
-      <BillsMenu topics={MOCK_BILLS_TOPICS} onAddBillClick={handleAddNewBill} />
+      <BillsMenu topics={topics} onAddBillClick={handleAddNewBill} />
     </BillsContainer>
   );
 };
+
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), 'data', 'billsTopics.json');
+  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
+  const data = JSON.parse(jsonData);
+
+  return {
+    props: {
+      topics: data.topics,
+    },
+  };
+}
 
 export default BillsPage;

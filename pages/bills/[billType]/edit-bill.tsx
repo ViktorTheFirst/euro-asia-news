@@ -12,6 +12,7 @@ import BillForm from '@/components/forms/BillForm';
 import { getSelectedBill, setSelectedBillInfoAction } from '@/store/Bills';
 import { Month } from '@/utils/interfaces';
 import { editBillAPI } from '@/api/bills/billsAPI';
+import { getToken } from '@/store/Auth';
 
 const EditBillContainer = styled(Container)`
   flex-direction: column;
@@ -37,6 +38,7 @@ const EditBillComponent = () => {
   const router = useRouter();
 
   const selectedBill = useSelector(getSelectedBill);
+  const token = useSelector(getToken);
 
   const handleSelectedMonths = (months: Month[]) => {
     dispatch(setSelectedBillInfoAction({ ...selectedBill, months }));
@@ -73,11 +75,9 @@ const EditBillComponent = () => {
   };
 
   const submitButtonHandler = () => {
-    // TODO: send selected bill from redux to BE
-    editBillAPI(selectedBill);
+    editBillAPI(selectedBill, token);
   };
 
-  console.log('router', router);
   return (
     <EditBillContainer>
       <StyledTypography variant='h5'>Edit bill</StyledTypography>

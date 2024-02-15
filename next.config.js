@@ -10,6 +10,21 @@ const nextConfig = {
     config.resolve.alias.canvas = false;
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: false,
+        missing: [
+          {
+            type: 'header',
+            key: 'authorization',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

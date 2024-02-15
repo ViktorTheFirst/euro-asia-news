@@ -1,8 +1,10 @@
-import { getUserToken } from '@/auth/utils/users';
+import styled from 'styled-components';
+import fs from 'fs/promises';
+import path from 'path';
+import { GetStaticProps } from 'next';
+
 import MainMenu from '@/components/menu/MainMenu';
 import { Container, Row } from '@/styles/globalStyles';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
 
 // our-domain.com/
 const HomeContainer = styled(Container)`
@@ -29,13 +31,11 @@ const MenuContainer = styled(Container)`
   flex: 2;
 `;
 
-const HomePage = () => {
-  const router = useRouter();
-  const token = getUserToken();
-  const mainTopics = ['Bills', 'Invoices', 'Cars', 'Shoping List'];
+interface HomePageProps {
+  mainTopics: { title: string }[];
+}
 
-  //console.log('token', token);
-
+const HomePage = ({ mainTopics }: HomePageProps) => {
   return (
     <HomeContainer>
       <Row>
@@ -46,6 +46,18 @@ const HomePage = () => {
       </Row>
     </HomeContainer>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const filePath = path.join(process.cwd(), 'data', 'mainMenuTopics.json');
+  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
+  const data = JSON.parse(jsonData);
+
+  return {
+    props: {
+      mainTopics: data.topics,
+    },
+  };
 };
 
 export default HomePage;

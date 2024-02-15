@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { loginAPI } from '@/api/auth/authAPI';
-import { setUserToken } from '@/auth/utils/users';
 import LoginForm from '@/components/forms/LoginForm';
 import { Container } from '@/styles/globalStyles';
+import { useDispatch } from 'react-redux';
+import { setHousholdIdAction, setTokenAction } from '@/store/Auth';
 
 const LoginContainer = styled(Container)`
   height: 100vh;
@@ -20,6 +21,7 @@ const LoginPage = () => {
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const onLogin = () => {
     try {
@@ -27,8 +29,9 @@ const LoginPage = () => {
         email: userEmail,
         password,
       }).then((result) => {
-        if (result?.data?.message) {
-          setUserToken(result?.data?.message);
+        if (result?.data.token) {
+          dispatch(setHousholdIdAction(result?.data.householdId));
+          dispatch(setTokenAction(result?.data.token));
           router.push('/');
         }
       });

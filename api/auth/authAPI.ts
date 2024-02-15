@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { baseUrl } from '@/utils/constants';
 import { UserLoginData, UserRegistrationData } from '@/utils/interfaces';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const registrationAPI = async (userData: UserRegistrationData) => {
   try {

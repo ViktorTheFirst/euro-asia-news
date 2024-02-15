@@ -1,9 +1,11 @@
-import { Container, StyledLink } from '@/styles/globalStyles';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Button, ButtonGroup } from '@material-ui/core';
 
+import { Container } from '@/styles/globalStyles';
+
 type MenuProps = {
-  topics: string[];
+  topics: { title: string }[];
 };
 
 const MenuContainer = styled(Container)`
@@ -20,14 +22,14 @@ const MainMenu = ({ topics }: MenuProps) => {
         color='primary'
         aria-label='vertical contained primary button group'
       >
-        {topics.map((menuItem: string, index: number) => (
+        {topics.map((menuItem: { title: string }, index: number) => (
           <Button
-            href={`/${menuItem.toLowerCase()}/`}
+            href={`/${menuItem.title.toLowerCase()}/`}
             key={`${index} - ${menuItem}`}
             size='large'
-            component={StyledLink}
+            component={Link}
           >
-            {menuItem}
+            {menuItem.title}
           </Button>
         ))}
       </ButtonGroup>
