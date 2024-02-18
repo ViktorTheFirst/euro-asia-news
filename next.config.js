@@ -10,7 +10,7 @@ const nextConfig = {
     config.resolve.alias.canvas = false;
     return config;
   },
-  async redirects() {
+  /* async redirects() {
     return [
       {
         source: '/',
@@ -24,7 +24,7 @@ const nextConfig = {
         ],
       },
     ];
-  },
+  }, */
 };
 
 module.exports = nextConfig;

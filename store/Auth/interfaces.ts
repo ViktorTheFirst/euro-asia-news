@@ -1,4 +1,4 @@
 export interface AuthInitialState {
-  houseHoldId: string;
+  householdId: string;
   token: string;
 }

@@ -7,6 +7,9 @@ import path from 'path';
 import BillsMenu from '@/components/menu/BillsMenu';
 import { Container } from '@/styles/globalStyles';
 import { getCreationBill, setCreationBillInfoAction } from '@/store/Bills';
+import { getHouseholdId, setHouseholdIdAction } from '@/store/Auth';
+import { GetServerSideProps } from 'next';
+import { useEffect } from 'react';
 
 const BillsContainer = styled(Container)`
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
@@ -19,18 +22,25 @@ const BillsContainer = styled(Container)`
 
 interface BillsPageProps {
   topics: { title: string }[];
+  sessionHouseholdId?: string;
 }
 
-const BillsPage = ({ topics }: BillsPageProps) => {
+const BillsPage = ({ topics, sessionHouseholdId }: BillsPageProps) => {
   const dispatch = useDispatch();
   const creationBill = useSelector(getCreationBill);
+  const householdId = useSelector(getHouseholdId);
+
+  useEffect(() => {
+    if (sessionHouseholdId && !householdId)
+      dispatch(setHouseholdIdAction(sessionHouseholdId));
+  }, [sessionHouseholdId, householdId, dispatch]);
 
   const handleAddNewBill = (billType: string) => {
     dispatch(
       setCreationBillInfoAction({
         ...creationBill,
         billType,
-        householdId: '1',
+        householdId,
         year: new Date().getFullYear().toString(),
       })
     );
@@ -43,7 +53,21 @@ const BillsPage = ({ topics }: BillsPageProps) => {
   );
 };
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+  const filePath = path.join(process.cwd(), 'data', 'billsTopics.json');
+  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
+  const data = JSON.parse(jsonData);
+
+  return {
+    props: {
+      topics: data.topics,
+      sessionHouseholdId: cookies.householdId,
+    },
+  };
+};
+
+/* export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'billsTopics.json');
   const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
   const data = JSON.parse(jsonData);
@@ -53,6 +77,6 @@ export async function getStaticProps() {
       topics: data.topics,
     },
   };
-}
+} */
 
 export default BillsPage;

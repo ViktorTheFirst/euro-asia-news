@@ -75,7 +75,7 @@ const EditBillComponent = () => {
   };
 
   const submitButtonHandler = () => {
-    editBillAPI(selectedBill, token);
+    editBillAPI(selectedBill);
   };
 
   return (

@@ -5,7 +5,7 @@ export const authSelector = (state: RootState) => state.auth;
 
 export const getHouseholdId = createSelector(
   [authSelector],
-  (authSelector) => authSelector.houseHoldId
+  (authSelector) => authSelector.householdId
 );
 
 export const getToken = createSelector(

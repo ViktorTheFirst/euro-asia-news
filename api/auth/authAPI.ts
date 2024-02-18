@@ -9,6 +9,7 @@ export const registrationAPI = async (userData: UserRegistrationData) => {
       method: 'post',
       url: `${baseUrl}/users/signup`,
       data: userData,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -26,6 +27,7 @@ export const loginAPI = async (userData: UserLoginData) => {
       method: 'post',
       url: `${baseUrl}/users/login`,
       data: userData,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },

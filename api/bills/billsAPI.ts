@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { BillInfo } from '@/utils/interfaces';
 
+const instance = axios.create({
+  withCredentials: true,
+});
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const addBillAPI = async (billInfo: BillInfo, token: string) => {
+export const addBillAPI = async (billInfo: BillInfo) => {
   try {
-    const createdBill = await axios({
+    const createdBill = await instance({
       method: 'post',
       url: `${baseUrl}/bills/addBill`,
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
       },
     });
 
@@ -21,15 +23,14 @@ export const addBillAPI = async (billInfo: BillInfo, token: string) => {
   }
 };
 
-export const editBillAPI = async (billInfo: BillInfo, token: string) => {
+export const editBillAPI = async (billInfo: BillInfo) => {
   try {
-    const editedBill = await axios({
+    const editedBill = await instance({
       method: 'post',
       url: `${baseUrl}/bills/${billInfo._id}`,
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
       },
     });
 
@@ -39,11 +40,17 @@ export const editBillAPI = async (billInfo: BillInfo, token: string) => {
   }
 };
 
-export const getBillsByTypeAPI = async (billType: string) => {
+export const getBillsByTypeAPI = async (
+  billType: string,
+  householdId: string
+) => {
   try {
-    const billsByType = await axios({
+    const billsByType = await instance({
       method: 'get',
       url: `${baseUrl}/bills/${billType}`,
+      data: {
+        householdId,
+      },
       headers: {
         'Content-Type': 'application/json',
       },
@@ -55,14 +62,13 @@ export const getBillsByTypeAPI = async (billType: string) => {
   }
 };
 
-export const deleteBillByIdAPI = async (billId: string, token: string) => {
+export const deleteBillByIdAPI = async (billId: string) => {
   try {
-    const deletedBill = await axios({
+    const deletedBill = await instance({
       method: 'delete',
       url: `${baseUrl}/bills/${billId}`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
       },
     });
 

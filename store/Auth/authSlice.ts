@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
-import { setHousholdIdAction, setTokenAction } from './authActions';
+import { setHouseholdIdAction, setTokenAction } from './authActions';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -8,8 +8,8 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(setHousholdIdAction, (state, action) => {
-        state.houseHoldId = action.payload;
+      .addCase(setHouseholdIdAction, (state, action) => {
+        state.householdId = action.payload;
       })
       .addCase(setTokenAction, (state, action) => {
         state.token = action.payload;

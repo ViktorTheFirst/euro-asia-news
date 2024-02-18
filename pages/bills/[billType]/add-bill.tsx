@@ -144,7 +144,7 @@ const AddBillPage = () => {
     }
 
     if (isLastStep) {
-      addBillAPI(creationBill, token).then((result) => {
+      addBillAPI(creationBill).then((result) => {
         dispatch(resetCreationBillInfoAction());
       });
     }
@@ -178,10 +178,6 @@ const AddBillPage = () => {
       newSkipped.add(activeStep);
       return newSkipped;
     });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   const handleSelectedMonths = (months: Month[]) => {
@@ -228,14 +224,7 @@ const AddBillPage = () => {
         })}
       </StyledStepper>
       <ContentWrapper>
-        {activeStep === steps.length ? (
-          <div>
-            <StyledTypography>
-              All steps completed - you&apos;re finished
-            </StyledTypography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
+        {activeStep === steps.length ? null : (
           <ContentContainer>
             <StyledTypography variant='h6'>
               {getStepContent(activeStep)}

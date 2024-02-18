@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const setHousholdIdAction = createAction<string>(
+export const setHouseholdIdAction = createAction<string>(
   'auth/setHousholdIdAction'
 );
 

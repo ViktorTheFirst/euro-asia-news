@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
 import styled from 'styled-components';
@@ -63,6 +63,7 @@ interface ViewBillsProps {
 }
 
 const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
+  console.log('billsByType', billsByType);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -123,7 +124,7 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
   };
 
   const handleDeleteClickInModal = async () => {
-    await deleteBillByIdAPI(selectedBill._id, token).then((result) => {
+    await deleteBillByIdAPI(selectedBill._id).then((result) => {
       if (result?.data._id === selectedBill._id) {
         setIsDeleteModalOpen(false);
         selectedBill &&
@@ -136,9 +137,11 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
               payedAmount: '',
             })
           );
-        getBillsByTypeAPI(router.query.billType as string).then((result) => {
-          dispatch(setBillsByTypeAction(result?.data));
-        });
+        getBillsByTypeAPI(router.query.billType as string, householdId).then(
+          (result) => {
+            dispatch(setBillsByTypeAction(result?.data));
+          }
+        );
       }
     });
   };
@@ -196,10 +199,26 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+  const params = context.params;
+  //console.log('getServerSideProps - params', params);
+  //console.log('getServerSideProps - cookies', cookies);
+  const billsByType = await getBillsByTypeAPI(
+    params?.billType as string,
+    cookies.householdId!
+  );
+
+  return {
+    props: {
+      billsByType: billsByType?.data,
+    },
+  };
+};
+
+/* export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const billsByType = await getBillsByTypeAPI(params?.billType as string);
-
   return {
     props: {
       billsByType: billsByType?.data,
@@ -220,6 +239,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: acceptedPaths,
     fallback: false,
   };
-};
+}; */
 
 export default ViewBillsPage;

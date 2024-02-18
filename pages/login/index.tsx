@@ -6,7 +6,7 @@ import { loginAPI } from '@/api/auth/authAPI';
 import LoginForm from '@/components/forms/LoginForm';
 import { Container } from '@/styles/globalStyles';
 import { useDispatch } from 'react-redux';
-import { setHousholdIdAction, setTokenAction } from '@/store/Auth';
+import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 
 const LoginContainer = styled(Container)`
   height: 100vh;
@@ -30,7 +30,7 @@ const LoginPage = () => {
         password,
       }).then((result) => {
         if (result?.data.token) {
-          dispatch(setHousholdIdAction(result?.data.householdId));
+          dispatch(setHouseholdIdAction(result?.data.householdId));
           dispatch(setTokenAction(result?.data.token));
           router.push('/');
         }
