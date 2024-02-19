@@ -1,10 +1,13 @@
+import { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import fs from 'fs/promises';
 import path from 'path';
-import { GetStaticProps } from 'next';
 
 import MainMenu from '@/components/menu/MainMenu';
 import { Container, Row } from '@/styles/globalStyles';
+import { getHouseholdId, setHouseholdIdAction } from '@/store/Auth';
 
 // our-domain.com/
 const HomeContainer = styled(Container)`
@@ -33,9 +36,18 @@ const MenuContainer = styled(Container)`
 
 interface HomePageProps {
   mainTopics: { title: string }[];
+  sessionHouseholdId?: string;
 }
 
-const HomePage = ({ mainTopics }: HomePageProps) => {
+const HomePage = ({ mainTopics, sessionHouseholdId }: HomePageProps) => {
+  const dispatch = useDispatch();
+  const householdId = useSelector(getHouseholdId);
+
+  useEffect(() => {
+    if (sessionHouseholdId && !householdId)
+      dispatch(setHouseholdIdAction(sessionHouseholdId));
+  }, [sessionHouseholdId, householdId, dispatch]);
+
   return (
     <HomeContainer>
       <Row>
@@ -48,7 +60,21 @@ const HomePage = ({ mainTopics }: HomePageProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+  const filePath = path.join(process.cwd(), 'data', 'mainMenuTopics.json');
+  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
+  const data = JSON.parse(jsonData);
+
+  return {
+    props: {
+      mainTopics: data.topics,
+      sessionHouseholdId: cookies.householdId,
+    },
+  };
+};
+
+/* export const getStaticProps: GetStaticProps = async () => {
   const filePath = path.join(process.cwd(), 'data', 'mainMenuTopics.json');
   const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
   const data = JSON.parse(jsonData);
@@ -58,6 +84,6 @@ export const getStaticProps: GetStaticProps = async () => {
       mainTopics: data.topics,
     },
   };
-};
+}; */
 
 export default HomePage;

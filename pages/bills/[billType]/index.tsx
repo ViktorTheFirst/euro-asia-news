@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
 import styled from 'styled-components';
@@ -23,7 +23,6 @@ import {
 } from '@/store/Bills';
 import { deleteBillByIdAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
 import DeleteItemModal from '@/components/modals/DeleteItemModal';
-import { getHouseholdId, getToken } from '@/store/Auth';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
@@ -63,14 +62,11 @@ interface ViewBillsProps {
 }
 
 const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
-  console.log('billsByType', billsByType);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const selectedBill = useSelector(getSelectedBill);
-  const token = useSelector(getToken);
-  const householdId = useSelector(getHouseholdId);
 
   useEffect(() => {
     dispatch(setBillsByTypeAction(billsByType));
@@ -137,11 +133,8 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
               payedAmount: '',
             })
           );
-        getBillsByTypeAPI(router.query.billType as string, householdId).then(
-          (result) => {
-            dispatch(setBillsByTypeAction(result?.data));
-          }
-        );
+        // navigate to same page so getServerSideProps will fetch updated bills
+        router.push(`/bills/${router.query.billType}`);
       }
     });
   };
@@ -202,8 +195,6 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.cookies;
   const params = context.params;
-  //console.log('getServerSideProps - params', params);
-  //console.log('getServerSideProps - cookies', cookies);
   const billsByType = await getBillsByTypeAPI(
     params?.billType as string,
     cookies.householdId!
@@ -213,6 +204,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       billsByType: billsByType?.data,
     },
+    notFound: !billsByType,
   };
 };
 

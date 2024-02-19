@@ -59,7 +59,6 @@ const InvoicesPage = () => {
 
   const handleSelectedInvoice = (invoice: InvoiceData) => {
     setSelectedInvoice(invoice);
-    console.log('handleSelectedInvoice', invoice);
   };
 
   return (

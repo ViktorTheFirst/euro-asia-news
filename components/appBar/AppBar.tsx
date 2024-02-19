@@ -10,6 +10,7 @@ import { Container, StyledLink } from '@/styles/globalStyles';
 import {
   resetCreationBillInfoAction,
   resetSelectedBillInfoAction,
+  setBillsByTypeAction,
 } from '@/store/Bills';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 
@@ -45,6 +46,7 @@ const AppBar = () => {
   const onHomeClick = () => {
     dispatch(resetSelectedBillInfoAction());
     dispatch(resetCreationBillInfoAction());
+    dispatch(setBillsByTypeAction([]));
   };
 
   const onLogoutClick = async () => {

@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest, response: NextResponse) {
-  //console.log('cookies', request.cookies);
   const token = request.cookies.get('token');
 
   // If the user is authenticated, continue as normal
@@ -15,12 +14,11 @@ export function middleware(request: NextRequest, response: NextResponse) {
     });
     return NextResponse.next();
   }
-
   // Redirect to login page if not authenticated
   return NextResponse.redirect(new URL('/login', request.url));
 }
 
 // TODO: match the paths that need autorization
-/* export const config = {
+export const config = {
   matcher: '/',
-}; */
+};

@@ -16,8 +16,9 @@ import {
   getBillsByType,
 } from '@/store/Bills';
 import { BillInfo, Month, MonthDictionary } from '@/utils/interfaces';
-import { addBillAPI } from '@/api/bills/billsAPI';
+import { addBillAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
 import { getToken } from '@/store/Auth';
+import { GetServerSideProps } from 'next';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -70,7 +71,11 @@ function getStepContent(step: number) {
   }
 }
 
-const AddBillPage = () => {
+interface AddBillPageProps {
+  billsByType: BillInfo[];
+}
+
+const AddBillPage = ({ billsByType }: AddBillPageProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
@@ -78,8 +83,6 @@ const AddBillPage = () => {
   const dispatch = useDispatch();
 
   const creationBill = useSelector(getCreationBill);
-  const billsByType = useSelector(getBillsByType);
-  const token = useSelector(getToken);
 
   const steps = getSteps();
   const isLastStep = activeStep === steps.length - 1;
@@ -144,9 +147,14 @@ const AddBillPage = () => {
     }
 
     if (isLastStep) {
-      addBillAPI(creationBill).then((result) => {
-        dispatch(resetCreationBillInfoAction());
-      });
+      // first add the bill then redirect to bills page so updated bills can be fetched
+      addBillAPI(creationBill)
+        .then((result) => {
+          dispatch(resetCreationBillInfoAction());
+        })
+        .finally(() => {
+          router.push(`/bills/${router.query.billType}`);
+        });
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -260,11 +268,11 @@ const AddBillPage = () => {
               )}
               {isLastStep ? (
                 <Button
-                  href={`/bills/${router.query.billType}`}
+                  //href={`/bills/${router.query.billType}`}
                   variant='contained'
                   color='primary'
                   onClick={handleNext}
-                  component={Link}
+                  //component={Link}
                 >
                   {'Finish'}
                 </Button>
@@ -284,6 +292,21 @@ const AddBillPage = () => {
       </ContentWrapper>
     </AddBillContainer>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+  const params = context.params;
+  const billsByType = await getBillsByTypeAPI(
+    params?.billType as string,
+    cookies.householdId!
+  );
+
+  return {
+    props: {
+      billsByType: billsByType?.data,
+    },
+  };
 };
 
 export default AddBillPage;
