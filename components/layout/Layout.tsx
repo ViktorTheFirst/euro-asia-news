@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
-import AppBar from '../appBar/AppBar';
-import { getHouseholdId } from '@/store/Auth';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+
+import AppBar from '../appBar/AppBar';
 
 export default function Layout({ children }: any) {
   const router = useRouter();

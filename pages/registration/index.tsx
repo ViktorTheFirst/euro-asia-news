@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import RegistrationForm from '@/components/forms/RegistrationForm';
 import { Container } from '@/styles/globalStyles';
-import { useRouter } from 'next/router';
 import { registrationAPI } from '@/api/auth/authAPI';
-import { useDispatch } from 'react-redux';
-import { setHousholdIdAction, setTokenAction } from '@/store/Auth';
+import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
+import { setUserInfoAction } from '@/store/Users';
 
 const RegistrationContainer = styled(Container)`
   height: 100vh;
@@ -62,8 +63,15 @@ const RegistrationPage = () => {
         password,
       }).then((result) => {
         if (result?.data.token) {
-          dispatch(setHousholdIdAction(result?.data.householdId));
-          dispatch(setTokenAction(result?.data.token));
+          const { name, email, token, householdId } = result?.data;
+          dispatch(setHouseholdIdAction(householdId));
+          dispatch(setTokenAction(token));
+          dispatch(
+            setUserInfoAction({
+              name,
+              email,
+            })
+          );
           router.push('/');
         }
       });

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { AppBar as MuiAppBar } from '@material-ui/core';
-import { Button, Toolbar } from '@material-ui/core';
+import { Toolbar } from '@material-ui/core';
 
 import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
 import { Container, StyledLink } from '@/styles/globalStyles';
@@ -13,6 +13,7 @@ import {
   setBillsByTypeAction,
 } from '@/store/Bills';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
+import UserImageComponent from './UserImage';
 
 const AppBarContainer = styled(Container)`
   flex-direction: row;
@@ -55,6 +56,12 @@ const AppBar = () => {
     router.push('/login');
   };
 
+  const onUserImageClick = () => {};
+
+  const onUserProfileClick = () => {
+    router.push('/profile');
+  };
+
   return (
     <AppBarContainer>
       <StyledAppBar position='static'>
@@ -63,9 +70,12 @@ const AppBar = () => {
             Home
           </AppBarLink>
           <div>{getNavbarHeader(routeString)}</div>
-          <Button color='inherit' onClick={onLogoutClick}>
-            Logout
-          </Button>
+
+          <UserImageComponent
+            onUserImageClick={onUserImageClick}
+            onLogoutClick={onLogoutClick}
+            onUserProfileClick={onUserProfileClick}
+          />
         </Toolbar>
       </StyledAppBar>
     </AppBarContainer>

@@ -3,13 +3,16 @@ import { UserLoginData, UserRegistrationData } from '@/utils/interfaces';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+const instance = axios.create({
+  withCredentials: true,
+});
+
 export const registrationAPI = async (userData: UserRegistrationData) => {
   try {
-    const createdUser = await axios({
+    const createdUser = await instance({
       method: 'post',
-      url: `${baseUrl}/users/signup`,
+      url: `${baseUrl}/api/users/signup`,
       data: userData,
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -23,11 +26,10 @@ export const registrationAPI = async (userData: UserRegistrationData) => {
 
 export const loginAPI = async (userData: UserLoginData) => {
   try {
-    const result = await axios({
+    const result = await instance({
       method: 'post',
-      url: `${baseUrl}/users/login`,
+      url: `${baseUrl}/api/users/login`,
       data: userData,
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,21 +38,5 @@ export const loginAPI = async (userData: UserLoginData) => {
     return result;
   } catch (err) {
     console.warn('User login failed on FE ' + err);
-  }
-};
-
-export const getUsersAPI = async () => {
-  try {
-    const users = await axios({
-      method: 'get',
-      url: `${baseUrl}/users/getAllUsers`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return users;
-  } catch (err) {
-    console.warn('Fetching users failed on FE ' + err);
   }
 };

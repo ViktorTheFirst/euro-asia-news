@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import { loginAPI } from '@/api/auth/authAPI';
 import LoginForm from '@/components/forms/LoginForm';
 import { Container } from '@/styles/globalStyles';
-import { useDispatch } from 'react-redux';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
+import { setUserInfoAction } from '@/store/Users';
 
 const LoginContainer = styled(Container)`
   height: 100vh;
@@ -30,8 +31,15 @@ const LoginPage = () => {
         password,
       }).then((result) => {
         if (result?.data.token) {
-          dispatch(setHouseholdIdAction(result?.data.householdId));
-          dispatch(setTokenAction(result?.data.token));
+          const { name, email, token, householdId } = result?.data;
+          dispatch(setHouseholdIdAction(householdId));
+          dispatch(setTokenAction(token));
+          dispatch(
+            setUserInfoAction({
+              name,
+              email,
+            })
+          );
           router.push('/');
         }
       });

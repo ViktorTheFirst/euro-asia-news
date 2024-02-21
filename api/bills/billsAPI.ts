@@ -10,7 +10,7 @@ export const addBillAPI = async (billInfo: BillInfo) => {
   try {
     const createdBill = await instance({
       method: 'post',
-      url: `${baseUrl}/bills/addBill`,
+      url: `${baseUrl}/api/bills/addBill`,
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const editBillAPI = async (billInfo: BillInfo) => {
   try {
     const editedBill = await instance({
       method: 'post',
-      url: `${baseUrl}/bills/${billInfo._id}`,
+      url: `${baseUrl}/api/bills/${billInfo._id}`,
       data: billInfo,
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const getBillsByTypeAPI = async (
   try {
     const billsByType = await instance({
       method: 'get',
-      url: `${baseUrl}/bills/${billType}`,
+      url: `${baseUrl}/api/bills/${billType}`,
       data: {
         householdId,
       },
@@ -66,7 +66,7 @@ export const deleteBillByIdAPI = async (billId: string) => {
   try {
     const deletedBill = await instance({
       method: 'delete',
-      url: `${baseUrl}/bills/${billId}`,
+      url: `${baseUrl}/api/bills/${billId}`,
       headers: {
         'Content-Type': 'application/json',
       },

@@ -8,6 +8,8 @@ import path from 'path';
 import MainMenu from '@/components/menu/MainMenu';
 import { Container, Row } from '@/styles/globalStyles';
 import { getHouseholdId, setHouseholdIdAction } from '@/store/Auth';
+import { UserInfo, getUserInfo, setUserInfoAction } from '@/store/Users';
+import { getUserAPI } from '@/api/users/usersAPI';
 
 // our-domain.com/
 const HomeContainer = styled(Container)`
@@ -37,16 +39,24 @@ const MenuContainer = styled(Container)`
 interface HomePageProps {
   mainTopics: { title: string }[];
   sessionHouseholdId?: string;
+  user?: UserInfo;
 }
 
-const HomePage = ({ mainTopics, sessionHouseholdId }: HomePageProps) => {
+const HomePage = ({ mainTopics, sessionHouseholdId, user }: HomePageProps) => {
   const dispatch = useDispatch();
   const householdId = useSelector(getHouseholdId);
+  const userInfo = useSelector(getUserInfo);
 
   useEffect(() => {
     if (sessionHouseholdId && !householdId)
       dispatch(setHouseholdIdAction(sessionHouseholdId));
   }, [sessionHouseholdId, householdId, dispatch]);
+
+  useEffect(() => {
+    if (!userInfo.profileImage && user) {
+      dispatch(setUserInfoAction(user));
+    }
+  }, [user, userInfo.profileImage, dispatch]);
 
   return (
     <HomeContainer>
@@ -66,24 +76,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
   const data = JSON.parse(jsonData);
 
+  const userData = await getUserAPI(cookies.userId!);
+  const { user } = userData?.data;
+  const { _id, name, email, profileImage } = user;
+
   return {
     props: {
       mainTopics: data.topics,
       sessionHouseholdId: cookies.householdId,
+      user: {
+        id: _id,
+        name,
+        email,
+        profileImage,
+      },
     },
   };
 };
-
-/* export const getStaticProps: GetStaticProps = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'mainMenuTopics.json');
-  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
-  const data = JSON.parse(jsonData);
-
-  return {
-    props: {
-      mainTopics: data.topics,
-    },
-  };
-}; */
 
 export default HomePage;
