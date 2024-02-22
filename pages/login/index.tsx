@@ -15,7 +15,6 @@ const LoginContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #d24ef3b7;
 `;
 
 const LoginPage = () => {

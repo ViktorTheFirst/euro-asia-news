@@ -12,7 +12,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const UserImageContainer = styled.div`
   display: flex;
-  background-color: #87dd24e2;
   border-radius: 30px;
 `;
 
@@ -73,6 +72,7 @@ const UserImageComponent = ({
         anchorEl={anchorEl}
         keepMounted
         onClose={handleClose}
+        transitionDuration={300}
       >
         <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
         <MenuItem onClick={onLogoutClick}>Logout</MenuItem>

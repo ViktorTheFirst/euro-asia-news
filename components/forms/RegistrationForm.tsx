@@ -8,7 +8,6 @@ import Link from 'next/link';
 const FormContainer = styled(Container)`
   flex-direction: column;
   width: 70%;
-  background-color: #c437bdac;
   height: 60vh;
   padding: 20px;
   margin: 0 70px;

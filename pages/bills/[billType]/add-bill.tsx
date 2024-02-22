@@ -25,12 +25,10 @@ const AddBillContainer = styled(Container)`
   align-items: center;
   justify-content: space-around;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
-  background-color: pink;
 `;
 
 const ContentWrapper = styled(Container)`
   width: 95%;
-  background-color: #28a6cc;
   height: 75vh;
   padding: 10px;
 `;

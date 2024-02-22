@@ -16,7 +16,6 @@ const MonthListContainer = styled(Container)`
   justify-content: flex-start;
   width: 445px;
   min-width: 445pxpx;
-  background-color: #d6696981;
   margin-left: 20px;
   border-radius: 6px;
   padding: 10px;

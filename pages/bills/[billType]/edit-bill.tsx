@@ -19,7 +19,6 @@ const EditBillContainer = styled(Container)`
   align-items: center;
   justify-content: space-evenly;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
-  background-color: pink;
 `;
 
 const StyledRow = styled(Row)`

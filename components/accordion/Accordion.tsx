@@ -8,7 +8,6 @@ import {
 import styled from 'styled-components';
 
 const AccordionContainer = styled(Container)`
-  background-color: #ec7e17;
   flex-direction: column;
   padding: 10px;
 `;

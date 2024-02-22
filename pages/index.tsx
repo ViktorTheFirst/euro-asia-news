@@ -10,10 +10,11 @@ import { Container, Row } from '@/styles/globalStyles';
 import { getHouseholdId, setHouseholdIdAction } from '@/store/Auth';
 import { UserInfo, getUserInfo, setUserInfoAction } from '@/store/Users';
 import { getUserAPI } from '@/api/users/usersAPI';
+import ModelViewer from '@/components/modelViewer/ModelViewer';
 
 // our-domain.com/
 const HomeContainer = styled(Container)`
-  background-color: pink;
+  background-color: #29e12cb0;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
   flex-direction: column;
   display: flex;
@@ -21,7 +22,6 @@ const HomeContainer = styled(Container)`
 `;
 
 const HouseContainer = styled(Container)`
-  //background-color: #d84acc;
   height: 75vh;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,6 @@ const HouseContainer = styled(Container)`
 `;
 
 const MenuContainer = styled(Container)`
-  //background-color: #4ad8b5;
   height: 75vh;
   justify-content: center;
   align-items: center;
@@ -61,7 +60,9 @@ const HomePage = ({ mainTopics, sessionHouseholdId, user }: HomePageProps) => {
   return (
     <HomeContainer>
       <Row>
-        <HouseContainer>House here</HouseContainer>
+        <HouseContainer>
+          <ModelViewer />
+        </HouseContainer>
         <MenuContainer>
           <MainMenu topics={mainTopics} />
         </MenuContainer>

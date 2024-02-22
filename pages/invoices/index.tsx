@@ -28,14 +28,12 @@ const RightSide = styled(Container)`
   height: 100%;
   width: 100%;
   padding: 8px;
-  background-color: #f05d5d;
   align-items: center;
 `;
 
 const CategoriesContainer = styled(Container)`
   display: flex;
   justify-content: flex-start;
-  background-color: #92e778;
   flex-direction: column;
   width: 100%;
   align-items: center;
@@ -43,7 +41,6 @@ const CategoriesContainer = styled(Container)`
 `;
 
 const UploadInvoiceContainer = styled(Container)`
-  background-color: #a7c20d;
   flex-direction: column;
   width: 100%;
   align-items: center;

@@ -15,7 +15,6 @@ const BillsContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #7ff3bd;
   width: 100%;
 `;
 

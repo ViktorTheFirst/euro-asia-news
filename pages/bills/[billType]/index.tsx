@@ -29,7 +29,6 @@ const ViewBillsContainer = styled(Container)`
   justify-content: space-evenly;
   flex-direction: column;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
-  background-color: #e9576f;
 `;
 
 const SelectYearContainer = styled(Container)`

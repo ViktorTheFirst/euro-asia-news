@@ -7,7 +7,6 @@ import { Container, StyledTypography } from '@/styles/globalStyles';
 const FormContainer = styled(Container)`
   flex-direction: column;
   width: 50%;
-  background-color: #c437bdac;
   height: 50vh;
   padding: 20px;
   margin: 0 70px;
