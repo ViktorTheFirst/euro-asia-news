@@ -6,10 +6,10 @@ import { Container, StyledTypography } from '@/styles/globalStyles';
 
 const FormContainer = styled(Container)`
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   height: 50vh;
   padding: 20px;
-  margin: 0 70px;
+  margin: 0 30px;
   border-radius: 6px;
   justify-content: center;
   align-items: center;

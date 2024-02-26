@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
-import { BillInfo, Month } from './interfaces';
+import { BillInfo, Month, MonthDictionary } from './interfaces';
 
 export const capitalizeFirstLetter = (s: string) =>
   (s && s[0].toUpperCase() + s.slice(1)) || '';
@@ -37,4 +37,29 @@ export const extractRelatedMonthInBundle = (
   return billsDataPerYear.find((bill: BillInfo) =>
     bill.months.includes(selectedMonth)
   )?.months;
+};
+
+export const getDisabledMonths = (billsByType: BillInfo[]): MonthDictionary => {
+  const disabledMonths: MonthDictionary = {
+    January: false,
+    February: false,
+    March: false,
+    April: false,
+    August: false,
+    December: false,
+    July: false,
+    June: false,
+    May: false,
+    October: false,
+    November: false,
+    September: false,
+  };
+
+  billsByType.forEach((bill) => {
+    bill.months.forEach((month) => {
+      disabledMonths[month] = true;
+    });
+  });
+
+  return disabledMonths;
 };

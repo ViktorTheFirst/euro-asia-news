@@ -1,10 +1,10 @@
 // our-domain.com/bills/[billType]/add-bill
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import styled from 'styled-components';
-import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Button, Step, StepLabel, Stepper, Divider } from '@material-ui/core';
 
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';
@@ -13,12 +13,10 @@ import {
   getCreationBill,
   setCreationBillInfoAction,
   resetCreationBillInfoAction,
-  getBillsByType,
 } from '@/store/Bills';
-import { BillInfo, Month, MonthDictionary } from '@/utils/interfaces';
+import { BillInfo, Month } from '@/utils/interfaces';
 import { addBillAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
-import { getToken } from '@/store/Auth';
-import { GetServerSideProps } from 'next';
+import { getDisabledMonths } from '@/utils/functions';
 
 const AddBillContainer = styled(Container)`
   flex-direction: column;
@@ -45,29 +43,17 @@ const ButtonsContainer = styled(Container)`
 
 const StyledStepper = styled(Stepper)`
   width: 80%;
+  caret-color: transparent;
 `;
 
 const StyledRow = styled(Row)`
   min-height: 50vh;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 const getSteps = () => {
   return ['Select period to pay', 'Add additional data', 'Upload the bill'];
 };
-
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return 'Select the month for this bill';
-    case 1:
-      return 'Add a confirmation number and payed amount';
-    case 2:
-      return 'Press Finish to upload the bill';
-    default:
-      return 'Unknown step';
-  }
-}
 
 interface AddBillPageProps {
   billsByType: BillInfo[];
@@ -104,30 +90,10 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
     return activeStep > 1;
   }, [activeStep]);
 
-  const alreadyPopulatedMonths = useMemo(() => {
-    const disabledMonths: MonthDictionary = {
-      January: false,
-      February: false,
-      March: false,
-      April: false,
-      August: false,
-      December: false,
-      July: false,
-      June: false,
-      May: false,
-      October: false,
-      November: false,
-      September: false,
-    };
-
-    billsByType.forEach((bill) => {
-      bill.months.forEach((month) => {
-        disabledMonths[month] = true;
-      });
-    });
-
-    return disabledMonths;
-  }, [billsByType]);
+  const alreadyPopulatedMonths = useMemo(
+    () => getDisabledMonths(billsByType),
+    [billsByType]
+  );
 
   const isStepOptional = (step: number) => {
     return step === 1;
@@ -147,7 +113,7 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
     if (isLastStep) {
       // first add the bill then redirect to bills page so updated bills can be fetched
       addBillAPI(creationBill)
-        .then((result) => {
+        .then(() => {
           dispatch(resetCreationBillInfoAction());
         })
         .finally(() => {
@@ -173,8 +139,6 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -230,18 +194,16 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
         })}
       </StyledStepper>
       <ContentWrapper>
-        {activeStep === steps.length ? null : (
-          <ContentContainer>
-            <StyledTypography variant='h6'>
-              {getStepContent(activeStep)}
-            </StyledTypography>
-            <StyledRow>
-              <MonthListComponent
-                isListDisabled={isMonthListDisabled}
-                disabledItems={alreadyPopulatedMonths}
-                getSelectedMonths={handleSelectedMonths}
-              />
-              {activeStep > 0 && (
+        <ContentContainer>
+          <StyledRow>
+            <MonthListComponent
+              isListDisabled={isMonthListDisabled}
+              disabledItems={alreadyPopulatedMonths}
+              getSelectedMonths={handleSelectedMonths}
+            />
+            {activeStep > 0 && (
+              <>
+                <Divider orientation='vertical' flexItem />
                 <BillForm
                   confirmationNumber={creationBill.confirmationNumber}
                   payedAmount={creationBill.payedAmount}
@@ -249,44 +211,34 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
                   confNumberChangeHandler={handleConfNumberChange}
                   payedAmountChangeHandler={handlePayedAmountChange}
                 />
-              )}
-            </StyledRow>
-            <ButtonsContainer>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
+              </>
+            )}
+          </StyledRow>
+          <ButtonsContainer>
+            <Button disabled={activeStep === 0} onClick={handleBack}>
+              Back
+            </Button>
+            {isStepOptional(activeStep) && (
+              <Button variant='contained' color='primary' onClick={handleSkip}>
+                Skip
               </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleSkip}
-                >
-                  Skip
-                </Button>
-              )}
-              {isLastStep ? (
-                <Button
-                  //href={`/bills/${router.query.billType}`}
-                  variant='contained'
-                  color='primary'
-                  onClick={handleNext}
-                  //component={Link}
-                >
-                  {'Finish'}
-                </Button>
-              ) : (
-                <Button
-                  disabled={isNextBtnDisabled}
-                  variant='contained'
-                  color='primary'
-                  onClick={handleNext}
-                >
-                  {'Next'}
-                </Button>
-              )}
-            </ButtonsContainer>
-          </ContentContainer>
-        )}
+            )}
+            {isLastStep ? (
+              <Button variant='contained' color='primary' onClick={handleNext}>
+                Finish
+              </Button>
+            ) : (
+              <Button
+                disabled={isNextBtnDisabled}
+                variant='contained'
+                color='primary'
+                onClick={handleNext}
+              >
+                Next
+              </Button>
+            )}
+          </ButtonsContainer>
+        </ContentContainer>
       </ContentWrapper>
     </AddBillContainer>
   );

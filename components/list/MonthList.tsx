@@ -15,8 +15,8 @@ const MonthListContainer = styled(Container)`
   align-items: center;
   justify-content: flex-start;
   width: 445px;
-  min-width: 445pxpx;
-  margin-left: 20px;
+  min-width: 445px;
+  margin-left: 50px;
   border-radius: 6px;
   padding: 10px;
 `;

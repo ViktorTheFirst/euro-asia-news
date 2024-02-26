@@ -32,6 +32,7 @@ const StyledAppBar = styled(MuiAppBar)`
 
 const AppBarLink = styled(StyledLink)`
   cursor: pointer;
+  caret-color: transparent;
 `;
 
 const AppBar = () => {

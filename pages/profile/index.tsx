@@ -98,7 +98,13 @@ const ProfilePage = ({ user }: ProfileProps) => {
       await editUserAPI(user.id, formData).then((result) => {
         if (result?.data?.user) {
           const { name, email, profileImage } = result.data.user;
-          dispatch(setUserInfoAction({ name, email, profileImage }));
+          dispatch(
+            setUserInfoAction({
+              name,
+              email,
+              profileImage: profileImage.toString(),
+            })
+          );
           setPreview(baseUrl + '/' + profileImage);
           setFile(null);
         }
@@ -208,7 +214,6 @@ const ProfilePage = ({ user }: ProfileProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.cookies;
-
   const userData = await getUserAPI(cookies.userId!);
   const { user } = userData?.data;
   const { _id, name, email, profileImage } = user;
