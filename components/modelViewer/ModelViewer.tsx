@@ -3,6 +3,22 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Mesh } from 'three';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  @media (max-width: 940px) {
+    width: 500px;
+    height: 400px;
+  }
+
+  @media (max-width: 400px) {
+    width: 385px;
+    height: 450px;
+  }
+
+  width: 800px;
+  height: 600px;
+`;
 
 const MeshComponent = () => {
   const fileUrl = '/assets/3DModels/house/scene.gltf';
@@ -23,17 +39,14 @@ const MeshComponent = () => {
 
 const ModelViewer = () => {
   return (
-    <div
-      style={{ width: '800px', height: '600px ' }}
-      className='flex justify-center items-center h-screen'
-    >
-      <Canvas className='h-4xl w-4xl'>
+    <Container>
+      <Canvas>
         <OrbitControls />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <MeshComponent />
       </Canvas>
-    </div>
+    </Container>
   );
 };
 

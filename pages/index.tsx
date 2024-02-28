@@ -14,11 +14,13 @@ import ModelViewer from '@/components/modelViewer/ModelViewer';
 
 // our-domain.com/
 const HomeContainer = styled(Container)`
-  background-color: #29e12cb0;
+  background-color: #f4d03f;
+  background-image: linear-gradient(132deg, #f4d03f 0%, #16a085 100%);
+
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
   flex-direction: column;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 `;
 
 const HouseContainer = styled(Container)`
@@ -33,6 +35,14 @@ const MenuContainer = styled(Container)`
   justify-content: center;
   align-items: center;
   flex: 2;
+`;
+
+const ContainerWithMedia = styled.div`
+  display: flex;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+  flex-direction: row;
 `;
 
 interface HomePageProps {
@@ -59,14 +69,14 @@ const HomePage = ({ mainTopics, sessionHouseholdId, user }: HomePageProps) => {
 
   return (
     <HomeContainer>
-      <Row>
+      <ContainerWithMedia>
         <HouseContainer>
           <ModelViewer />
         </HouseContainer>
         <MenuContainer>
           <MainMenu topics={mainTopics} />
         </MenuContainer>
-      </Row>
+      </ContainerWithMedia>
     </HomeContainer>
   );
 };

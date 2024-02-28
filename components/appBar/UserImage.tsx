@@ -16,8 +16,6 @@ const UserImageContainer = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-  width: 62px;
-  height: 62px;
   border-radius: 30px;
   border: 1px solid black;
   cursor: pointer;
@@ -62,8 +60,8 @@ const UserImageComponent = ({
             : profilePicPlaceHolder
         }
         onClick={handleClick}
-        width={70}
-        height={70}
+        width={58}
+        height={58}
         aria-controls='user-image-menu'
       />
       <Menu
