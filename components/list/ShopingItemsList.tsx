@@ -7,7 +7,7 @@ import { MOCK_SHOPING_LIST } from '@/utils/mocks';
 import ShopingItem from '../shopingItem/ShopingItem';
 
 const ListContainer = styled(Container)`
-  height: ${(props) => 100 - 10 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 10 - 7 /* props.theme.appBarHeight */}vh;
   display: flex;
   flex-direction: column;
   background-color: #99e25d;

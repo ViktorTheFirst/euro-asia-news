@@ -19,12 +19,14 @@ const AppBarContainer = styled(Container)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: ${(props) => props.theme.appBarHeight}vh;
+  //height: ${(props) => props.theme.appBarHeight}vh;
+  height: 7vh;
 `;
 
 const StyledAppBar = styled(MuiAppBar)`
   & .MuiToolbar-regular {
-    min-height: ${(props) => props.theme.appBarHeight}vh;
+    //min-height: ${(props) => props.theme.appBarHeight}vh;
+    min-height: 7vh;
     display: flex;
     justify-content: space-between;
   }

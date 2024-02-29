@@ -11,7 +11,7 @@ import { getCreationBill, setCreationBillInfoAction } from '@/store/Bills';
 import { getHouseholdId } from '@/store/Auth';
 
 const BillsContainer = styled(Container)`
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;

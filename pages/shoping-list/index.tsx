@@ -5,7 +5,7 @@ import ShopingItemsList from '@/components/list/ShopingItemsList';
 import { Container } from '@/styles/globalStyles';
 
 const ShopingListContainer = styled(Container)`
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
   display: flex;
   flex-direction: column;
 `;

@@ -10,7 +10,7 @@ import PdfViewer from '@/components/pdfViewer/PdfViewer';
 
 // our-domain.com/invoices
 const InvoicesContainer = styled(Container)`
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
   flex-direction: row;
   align-items: center;
   justify-content: center;

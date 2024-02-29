@@ -18,7 +18,7 @@ const EditBillContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
 `;
 
 const StyledRow = styled(Row)`

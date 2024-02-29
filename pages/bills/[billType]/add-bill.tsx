@@ -22,7 +22,7 @@ const AddBillContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
 `;
 
 const ContentWrapper = styled(Container)`

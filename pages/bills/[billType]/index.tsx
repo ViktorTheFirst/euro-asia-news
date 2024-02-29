@@ -26,7 +26,7 @@ const ViewBillsContainer = styled(Container)`
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
   overflow: hidden;
 `;
 

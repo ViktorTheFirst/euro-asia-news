@@ -17,7 +17,7 @@ const HomeContainer = styled(Container)`
   background-color: #f4d03f;
   background-image: linear-gradient(132deg, #f4d03f 0%, #16a085 100%);
 
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
   flex-direction: column;
   display: flex;
   justify-content: flex-start;

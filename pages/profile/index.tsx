@@ -14,7 +14,7 @@ import { editUserAPI, getUserAPI } from '@/api/users/usersAPI';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ProfileContainer = styled(Container)`
-  height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
 `;
 
 const ImageSection = styled(Container)`
