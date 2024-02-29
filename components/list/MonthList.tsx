@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Checkbox,
+} from '@material-ui/core';
 
 import { Container } from '@/styles/globalStyles';
 import { MOCK_MONTHS } from '@/utils/mocks';
@@ -76,6 +78,7 @@ const MonthListComponent = ({
               button
               disabled={isListDisabled || disabledItems?.[month]}
               onClick={(val) => handleToggle(val, index)}
+              divider
             >
               <ListItemIcon>
                 <Checkbox

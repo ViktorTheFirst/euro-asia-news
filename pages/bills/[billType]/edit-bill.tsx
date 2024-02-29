@@ -8,7 +8,7 @@ import { Button, Divider } from '@material-ui/core';
 
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';
-import BillForm from '@/components/forms/BillForm';
+import BillForm from '@/components/form/BillForm';
 import { getSelectedBill, setSelectedBillInfoAction } from '@/store/Bills';
 import { Month } from '@/utils/interfaces';
 import { editBillAPI } from '@/api/bills/billsAPI';

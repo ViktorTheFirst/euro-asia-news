@@ -15,7 +15,6 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ProfileContainer = styled(Container)`
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
-  display: flex;
 `;
 
 const ImageSection = styled(Container)`

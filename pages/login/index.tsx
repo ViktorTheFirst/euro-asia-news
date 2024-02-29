@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
 import { loginAPI } from '@/api/auth/authAPI';
-import LoginForm from '@/components/forms/LoginForm';
+import LoginForm from '@/components/form/LoginForm';
 import { Container } from '@/styles/globalStyles';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import { setUserInfoAction } from '@/store/Users';

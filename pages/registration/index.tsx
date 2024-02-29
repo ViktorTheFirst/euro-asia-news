@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import RegistrationForm from '@/components/forms/RegistrationForm';
+import RegistrationForm from '@/components/form/RegistrationForm';
 import { Container } from '@/styles/globalStyles';
 import { registrationAPI } from '@/api/auth/authAPI';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';

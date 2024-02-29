@@ -8,7 +8,7 @@ import { Button, Step, StepLabel, Stepper, Divider } from '@material-ui/core';
 
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';
-import BillForm from '@/components/forms/BillForm';
+import BillForm from '@/components/form/BillForm';
 import {
   getCreationBill,
   setCreationBillInfoAction,

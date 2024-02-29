@@ -1,5 +1,12 @@
 import { CategoriesData, Month, SelectOption } from './interfaces';
 
+export const MOCK_SHOPING_LIST = [
+  { name: 'milk', amount: 2 },
+  { name: 'bread', amount: 1 },
+  { name: 'potatoes', amount: 1 },
+  { name: 'razor blades', amount: 4 },
+];
+
 export const MOCK_YEARS_OPTIONS: SelectOption[] = [
   { label: '2022', value: '2022' },
   { label: '2023', value: '2023' },
@@ -20,8 +27,6 @@ export const MOCK_MONTHS: Month[] = [
   'November',
   'December',
 ];
-
-export const MOCK_BILLS_TOPICS = ['Water', 'Electricity', 'Arnona', 'Other'];
 
 export const MOCK_CATEGORIES_DATA: CategoriesData[] = [
   {

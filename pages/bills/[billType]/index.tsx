@@ -3,8 +3,6 @@ import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import fs from 'fs/promises';
-import path from 'path';
 import styled from 'styled-components';
 import { Grid, Select } from '@material-ui/core';
 
@@ -22,13 +20,14 @@ import {
   setBillsByTypeAction,
 } from '@/store/Bills';
 import { deleteBillByIdAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
-import DeleteItemModal from '@/components/modals/DeleteItemModal';
+import DeleteItemModal from '@/components/modal/DeleteItemModal';
 
 const ViewBillsContainer = styled(Container)`
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
   height: ${(props) => 100 - props.theme.appBarHeight}vh;
+  overflow: hidden;
 `;
 
 const SelectYearContainer = styled(Container)`
@@ -41,11 +40,9 @@ const MonthsGrid = styled(Grid)`
   & .MuiGrid-container {
     max-width: 60%;
   }
-  ,
   & .MuiGrid-spacing {
     max-width: 60%;
   }
-  ,
   & .MuiGrid-item {
     display: flex;
     justify-content: center;
@@ -206,30 +203,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     notFound: !billsByType,
   };
 };
-
-/* export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const billsByType = await getBillsByTypeAPI(params?.billType as string);
-  return {
-    props: {
-      billsByType: billsByType?.data,
-    },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'billsTopics.json');
-  const jsonData = await fs.readFile(filePath, { encoding: 'utf-8' });
-  const data = JSON.parse(jsonData);
-
-  const acceptedPaths = data.topics.map((topic: { title: string }) => ({
-    params: { billType: topic.title.toLowerCase() },
-  }));
-
-  return {
-    paths: acceptedPaths,
-    fallback: false,
-  };
-}; */
 
 export default ViewBillsPage;
