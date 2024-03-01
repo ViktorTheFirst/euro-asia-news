@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Container } from '@/styles/globalStyles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 
 const InputContainer = styled(Container)`
   width: 100%;

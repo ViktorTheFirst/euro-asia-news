@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Button, Divider } from '@material-ui/core';
+import { Button, Divider } from '@mui/material';
 
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';

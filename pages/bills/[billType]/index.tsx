@@ -1,10 +1,10 @@
 // our-domain.com/bills/[billType]
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import styled from 'styled-components';
-import { Grid, Select } from '@material-ui/core';
+import { Grid, Select, SelectChangeEvent } from '@mui/material';
 
 import MonthBox from '@/components/monthBox/MonthBox';
 import { Container, StyledTypography } from '@/styles/globalStyles';
@@ -76,7 +76,7 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
     );
   }, [dispatch]);
 
-  const handleSelectChange = (event: ChangeEvent<any>) => {
+  const handleSelectChange = (event: SelectChangeEvent<any>) => {
     dispatch(
       setSelectedBillInfoAction({ ...selectedBill, year: event.target.value })
     );

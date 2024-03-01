@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { AppBar as MuiAppBar } from '@material-ui/core';
-import { Toolbar } from '@material-ui/core';
+import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
 
 import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
 import { Container, StyledLink } from '@/styles/globalStyles';

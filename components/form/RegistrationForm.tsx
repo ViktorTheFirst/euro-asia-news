@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Col, Container, Row, StyledTypography } from '@/styles/globalStyles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 
 const FormContainer = styled(Container)`

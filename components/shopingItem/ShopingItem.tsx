@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  List,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -8,8 +7,8 @@ import {
   Chip,
   Menu,
   MenuItem,
-} from '@material-ui/core';
-import { MoreVert } from '@material-ui/icons';
+} from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
 
 interface ShopingItemProps {
   labelId: string;

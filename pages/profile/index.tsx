@@ -5,7 +5,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import { Col, Container, Row } from '@/styles/globalStyles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { UserInfo, setUserInfoAction } from '@/store/Users';
 import { getHouseholdId } from '@/store/Auth';

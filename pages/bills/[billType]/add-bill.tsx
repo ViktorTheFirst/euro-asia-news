@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Button, Step, StepLabel, Stepper, Divider } from '@material-ui/core';
+import { Button, Step, StepLabel, Stepper, Divider } from '@mui/material';
 
 import MonthListComponent from '@/components/list/MonthList';
 import { Container, Row, StyledTypography } from '@/styles/globalStyles';

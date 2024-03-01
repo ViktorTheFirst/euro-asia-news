@@ -1,11 +1,8 @@
+import styled from 'styled-components';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+
 import { Container, StyledTypography } from '@/styles/globalStyles';
 import { CategoriesData, InvoiceData } from '@/utils/interfaces';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from '@material-ui/core';
-import styled from 'styled-components';
 
 const AccordionContainer = styled(Container)`
   flex-direction: column;
@@ -45,7 +42,7 @@ const CategoriesAccordion = ({
                 {category.items.map((invoice: InvoiceData) => (
                   <InvoiceItem
                     key={invoice.id}
-                    onClick={(e) => handleInvoiceSelection(e, invoice)}
+                    onClick={(e: any) => handleInvoiceSelection(e, invoice)}
                   >
                     {invoice.title}
                   </InvoiceItem>

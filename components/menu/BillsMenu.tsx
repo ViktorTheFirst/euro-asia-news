@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Add } from '@material-ui/icons';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Add } from '@mui/icons-material';
+import { Button, ButtonGroup } from '@mui/material';
 
 import { Container } from '@/styles/globalStyles';
 

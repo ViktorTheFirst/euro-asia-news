@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { List } from '@material-ui/core';
+import { List } from '@mui/material';
 
 import { Container } from '@/styles/globalStyles';
 import { MOCK_SHOPING_LIST } from '@/utils/mocks';

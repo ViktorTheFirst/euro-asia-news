@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { InputAdornment, TextField } from '@material-ui/core';
+import { InputAdornment, TextField } from '@mui/material';
 import { Container, StyledTypography } from '@/styles/globalStyles';
 
 const FormContainer = styled(Container)`

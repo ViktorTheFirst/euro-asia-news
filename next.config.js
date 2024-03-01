@@ -25,14 +25,11 @@ const nextConfig = {
     lodash: {
       transform: 'lodash/{{member}}',
     },
-    '@material-ui/core/': {
-      transform: '@material-ui/core/{{member}}',
+    '@mui/material/': {
+      transform: '@mui/material/{{member}}',
     },
-    '@material-ui/lab/': {
-      transform: '@material-ui/lab/{{member}}',
-    },
-    '@material-ui/icons/?(((\\w*)?/?)*)': {
-      transform: '@material-ui/icons/{{ matches.[1] }}/{{member}}',
+    '@mui/icons-material/?(((\\w*)?/?)*)': {
+      transform: '@mui/icons-material/{{ matches.[1] }}/{{member}}',
     },
   },
 };

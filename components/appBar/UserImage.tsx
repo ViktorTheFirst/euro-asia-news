@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { Menu, MenuItem } from '@mui/material';
 
-import Menu from '@material-ui/core/Menu';
-import { MenuItem } from '@material-ui/core';
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { getUserInfo } from '@/store/Users';
 

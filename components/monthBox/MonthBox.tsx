@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Paper } from '@mui/material';
 
 import { Container, StyledTypography } from '@/styles/globalStyles';
 import { Month, MonthInfo } from '@/utils/interfaces';
@@ -11,14 +11,15 @@ const StyledPaper = styled(Paper)`
   width: 160px;
   height: 160px;
 `;
-
-const ContentContainer = styled(Container)<{ billPayed: boolean }>`
+/* <{ billPayed: boolean }> */
+const ContentContainer = styled(Container)`
   flex-direction: column;
   align-items: center;
-  background-color: ${({ billPayed }) =>
-    billPayed ? '#41e72b97' : '#d1373796'};
+  background-color: '#41e72b97';
   height: 100%;
 `;
+/* background-color: ${({ billPayed }) =>
+    billPayed ? '#41e72b97' : '#d1373796'}; */
 
 const ButtonsContainer = styled(Container)`
   flex-direction: column;
@@ -94,7 +95,7 @@ const MonthBox = ({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <ContentContainer billPayed={!!billData}>
+      <ContentContainer /* billPayed={!!billData} */>
         <StyledTypography variant='h6' gutterBottom>
           {month}
         </StyledTypography>

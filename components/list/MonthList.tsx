@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Checkbox,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { Container } from '@/styles/globalStyles';
 import { MOCK_MONTHS } from '@/utils/mocks';
