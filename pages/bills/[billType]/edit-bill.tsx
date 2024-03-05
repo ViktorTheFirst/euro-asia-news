@@ -3,41 +3,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import { Button, Divider } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 
-import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import MonthListComponent from '@/components/list/MonthList';
 import BillForm from '@/components/form/BillForm';
 import { getSelectedBill, setSelectedBillInfoAction } from '@/store/Bills';
 import { Month } from '@/utils/interfaces';
 import { editBillAPI } from '@/api/bills/billsAPI';
-import { getToken } from '@/store/Auth';
-
-const EditBillContainer = styled(Container)`
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-`;
-
-const StyledRow = styled(Row)`
-  min-height: 50vh;
-  justify-content: space-around;
-`;
-
-const ButtonsContainer = styled(Container)`
-  flex-direction: row;
-  width: 80%;
-  justify-content: flex-end;
-`;
 
 const EditBillComponent = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const selectedBill = useSelector(getSelectedBill);
-  const token = useSelector(getToken);
 
   const handleSelectedMonths = (months: Month[]) => {
     dispatch(setSelectedBillInfoAction({ ...selectedBill, months }));
@@ -78,9 +55,21 @@ const EditBillComponent = () => {
   };
 
   return (
-    <EditBillContainer>
-      <StyledTypography variant='h5'>Edit bill</StyledTypography>
-      <StyledRow>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='space-evenly'
+      alignItems='center'
+      sx={{ height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)` }}
+    >
+      <Typography variant='h5'>Edit bill</Typography>
+      <Box
+        component={Box}
+        display='flex'
+        justifyContent='space-around'
+        sx={{ minHeight: '50vh', width: '100%' }}
+      >
         <MonthListComponent
           isListDisabled={false}
           preSelectedMonths={selectedBill.months}
@@ -94,8 +83,13 @@ const EditBillComponent = () => {
           confNumberChangeHandler={handleConfirmationNumberChange}
           payedAmountChangeHandler={handlePayedAmountChange}
         />
-      </StyledRow>
-      <ButtonsContainer>
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        justifyContent='flex-end'
+        sx={{ width: '80%' }}
+      >
         <Button
           href={`/bills/${router.query.billType}/`}
           key='cancel edit'
@@ -113,11 +107,12 @@ const EditBillComponent = () => {
           variant='contained'
           color='primary'
           onClick={submitButtonHandler}
+          sx={{ marginLeft: '10px' }}
         >
           Submit
         </Button>
-      </ButtonsContainer>
-    </EditBillContainer>
+      </Box>
+    </Box>
   );
 };
 

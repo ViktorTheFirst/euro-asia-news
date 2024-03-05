@@ -1,42 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import { Col, Container, Row, StyledTypography } from '@/styles/globalStyles';
-import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 
-const FormContainer = styled(Container)`
-  flex-direction: column;
-  width: 70%;
-  height: 60vh;
-  padding: 20px;
-  margin: 0 70px;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-`;
+import { Box, Button, TextField, Typography } from '@mui/material';
 
-const ButtonsContainer = styled(Container)`
-  flex-direction: column;
-  display: flex;
-  width: 20%;
-  max-width: 300px;
-  margin-top: 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 40%;
-  caret-color: transparent;
-`;
-
-const StyledRow = styled(Row)`
-  justify-content: space-evenly;
-`;
-
-const StyledCol = styled(Col)`
-  align-items: center;
-`;
-
+const InputStyle = {
+  width: '40%',
+} as const;
 interface RegistrationFormProps {
   userName: string;
   userEmail: string;
@@ -71,19 +40,38 @@ const RegistrationForm = ({
   onAlreadyRegistered,
 }: RegistrationFormProps) => {
   return (
-    <FormContainer>
-      <StyledTypography variant='h4'>Register new household</StyledTypography>
-      <StyledRow>
-        <StyledTextField
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '70%',
+        height: '60vh',
+        margin: '0 70px',
+      }}
+    >
+      <Typography variant='h4'>Register new household</Typography>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        justifyContent='space-evenly'
+        alignItems='center'
+        sx={{ width: '100%' }}
+      >
+        <TextField
           id='userName'
           label='Name'
           variant='outlined'
           margin='normal'
           value={userName}
           onChange={nameChangeHandler}
+          sx={InputStyle}
         />
 
-        <StyledTextField
+        <TextField
           id='userEmail'
           label='Email'
           variant='outlined'
@@ -91,19 +79,28 @@ const RegistrationForm = ({
           type='email'
           value={userEmail}
           onChange={emailChangeHandler}
+          sx={InputStyle}
         />
-      </StyledRow>
-      <StyledRow>
-        <StyledTextField
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='space-evenly'
+        sx={{ width: '100%' }}
+      >
+        <TextField
           id='partnersName'
           label='Partners name'
           variant='outlined'
           margin='normal'
           value={partnerName}
           onChange={partnerNameChangeHandler}
+          sx={InputStyle}
         />
 
-        <StyledTextField
+        <TextField
           id='partnersEmail'
           label='Partners email'
           variant='outlined'
@@ -111,10 +108,17 @@ const RegistrationForm = ({
           type='email'
           value={partnerEmail}
           onChange={partnerEmailChangeHandler}
+          sx={InputStyle}
         />
-      </StyledRow>
-      <StyledCol>
-        <StyledTextField
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        sx={{ width: '100%' }}
+      >
+        <TextField
           id='userPassword'
           label='Password'
           variant='outlined'
@@ -122,8 +126,9 @@ const RegistrationForm = ({
           type='password'
           value={password}
           onChange={passwordChangeHandler}
+          sx={InputStyle}
         />
-        <StyledTextField
+        <TextField
           id='userPasswordAgain'
           label='Password again'
           variant='outlined'
@@ -131,23 +136,36 @@ const RegistrationForm = ({
           type='password'
           value={passwordAgain}
           onChange={passwordAgainChangeHandler}
+          sx={InputStyle}
         />
-      </StyledCol>
-      <ButtonsContainer>
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        sx={{ width: '25%' }}
+      >
         <Button
           variant='text'
           color='primary'
           onClick={onAlreadyRegistered}
           component={Link}
           href='/login'
+          sx={{ width: '100%' }}
         >
           Already registered?
         </Button>
-        <Button variant='contained' color='secondary' onClick={onRegister}>
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={onRegister}
+          sx={{ width: '100%' }}
+        >
           Register
         </Button>
-      </ButtonsContainer>
-    </FormContainer>
+      </Box>
+    </Box>
   );
 };
 

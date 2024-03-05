@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
-import { Container, StyledTypography } from '@/styles/globalStyles';
 import CategoriesAccordion from '@/components/accordion/Accordion';
 import { MOCK_CATEGORIES_DATA } from '@/utils/mocks';
 import InvoicePlaceHolder from './InvoicePlaceHolder';
@@ -10,45 +8,6 @@ import { InvoiceData } from '@/utils/interfaces';
 import PdfViewer from '@/components/pdfViewer/PdfViewer';
 
 // our-domain.com/invoices
-const InvoicesContainer = styled(Container)`
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const LeftSide = styled(Container)`
-  height: 100%;
-  width: 100%;
-  padding: 8px;
-  flex-direction: column;
-`;
-
-const RightSide = styled(Container)`
-  height: 100%;
-  width: 100%;
-  padding: 8px;
-  align-items: center;
-`;
-
-const CategoriesContainer = styled(Container)`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  flex: 3;
-`;
-
-const UploadInvoiceContainer = styled(Container)`
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-`;
-
 const InvoicesPage = () => {
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceData | null>(
     null
@@ -60,30 +19,78 @@ const InvoicesPage = () => {
   };
 
   return (
-    <InvoicesContainer>
-      <LeftSide>
-        <CategoriesContainer>
-          <StyledTypography>Categories</StyledTypography>
+    <Box
+      component={Box}
+      display='flex'
+      alignItems='center'
+      justifyContent='center'
+      sx={{
+        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
+        width: '100%',
+      }}
+    >
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        sx={{
+          height: '100%',
+          width: '100%',
+          padding: '8px',
+        }}
+      >
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='flex-start'
+          alignItems='center'
+          flex={3}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Typography marginTop={5}>Categories</Typography>
           <CategoriesAccordion
             categoriesList={MOCK_CATEGORIES_DATA}
             getSelectedInvoice={handleSelectedInvoice}
           />
-        </CategoriesContainer>
-        <UploadInvoiceContainer>
-          <StyledTypography>Upload invoice</StyledTypography>
+        </Box>
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+          flex={1}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Typography>Upload invoice</Typography>
           <Button variant='contained' color='primary'>
             Upload
           </Button>
-        </UploadInvoiceContainer>
-      </LeftSide>
-      <RightSide>
+        </Box>
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        sx={{
+          height: '100%',
+          width: '100%',
+          padding: '8px',
+        }}
+      >
         {selectedInvoice ? (
           <PdfViewer pdfURL={selectedPDF} />
         ) : (
           <InvoicePlaceHolder />
         )}
-      </RightSide>
-    </InvoicesContainer>
+      </Box>
+    </Box>
   );
 };
 

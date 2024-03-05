@@ -3,11 +3,17 @@ import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import { Button, Step, StepLabel, Stepper, Divider } from '@mui/material';
+import {
+  Button,
+  Step,
+  StepLabel,
+  Stepper,
+  Divider,
+  Box,
+  Typography,
+} from '@mui/material';
 
 import MonthListComponent from '@/components/list/MonthList';
-import { Container, Row, StyledTypography } from '@/styles/globalStyles';
 import BillForm from '@/components/form/BillForm';
 import {
   getCreationBill,
@@ -17,39 +23,6 @@ import {
 import { BillInfo, Month } from '@/utils/interfaces';
 import { addBillAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
 import { getDisabledMonths } from '@/utils/functions';
-
-const AddBillContainer = styled(Container)`
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-`;
-
-const ContentWrapper = styled(Container)`
-  width: 95%;
-  height: 75vh;
-  padding: 10px;
-`;
-
-const ContentContainer = styled(Container)`
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ButtonsContainer = styled(Container)`
-  width: 220px;
-  justify-content: space-evenly;
-`;
-
-const StyledStepper = styled(Stepper)`
-  width: 80%;
-  caret-color: transparent;
-`;
-
-const StyledRow = styled(Row)`
-  min-height: 50vh;
-  justify-content: space-evenly;
-`;
 
 const getSteps = () => {
   return ['Select period to pay', 'Add additional data', 'Upload the bill'];
@@ -173,14 +146,24 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
   };
 
   return (
-    <AddBillContainer>
-      <StyledStepper activeStep={activeStep}>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='space-around'
+      alignItems='center'
+      sx={{ height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)` }}
+    >
+      <Stepper
+        activeStep={activeStep}
+        sx={{ width: '80%', caretColor: 'transparent', minHeight: '60px' }}
+      >
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: { optional?: React.ReactNode } = {};
           if (isStepOptional(index)) {
             labelProps.optional = (
-              <StyledTypography variant='caption'>Optional</StyledTypography>
+              <Typography variant='caption'>Optional</Typography>
             );
           }
           if (isStepSkipped(index)) {
@@ -192,10 +175,20 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
             </Step>
           );
         })}
-      </StyledStepper>
-      <ContentWrapper>
-        <ContentContainer>
-          <StyledRow>
+      </Stepper>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        sx={{ height: '75vh', width: '95%', padding: '10px' }}
+      >
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-around'
+        >
+          <Box component={Box} display='flex' justifyContent='space-evenly'>
             <MonthListComponent
               isListDisabled={isMonthListDisabled}
               disabledItems={alreadyPopulatedMonths}
@@ -213,13 +206,18 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
                 />
               </>
             )}
-          </StyledRow>
-          <ButtonsContainer>
+          </Box>
+          <Box component={Box} display='flex' justifyContent='flex-end' sx={{}}>
             <Button disabled={activeStep === 0} onClick={handleBack}>
               Back
             </Button>
             {isStepOptional(activeStep) && (
-              <Button variant='contained' color='primary' onClick={handleSkip}>
+              <Button
+                sx={{ marginLeft: '10px' }}
+                variant='contained'
+                color='primary'
+                onClick={handleSkip}
+              >
                 Skip
               </Button>
             )}
@@ -233,14 +231,15 @@ const AddBillPage = ({ billsByType }: AddBillPageProps) => {
                 variant='contained'
                 color='primary'
                 onClick={handleNext}
+                sx={{ marginLeft: '10px' }}
               >
                 Next
               </Button>
             )}
-          </ButtonsContainer>
-        </ContentContainer>
-      </ContentWrapper>
-    </AddBillContainer>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

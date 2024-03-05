@@ -1,21 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
+
 import AddShopingItem from '@/components/input/AddShopingItem';
 import ShopingItemsList from '@/components/list/ShopingItemsList';
-import { Container } from '@/styles/globalStyles';
-
-const ShopingListContainer = styled(Container)`
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-  display: flex;
-  flex-direction: column;
-`;
 
 const ShopingList = () => {
   return (
-    <ShopingListContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      sx={{
+        width: '100%',
+        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
+      }}
+    >
       <AddShopingItem />
       <ShopingItemsList />
-    </ShopingListContainer>
+    </Box>
   );
 };
 

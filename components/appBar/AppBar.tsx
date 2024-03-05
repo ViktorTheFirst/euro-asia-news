@@ -1,11 +1,15 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
+import Link from 'next/link';
+import {
+  AppBar as MuiAppBar,
+  Box,
+  Link as MuiLink,
+  Toolbar,
+} from '@mui/material';
 
 import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
-import { Container, StyledLink } from '@/styles/globalStyles';
 import {
   resetCreationBillInfoAction,
   resetSelectedBillInfoAction,
@@ -13,28 +17,6 @@ import {
 } from '@/store/Bills';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
-
-const AppBarContainer = styled(Container)`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  //height: ${(props) => props.theme.appBarHeight}vh;
-  height: 7vh;
-`;
-
-const StyledAppBar = styled(MuiAppBar)`
-  & .MuiToolbar-regular {
-    //min-height: ${(props) => props.theme.appBarHeight}vh;
-    min-height: 7vh;
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const AppBarLink = styled(StyledLink)`
-  cursor: pointer;
-  caret-color: transparent;
-`;
 
 const AppBar = () => {
   const router = useRouter();
@@ -65,12 +47,40 @@ const AppBar = () => {
   };
 
   return (
-    <AppBarContainer>
-      <StyledAppBar position='static'>
-        <Toolbar>
-          <AppBarLink onClick={onHomeClick} href='/'>
+    <Box
+      component={Box}
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        height: (theme) => `${theme.appBarHeight}vh`,
+      }}
+    >
+      <MuiAppBar
+        position='static'
+        sx={{
+          height: (theme) => `${theme.appBarHeight}vh`,
+        }}
+      >
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            display: 'flex',
+          }}
+        >
+          <MuiLink
+            component={Link}
+            onClick={onHomeClick}
+            href='/'
+            sx={{
+              cursor: 'pointer',
+              caretColor: 'transparent',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
             Home
-          </AppBarLink>
+          </MuiLink>
           <div>{getNavbarHeader(routeString)}</div>
 
           <UserImageComponent
@@ -79,8 +89,8 @@ const AppBar = () => {
             onUserProfileClick={onUserProfileClick}
           />
         </Toolbar>
-      </StyledAppBar>
-    </AppBarContainer>
+      </MuiAppBar>
+    </Box>
   );
 };
 

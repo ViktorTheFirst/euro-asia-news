@@ -1,17 +1,10 @@
-import { Container } from '@/styles/globalStyles';
-import styled from 'styled-components';
-
 interface PdfViewerProps {
   pdfURL: string;
 }
 
 const PdfViewer = ({ pdfURL }: PdfViewerProps) => {
-  const PdfViewerContainer = styled(Container)`
-    height: 90vh;
-  `;
-
   return (
-    <PdfViewerContainer>
+    <div style={{ height: '90vh' }}>
       <object
         data='http://africau.edu/images/default/sample.pdf'
         //data={pdfURL}
@@ -21,7 +14,7 @@ const PdfViewer = ({ pdfURL }: PdfViewerProps) => {
       >
         <p>PDF file failed to load</p>
       </object>
-    </PdfViewerContainer>
+    </div>
   );
 };
 

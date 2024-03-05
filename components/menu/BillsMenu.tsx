@@ -1,36 +1,26 @@
 import Link from 'next/link';
-import styled from 'styled-components';
 import { Add } from '@mui/icons-material';
-import { Button, ButtonGroup } from '@mui/material';
-
-import { Container } from '@/styles/globalStyles';
+import { Box, Button, ButtonGroup } from '@mui/material';
 
 type MenuProps = {
   topics: { title: string }[];
   onAddBillClick: (billType: string) => void;
 };
 
-const MenuContainer = styled(Container)`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
-  padding: 8px;
-`;
-
-const AddButtonGroup = styled(ButtonGroup)`
-  margin-left: 8px;
-  & .MuiButtonGroup-grouped {
-    min-height: 44px;
-  }
-`;
-
 const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
   return (
-    <MenuContainer>
+    <Box
+      component={Box}
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      minHeight={50}
+    >
       <ButtonGroup
         orientation='vertical'
-        color='primary'
+        size='large'
+        color='success'
+        variant='contained'
         aria-label='vertical contained primary button group'
       >
         {topics.map((menuItem: { title: string }, index: number) => {
@@ -46,10 +36,13 @@ const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
           );
         })}
       </ButtonGroup>
-      <AddButtonGroup
+      <ButtonGroup
         orientation='vertical'
-        color='primary'
+        color='success'
+        variant='contained'
         aria-label='vertical contained primary button group'
+        size='large'
+        sx={{ marginLeft: '10px' }}
       >
         {topics.map((menuItem: { title: string }, index: number) => {
           return (
@@ -60,12 +53,12 @@ const BillsMenu = ({ topics, onAddBillClick }: MenuProps) => {
               key={`${index} - ${menuItem}`}
               onClick={() => onAddBillClick(menuItem.title.toLowerCase())}
             >
-              <Add />
+              <Add sx={{ minHeight: '28px' }} />
             </Button>
           );
         })}
-      </AddButtonGroup>
-    </MenuContainer>
+      </ButtonGroup>
+    </Box>
   );
 };
 

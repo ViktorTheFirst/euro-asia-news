@@ -2,56 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
-import styled from 'styled-components';
+import { Box, Button, TextField } from '@mui/material';
 
-import { Col, Container, Row } from '@/styles/globalStyles';
-import { Button, TextField } from '@mui/material';
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { UserInfo, setUserInfoAction } from '@/store/Users';
 import { getHouseholdId } from '@/store/Auth';
 import { editUserAPI, getUserAPI } from '@/api/users/usersAPI';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-const ProfileContainer = styled(Container)`
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-`;
-
-const ImageSection = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  background-color: #69ad3ca9;
-  padding: 12px;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-const TextSection = styled(Col)`
-  background-color: #dad86ca9;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImageContainer = styled(Container)`
-  justify-content: center;
-  margin-top: 30px;
-`;
-
-const StyledImage = styled(Image)`
-  border-radius: 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 50%;
-  caret-color: transparent;
-`;
-
-const StyledCol = styled(Col)`
-  width: 30%;
-  min-height: 100px;
-  justify-content: space-around;
-`;
 
 interface ProfileProps {
   user: UserInfo;
@@ -119,10 +77,34 @@ const ProfilePage = ({ user }: ProfileProps) => {
   };
 
   return (
-    <ProfileContainer>
-      <Row>
-        <TextSection>
-          <StyledTextField
+    <Box
+      component={Box}
+      display='flex'
+      sx={{
+        width: '100%',
+        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
+      }}
+    >
+      <Box
+        component={Box}
+        display='flex'
+        sx={{
+          width: '100%',
+        }}
+      >
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+          bgcolor='#dad86ca9'
+          padding={7}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <TextField
             id='profile-user-name'
             label='Name'
             variant='outlined'
@@ -130,8 +112,9 @@ const ProfilePage = ({ user }: ProfileProps) => {
             value={user.name}
             onChange={() => {}}
             disabled={false}
+            sx={{ width: '50%' }}
           />
-          <StyledTextField
+          <TextField
             id='profile-user-email'
             label='Email'
             variant='outlined'
@@ -139,9 +122,10 @@ const ProfilePage = ({ user }: ProfileProps) => {
             value={user.email}
             onChange={() => {}}
             disabled={false}
+            sx={{ width: '50%' }}
           />
 
-          <StyledTextField
+          <TextField
             id='profile-household-id'
             label='Household ID'
             variant='outlined'
@@ -149,14 +133,38 @@ const ProfilePage = ({ user }: ProfileProps) => {
             value={householdId}
             onChange={() => {}}
             disabled={true}
+            sx={{ width: '50%' }}
           />
-          <Button variant='outlined' color='primary' onClick={() => {}}>
+          <Button
+            variant='outlined'
+            color='primary'
+            onClick={() => {}}
+            disabled
+          >
             Save
           </Button>
-        </TextSection>
-        <ImageSection>
-          <ImageContainer>
-            <StyledImage
+        </Box>
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+          bgcolor='#69ad3ca9'
+          padding={8}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Box
+            component={Box}
+            display='flex'
+            justifyContent='center'
+            sx={{
+              width: '100%',
+            }}
+          >
+            <Image
               src={
                 preview ??
                 (user.profileImage
@@ -166,10 +174,22 @@ const ProfilePage = ({ user }: ProfileProps) => {
               width={300}
               height={300}
               alt='User profile picture'
+              style={{
+                borderRadius: '10px',
+              }}
             />
-          </ImageContainer>
+          </Box>
           {preview && file ? (
-            <StyledCol>
+            <Box
+              component={Box}
+              display='flex'
+              flexDirection='column'
+              justifyContent='space-around'
+              sx={{
+                width: '30%',
+                minHeight: '100px',
+              }}
+            >
               <Button
                 type='button'
                 variant='contained'
@@ -186,13 +206,14 @@ const ProfilePage = ({ user }: ProfileProps) => {
               >
                 Cancel
               </Button>
-            </StyledCol>
+            </Box>
           ) : (
             <Button
               type='button'
               variant='contained'
               color='primary'
               onClick={pickImageHandler}
+              sx={{ marginTop: '10px' }}
             >
               Upload image
             </Button>
@@ -205,9 +226,9 @@ const ProfilePage = ({ user }: ProfileProps) => {
             type='file'
             onChange={pickedImageHandler}
           />
-        </ImageSection>
-      </Row>
-    </ProfileContainer>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

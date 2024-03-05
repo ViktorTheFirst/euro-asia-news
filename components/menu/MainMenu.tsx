@@ -1,26 +1,23 @@
 import Link from 'next/link';
-import styled from 'styled-components';
-import { Button, ButtonGroup } from '@mui/material';
-
-import { Container } from '@/styles/globalStyles';
+import { Box, Button, ButtonGroup } from '@mui/material';
 
 type MenuProps = {
   topics: { title: string }[];
 };
 
-const MenuContainer = styled(Container)`
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
-`;
-
 const MainMenu = ({ topics }: MenuProps) => {
   return (
-    <MenuContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+    >
       <ButtonGroup
         orientation='vertical'
         color='primary'
         aria-label='vertical contained primary button group'
+        size='large'
       >
         {topics.map((menuItem: { title: string }, index: number) => (
           <Button
@@ -33,7 +30,7 @@ const MainMenu = ({ topics }: MenuProps) => {
           </Button>
         ))}
       </ButtonGroup>
-    </MenuContainer>
+    </Box>
   );
 };
 

@@ -1,24 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import { InputAdornment, TextField } from '@mui/material';
-import { Container, StyledTypography } from '@/styles/globalStyles';
-
-const FormContainer = styled(Container)`
-  flex-direction: column;
-  width: 40%;
-  height: 50vh;
-  padding: 20px;
-  margin: 0 30px;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 50%;
-  caret-color: transparent;
-`;
+import { Box, InputAdornment, TextField, Typography } from '@mui/material';
 
 interface BillFormProps {
   confirmationNumber: string;
@@ -36,9 +18,21 @@ const BillForm = ({
   payedAmountChangeHandler,
 }: BillFormProps) => {
   return (
-    <FormContainer>
-      <StyledTypography>Confirmation number</StyledTypography>
-      <StyledTextField
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '40%',
+        height: '50vh',
+        margin: '0 30px',
+        padding: '20px',
+      }}
+    >
+      <Typography>Confirmation number</Typography>
+      <TextField
         id='conf-number'
         label='Confirmation number'
         variant='outlined'
@@ -46,10 +40,11 @@ const BillForm = ({
         value={confirmationNumber}
         onChange={confNumberChangeHandler}
         disabled={isInputsDisabled}
+        sx={{ width: '50%' }}
       />
 
-      <StyledTypography>Payed amount</StyledTypography>
-      <StyledTextField
+      <Typography>Payed amount</Typography>
+      <TextField
         id='payed-amount'
         label='Payed amount'
         variant='outlined'
@@ -62,8 +57,9 @@ const BillForm = ({
         value={payedAmount}
         onChange={payedAmountChangeHandler}
         disabled={isInputsDisabled}
+        sx={{ width: '50%' }}
       />
-    </FormContainer>
+    </Box>
   );
 };
 

@@ -1,21 +1,12 @@
-import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
+} from '@mui/material';
 
-import { Container, StyledTypography } from '@/styles/globalStyles';
 import { CategoriesData, InvoiceData } from '@/utils/interfaces';
-
-const AccordionContainer = styled(Container)`
-  flex-direction: column;
-  padding: 10px;
-`;
-
-const InvoiceListContainer = styled(Container)`
-  flex-direction: column;
-`;
-
-const InvoiceItem = styled(StyledTypography)`
-  cursor: pointer;
-`;
 
 interface AccordionProps {
   categoriesList: CategoriesData[];
@@ -30,29 +21,41 @@ const CategoriesAccordion = ({
   };
 
   return (
-    <AccordionContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      padding={8}
+      sx={{ width: '100%' }}
+    >
       {categoriesList.map((category: CategoriesData, index: number) => {
         return (
           <Accordion key={`${category.title} - ${index}`}>
             <AccordionSummary>
-              <StyledTypography>{category.title}</StyledTypography>
+              <Typography>{category.title}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <InvoiceListContainer>
+              <Box
+                component={Box}
+                display='flex'
+                flexDirection='column'
+                sx={{ width: '100%' }}
+              >
                 {category.items.map((invoice: InvoiceData) => (
-                  <InvoiceItem
+                  <Typography
+                    sx={{ cursor: 'pointer' }}
                     key={invoice.id}
                     onClick={(e: any) => handleInvoiceSelection(e, invoice)}
                   >
                     {invoice.title}
-                  </InvoiceItem>
+                  </Typography>
                 ))}
-              </InvoiceListContainer>
+              </Box>
             </AccordionDetails>
           </Accordion>
         );
       })}
-    </AccordionContainer>
+    </Box>
   );
 };
 

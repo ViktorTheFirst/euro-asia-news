@@ -1,22 +1,13 @@
 // our-domain.com/bills
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import styled from 'styled-components';
 import fs from 'fs/promises';
 import path from 'path';
+import { Box } from '@mui/material';
 
 import BillsMenu from '@/components/menu/BillsMenu';
-import { Container } from '@/styles/globalStyles';
 import { getCreationBill, setCreationBillInfoAction } from '@/store/Bills';
 import { getHouseholdId } from '@/store/Auth';
-
-const BillsContainer = styled(Container)`
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
 
 interface BillsPageProps {
   topics: { title: string }[];
@@ -40,9 +31,19 @@ const BillsPage = ({ topics }: BillsPageProps) => {
   };
 
   return (
-    <BillsContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '100%',
+        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
+      }}
+    >
       <BillsMenu topics={topics} onAddBillClick={handleAddNewBill} />
-    </BillsContainer>
+    </Box>
   );
 };
 

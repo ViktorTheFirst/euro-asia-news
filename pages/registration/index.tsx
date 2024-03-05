@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
 
 import RegistrationForm from '@/components/form/RegistrationForm';
-import { Container } from '@/styles/globalStyles';
 import { registrationAPI } from '@/api/auth/authAPI';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import { setUserInfoAction } from '@/store/Users';
-
-const RegistrationContainer = styled(Container)`
-  height: 100vh;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 const RegistrationPage = () => {
   const router = useRouter();
@@ -80,9 +71,25 @@ const RegistrationPage = () => {
   };
 
   const onAlreadyRegistered = () => {};
-
+  /* 
+height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+*/
   return (
-    <RegistrationContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '100%',
+        height: '100vh',
+      }}
+    >
       <RegistrationForm
         userName={userName}
         userEmail={userEmail}
@@ -99,7 +106,7 @@ const RegistrationPage = () => {
         onRegister={onRegister}
         onAlreadyRegistered={onAlreadyRegistered}
       />
-    </RegistrationContainer>
+    </Box>
   );
 };
 

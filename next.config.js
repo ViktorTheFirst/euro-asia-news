@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: true,
+    emotion: true,
   },
   // needed for react-pdf package
   webpack: (config) => {
@@ -27,6 +27,9 @@ const nextConfig = {
     },
     '@mui/material/': {
       transform: '@mui/material/{{member}}',
+    },
+    '@mui/lab/': {
+      transform: '@mui/lab/{{member}}',
     },
     '@mui/icons-material/?(((\\w*)?/?)*)': {
       transform: '@mui/icons-material/{{ matches.[1] }}/{{member}}',

@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import Image from 'next/image';
-import { Menu, MenuItem } from '@mui/material';
+import { Box, Menu, MenuItem } from '@mui/material';
 
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { getUserInfo } from '@/store/Users';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-const UserImageContainer = styled.div`
-  display: flex;
-  border-radius: 30px;
-`;
-
-const StyledImage = styled(Image)`
-  border-radius: 30px;
-  border: 1px solid black;
-  cursor: pointer;
-`;
 
 interface UserImageProps {
   onUserImageClick: () => void;
@@ -32,7 +20,6 @@ const UserImageComponent = ({
   onUserProfileClick,
 }: UserImageProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
-
   const userInfo = useSelector(getUserInfo);
 
   const handleClick = (event: any) => {
@@ -50,8 +37,8 @@ const UserImageComponent = ({
   };
 
   return (
-    <UserImageContainer>
-      <StyledImage
+    <Box component={Box} display='flex' justifyContent='center'>
+      <Image
         alt='profile image'
         src={
           userInfo.profileImage
@@ -62,6 +49,11 @@ const UserImageComponent = ({
         width={58}
         height={58}
         aria-controls='user-image-menu'
+        style={{
+          borderRadius: '30px',
+          cursor: 'pointer',
+          border: '1px solid black',
+        }}
       />
       <Menu
         id='user-image-menu'
@@ -74,7 +66,7 @@ const UserImageComponent = ({
         <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
         <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
       </Menu>
-    </UserImageContainer>
+    </Box>
   );
 };
 

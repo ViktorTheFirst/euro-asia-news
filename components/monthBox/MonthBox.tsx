@@ -1,32 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button, Paper } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 
-import { Container, StyledTypography } from '@/styles/globalStyles';
 import { Month, MonthInfo } from '@/utils/interfaces';
-
-const StyledPaper = styled(Paper)`
-  width: 160px;
-  height: 160px;
-`;
-/* <{ billPayed: boolean }> */
-const ContentContainer = styled(Container)`
-  flex-direction: column;
-  align-items: center;
-  background-color: '#41e72b97';
-  height: 100%;
-`;
-/* background-color: ${({ billPayed }) =>
-    billPayed ? '#41e72b97' : '#d1373796'}; */
-
-const ButtonsContainer = styled(Container)`
-  flex-direction: column;
-  width: 70%;
-  height: 90%;
-  justify-content: space-evenly;
-`;
 
 interface MonthBoxProps {
   month: Month;
@@ -48,7 +25,16 @@ const MonthBox = ({
     if (!billData) return null;
     if (isHovering && router.query.billType) {
       return (
-        <ButtonsContainer>
+        <Box
+          component={Box}
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-evenly'
+          sx={{
+            width: '70%',
+            height: '90%',
+          }}
+        >
           <Button
             key='edit-btn'
             variant='contained'
@@ -67,21 +53,21 @@ const MonthBox = ({
           >
             DELETE
           </Button>
-        </ButtonsContainer>
+        </Box>
       );
     }
     return (
       <>
         {billData.confirmationNumber && (
           <>
-            <StyledTypography gutterBottom>Confirmation #</StyledTypography>
-            <StyledTypography>{billData.confirmationNumber}</StyledTypography>
+            <Typography gutterBottom>Confirmation #</Typography>
+            <Typography>{billData.confirmationNumber}</Typography>
           </>
         )}
         {billData.payedAmount && (
           <>
-            <StyledTypography gutterBottom>Payed amount</StyledTypography>
-            <StyledTypography>{`${billData.payedAmount}\u20aa`}</StyledTypography>
+            <Typography gutterBottom>Payed amount</Typography>
+            <Typography>{`${billData.payedAmount}\u20aa`}</Typography>
           </>
         )}
       </>
@@ -89,19 +75,32 @@ const MonthBox = ({
   }, [isHovering, billData, router.query.billType, onDeleteBill, onEditBill]);
 
   return (
-    <StyledPaper
+    <Paper
       square
       elevation={5}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      sx={{
+        width: '160px',
+        height: '160px',
+      }}
     >
-      <ContentContainer /* billPayed={!!billData} */>
-        <StyledTypography variant='h6' gutterBottom>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        sx={{
+          height: '100%',
+          bgcolor: !!billData ? '#41e72b97' : '#d1373796',
+        }}
+      >
+        <Typography variant='h6' gutterBottom>
           {month}
-        </StyledTypography>
+        </Typography>
         {renderContent}
-      </ContentContainer>
-    </StyledPaper>
+      </Box>
+    </Paper>
   );
 };
 

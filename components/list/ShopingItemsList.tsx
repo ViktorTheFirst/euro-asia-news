@@ -1,28 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
-import { List } from '@mui/material';
+import { Box, List } from '@mui/material';
 
-import { Container } from '@/styles/globalStyles';
 import { MOCK_SHOPING_LIST } from '@/utils/mocks';
 import ShopingItem from '../shopingItem/ShopingItem';
 
-const ListContainer = styled(Container)`
-  height: ${(props) => 100 - 10 - 7 /* props.theme.appBarHeight */}vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #99e25d;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const StyledList = styled(List)`
-  width: 100%;
-`;
-
 const ShopingItemsList = () => {
   return (
-    <ListContainer>
-      <StyledList>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='flex=start'
+      alignItems='center'
+      bgcolor='#99e25d'
+      sx={{
+        width: '100%',
+        height: (theme) => `calc(100vh - 10vh - ${theme.appBarHeight}vh)`,
+      }}
+    >
+      <List sx={{ width: '100%' }}>
         {MOCK_SHOPING_LIST.map(
           (item: { name: string; amount: number }, index: number) => {
             const labelId = `checkbox-list-label-${item.name}`;
@@ -38,8 +34,8 @@ const ShopingItemsList = () => {
             );
           }
         )}
-      </StyledList>
-    </ListContainer>
+      </List>
+    </Box>
   );
 };
 

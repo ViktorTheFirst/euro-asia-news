@@ -1,36 +1,15 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import {
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Checkbox,
+  Box,
 } from '@mui/material';
 
-import { Container } from '@/styles/globalStyles';
 import { MOCK_MONTHS } from '@/utils/mocks';
 import { Month, MonthDictionary } from '@/utils/interfaces';
-
-const MonthListContainer = styled(Container)`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 445px;
-  min-width: 445px;
-  margin-left: 50px;
-  border-radius: 6px;
-  padding: 10px;
-`;
-
-const StyledList = styled(List)`
-  width: 210px;
-  height: 37vh;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  margin: 0 20px;
-`;
 
 interface MonthListProps {
   isListDisabled: boolean;
@@ -57,7 +36,6 @@ const MonthListComponent = ({
       newSelected.push(MOCK_MONTHS[index]);
     }
     if (selected === false) {
-      // if value exist in list, unselect it
       newSelected.splice(selectedMonths.indexOf(MOCK_MONTHS[index]), 1);
     }
     setSelectedMonths(newSelected);
@@ -65,8 +43,28 @@ const MonthListComponent = ({
   };
 
   return (
-    <MonthListContainer>
-      <StyledList>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='flex-start'
+      sx={{
+        minWidth: '465px',
+        height: '60vh',
+        padding: '10px',
+      }}
+    >
+      <List
+        sx={{
+          width: '210px',
+          height: '38vh',
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          margin: '0 20px',
+        }}
+      >
         {MOCK_MONTHS.map((month, index) => {
           const labelId = `checkbox-list-label-${month}`;
 
@@ -93,8 +91,8 @@ const MonthListComponent = ({
             </ListItem>
           );
         })}
-      </StyledList>
-    </MonthListContainer>
+      </List>
+    </Box>
   );
 };
 

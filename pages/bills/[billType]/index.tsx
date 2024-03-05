@@ -3,11 +3,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import styled from 'styled-components';
-import { Grid, Select, SelectChangeEvent } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from '@mui/material';
 
 import MonthBox from '@/components/monthBox/MonthBox';
-import { Container, StyledTypography } from '@/styles/globalStyles';
 import {
   extractBillInfoByMonth,
   extractRelatedMonthInBundle,
@@ -21,37 +25,6 @@ import {
 } from '@/store/Bills';
 import { deleteBillByIdAPI, getBillsByTypeAPI } from '@/api/bills/billsAPI';
 import DeleteItemModal from '@/components/modal/DeleteItemModal';
-
-const ViewBillsContainer = styled(Container)`
-  align-items: center;
-  justify-content: space-evenly;
-  flex-direction: column;
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-  overflow: hidden;
-`;
-
-const SelectYearContainer = styled(Container)`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const MonthsGrid = styled(Grid)`
-  & .MuiGrid-container {
-    max-width: 60%;
-  }
-  & .MuiGrid-spacing {
-    max-width: 60%;
-  }
-  & .MuiGrid-item {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const StyledSelect = styled(Select)`
-  margin-left: 20px;
-`;
 
 interface ViewBillsProps {
   billsByType: BillInfo[];
@@ -149,24 +122,49 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
       );
   };
   return (
-    <ViewBillsContainer>
-      <SelectYearContainer>
-        <StyledTypography>Year:</StyledTypography>
-        <StyledSelect
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='space-evenly'
+      alignItems='center'
+      sx={{ height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)` }}
+    >
+      <Box
+        component={Box}
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Typography>Year:</Typography>
+        <Select
           native
           value={selectedBill.year}
           onChange={handleSelectChange}
+          sx={{ marginLeft: '20px ' }}
         >
           {MOCK_YEARS_OPTIONS.map((option: SelectOption, index: number) => (
             <option key={`${option.value} - ${index}`} value={option.value}>
               {option.label}
             </option>
           ))}
-        </StyledSelect>
-      </SelectYearContainer>
-      <MonthsGrid container justifyContent='center' spacing={2}>
+        </Select>
+      </Box>
+      <Grid
+        container
+        justifyContent='center'
+        spacing={2}
+        display='flex'
+        sx={{ justifyContent: 'center' }}
+      >
         {MOCK_MONTHS.map((month) => (
-          <Grid key={month} item md={3}>
+          <Grid
+            key={month}
+            item
+            md={3}
+            display='flex'
+            sx={{ justifyContent: 'center' }}
+          >
             <MonthBox
               month={month}
               billData={extractBillInfoByMonth(month, billsDataPerYear)}
@@ -175,7 +173,7 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
             />
           </Grid>
         ))}
-      </MonthsGrid>
+      </Grid>
       {isDeleteModalOpen && (
         <DeleteItemModal
           isModalOpen={isDeleteModalOpen}
@@ -184,7 +182,7 @@ const ViewBillsPage = ({ billsByType }: ViewBillsProps) => {
           onClose={handleCncelDeletionInModal}
         />
       )}
-    </ViewBillsContainer>
+    </Box>
   );
 };
 

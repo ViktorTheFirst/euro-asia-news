@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { Box } from '@mui/material';
 
 import { loginAPI } from '@/api/auth/authAPI';
 import LoginForm from '@/components/form/LoginForm';
-import { Container } from '@/styles/globalStyles';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import { setUserInfoAction } from '@/store/Users';
-
-const LoginContainer = styled(Container)`
-  height: 100vh;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState('');
@@ -55,7 +46,17 @@ const LoginPage = () => {
   };
 
   return (
-    <LoginContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '100%',
+        height: '100vh',
+      }}
+    >
       <LoginForm
         userEmail={userEmail}
         password={password}
@@ -63,7 +64,7 @@ const LoginPage = () => {
         emailChangeHandler={emailChangeHandler}
         passwordChangeHandler={passwordChangeHandler}
       />
-    </LoginContainer>
+    </Box>
   );
 };
 

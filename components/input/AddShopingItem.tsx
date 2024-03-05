@@ -1,27 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import { Container } from '@/styles/globalStyles';
-import { Button, TextField } from '@mui/material';
-
-const InputContainer = styled(Container)`
-  width: 100%;
-  height: 10vh;
-  display: flex;
-  background-color: pink;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 60%;
-  caret-color: transparent;
-`;
+import { Box, Button, TextField } from '@mui/material';
 
 const AddShopingItem = () => {
   return (
-    <InputContainer>
-      <StyledTextField
+    <Box
+      component={Box}
+      display='flex'
+      justifyContent='space-evenly'
+      alignItems='center'
+      sx={{
+        width: '100%',
+        height: '10vh',
+      }}
+    >
+      <TextField
         id='add item input'
         label='Add item name'
         size='small'
@@ -30,6 +22,7 @@ const AddShopingItem = () => {
         type='search'
         value={''}
         onChange={() => {}}
+        sx={{ width: '60%', caretColor: 'transparent' }}
       />
       <Button
         variant='contained'
@@ -39,7 +32,7 @@ const AddShopingItem = () => {
       >
         Add
       </Button>
-    </InputContainer>
+    </Box>
   );
 };
 

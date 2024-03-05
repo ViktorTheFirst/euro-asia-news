@@ -1,49 +1,16 @@
 import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import fs from 'fs/promises';
 import path from 'path';
+import { Box } from '@mui/material';
 
 import MainMenu from '@/components/menu/MainMenu';
-import { Container, Row } from '@/styles/globalStyles';
 import { getHouseholdId, setHouseholdIdAction } from '@/store/Auth';
 import { UserInfo, getUserInfo, setUserInfoAction } from '@/store/Users';
 import { getUserAPI } from '@/api/users/usersAPI';
 import ModelViewer from '@/components/modelViewer/ModelViewer';
-
-// our-domain.com/
-const HomeContainer = styled(Container)`
-  background-color: #f4d03f;
-  background-image: linear-gradient(132deg, #f4d03f 0%, #16a085 100%);
-
-  height: ${(props) => 100 - 7 /* props.theme.appBarHeight */}vh;
-  flex-direction: column;
-  display: flex;
-  justify-content: flex-start;
-`;
-
-const HouseContainer = styled(Container)`
-  height: 75vh;
-  justify-content: center;
-  align-items: center;
-  flex: 3;
-`;
-
-const MenuContainer = styled(Container)`
-  height: 75vh;
-  justify-content: center;
-  align-items: center;
-  flex: 2;
-`;
-
-const ContainerWithMedia = styled.div`
-  display: flex;
-  @media (max-width: 400px) {
-    flex-direction: column;
-  }
-  flex-direction: row;
-`;
+import myTheme from '@/theme';
 
 interface HomePageProps {
   mainTopics: { title: string }[];
@@ -68,16 +35,48 @@ const HomePage = ({ mainTopics, sessionHouseholdId, user }: HomePageProps) => {
   }, [user, userInfo.profileImage, dispatch]);
 
   return (
-    <HomeContainer>
-      <ContainerWithMedia>
-        <HouseContainer>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='flex-start'
+      sx={{
+        backgroundImage: 'linear-gradient(132deg, #f4d03f 0%, #16a085 100%)',
+        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
+      }}
+    >
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='row'
+        sx={{
+          [myTheme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+          },
+        }}
+      >
+        <Box
+          component={Box}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          flex={3}
+          sx={{ height: '75vh' }}
+        >
           <ModelViewer />
-        </HouseContainer>
-        <MenuContainer>
+        </Box>
+        <Box
+          component={Box}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          flex={2}
+          sx={{ height: '75vh' }}
+        >
           <MainMenu topics={mainTopics} />
-        </MenuContainer>
-      </ContainerWithMedia>
-    </HomeContainer>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

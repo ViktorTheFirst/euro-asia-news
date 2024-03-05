@@ -1,36 +1,6 @@
-import { Col, Container, StyledTypography } from '@/styles/globalStyles';
-import { Button, TextField } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
-import styled from 'styled-components';
-
-const FormContainer = styled(Container)`
-  flex-direction: column;
-  width: 70%;
-  height: 60vh;
-  padding: 20px;
-  margin: 0 70px;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ButtonsContainer = styled(Container)`
-  flex-direction: column;
-  display: flex;
-  width: 20%;
-  max-width: 300px;
-  margin-top: 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 40%;
-  caret-color: transparent;
-`;
-
-const StyledCol = styled(Col)`
-  align-items: center;
-`;
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 interface LoginFormProps {
   userEmail: string;
@@ -48,11 +18,28 @@ const LoginForm = ({
   onLogin,
 }: LoginFormProps) => {
   return (
-    <FormContainer>
-      <StyledTypography variant='h4'>Login</StyledTypography>
+    <Box
+      component={Box}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        width: '70%',
+        height: '60vh',
+        margin: '0 70px',
+      }}
+    >
+      <Typography variant='h4'>Login</Typography>
 
-      <StyledCol>
-        <StyledTextField
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        sx={{ width: '100%' }}
+      >
+        <TextField
           id='userEmail'
           label='Email'
           variant='outlined'
@@ -60,8 +47,9 @@ const LoginForm = ({
           type='email'
           value={userEmail}
           onChange={emailChangeHandler}
+          sx={{ width: '40%' }}
         />
-        <StyledTextField
+        <TextField
           id='userPassword'
           label='Password'
           variant='outlined'
@@ -69,9 +57,18 @@ const LoginForm = ({
           type='password'
           value={password}
           onChange={passwordChangeHandler}
+          sx={{ width: '40%' }}
         />
-      </StyledCol>
-      <ButtonsContainer>
+      </Box>
+      <Box
+        component={Box}
+        display='flex'
+        flexDirection='column'
+        justifyContent='center'
+        sx={{
+          width: '30%',
+        }}
+      >
         <Button
           variant='text'
           color='primary'
@@ -80,11 +77,11 @@ const LoginForm = ({
         >
           Register
         </Button>
-        <Button variant='contained' color='primary' onClick={onLogin}>
+        <Button variant='contained' color='secondary' onClick={onLogin}>
           Login
         </Button>
-      </ButtonsContainer>
-    </FormContainer>
+      </Box>
+    </Box>
   );
 };
 
