@@ -57,3 +57,11 @@ export interface BillInfo {
 export type MonthDictionary = {
   [month in Month]: boolean;
 };
+
+// -------------- SJOPLIST INTERFACES ---------------------
+
+export interface ShopListItem {
+  title: string;
+  amount: number;
+  isDone: boolean;
+}

@@ -25,6 +25,14 @@ const MainMenu = ({ topics }: MenuProps) => {
             key={`${index} - ${menuItem}`}
             size='large'
             component={Link}
+            sx={{
+              minHeight: '60px',
+              fontWeight: 'bold',
+              borderWidth: 3,
+              '&:hover': {
+                borderWidth: 3,
+              },
+            }}
           >
             {menuItem.title}
           </Button>

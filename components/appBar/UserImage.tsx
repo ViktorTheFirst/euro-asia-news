@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
-import { Box, Menu, MenuItem } from '@mui/material';
+import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import PortraitIcon from '@mui/icons-material/Portrait';
 
-import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { getUserInfo } from '@/store/Users';
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface UserImageProps {
   onUserImageClick: () => void;
@@ -37,23 +34,20 @@ const UserImageComponent = ({
   };
 
   return (
-    <Box component={Box} display='flex' justifyContent='center'>
-      <Image
-        alt='profile image'
-        src={
-          userInfo.profileImage
-            ? baseUrl + '/' + userInfo.profileImage
-            : profilePicPlaceHolder
-        }
-        onClick={handleClick}
-        width={58}
-        height={58}
+    <Box
+      component={Box}
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+    >
+      <Typography sx={{ cursor: 'pointer' }} onClick={handleClick}>
+        {userInfo.name}
+      </Typography>
+      <PortraitIcon
+        fontSize='large'
         aria-controls='user-image-menu'
-        style={{
-          borderRadius: '30px',
-          cursor: 'pointer',
-          border: '1px solid black',
-        }}
+        sx={{ cursor: 'pointer', marginLeft: '5px' }}
+        onClick={handleClick}
       />
       <Menu
         id='user-image-menu'

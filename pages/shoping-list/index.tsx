@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 
-import AddShopingItem from '@/components/input/AddShopingItem';
-import ShopingItemsList from '@/components/list/ShopingItemsList';
+import AddShopingItem from '@/components/shopingList/AddShopingItem';
+import ShopingItemsList from '@/components/shopingList/ShopingItemsList';
+import ShopingListBottomButtons from '@/components/shopingList/ShopingListBottomButtons';
 
 const ShopingList = () => {
   return (
@@ -16,7 +17,9 @@ const ShopingList = () => {
       }}
     >
       <AddShopingItem />
+      <Divider orientation='horizontal' flexItem />
       <ShopingItemsList />
+      <ShopingListBottomButtons />
     </Box>
   );
 };

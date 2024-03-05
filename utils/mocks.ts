@@ -5,6 +5,14 @@ export const MOCK_SHOPING_LIST = [
   { name: 'bread', amount: 1 },
   { name: 'potatoes', amount: 1 },
   { name: 'razor blades', amount: 4 },
+  { name: 'milk', amount: 2 },
+  { name: 'bread', amount: 1 },
+  { name: 'potatoes', amount: 1 },
+  { name: 'razor blades', amount: 4 },
+  { name: 'milk', amount: 2 },
+  { name: 'bread', amount: 1 },
+  { name: 'potatoes', amount: 1 },
+  { name: 'razor blades', amount: 4 },
 ];
 
 export const MOCK_YEARS_OPTIONS: SelectOption[] = [
