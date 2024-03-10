@@ -17,6 +17,10 @@ export const setIsShopListChangedAction = createAction<boolean>(
   'shopList/setIsShopListChangedAction'
 );
 
-export const deleteShopListAction = createAction(
-  'shopList/deleteShopListAction'
+export const setShopListAction = createAction<ShopListItem[]>(
+  'shopList/setShopListAction'
+);
+
+export const setInitialShopListAction = createAction<ShopListItem[]>(
+  'shopList/setInitialShopListAction'
 );

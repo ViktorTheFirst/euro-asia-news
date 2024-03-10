@@ -61,7 +61,15 @@ export type MonthDictionary = {
 // -------------- SJOPLIST INTERFACES ---------------------
 
 export interface ShopListItem {
+  _id?: string;
   title: string;
   amount: number;
   isDone: boolean;
+}
+
+export interface ShopListData {
+  householdId: string;
+  initialList: ShopListItem[];
+  shopList: ShopListItem[];
+  isChanged: boolean;
 }

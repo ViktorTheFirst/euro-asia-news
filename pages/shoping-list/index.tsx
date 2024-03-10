@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
+import { useDispatch } from 'react-redux';
 import { Box, Divider } from '@mui/material';
 
 import AddShopingItem from '@/components/shopingList/AddShopingItem';
 import ShopingItemsList from '@/components/shopingList/ShopingItemsList';
 import ShopingListBottomButtons from '@/components/shopingList/ShopingListBottomButtons';
+import { getShopListDataAPI } from '@/api/shopList/shopListAPI';
+import { ShopListData } from '@/utils/interfaces';
+import { setInitialShopListAction, setShopListAction } from '@/store/ShopList';
 
-const ShopingList = () => {
+interface ShopingListProps {
+  shopListData?: ShopListData;
+  sessionHouseholdId: string;
+}
+
+const ShopingList = ({
+  shopListData,
+  sessionHouseholdId,
+}: ShopingListProps) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setShopListAction(shopListData?.shopList || []));
+    dispatch(setInitialShopListAction(shopListData?.shopList || []));
+  }, [shopListData, dispatch]);
+
   return (
     <Box
       component={Box}
@@ -19,9 +39,23 @@ const ShopingList = () => {
       <AddShopingItem />
       <Divider orientation='horizontal' flexItem />
       <ShopingItemsList />
-      <ShopingListBottomButtons />
+      <ShopingListBottomButtons householdId={sessionHouseholdId} />
     </Box>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.cookies;
+  const result = await getShopListDataAPI(cookies.householdId!);
+
+  return {
+    props: {
+      sessionHouseholdId: cookies.householdId,
+      shopListData: !!result?.data
+        ? JSON.parse(JSON.stringify(result?.data?.shopListData))
+        : null,
+    },
+  };
 };
 
 export default ShopingList;

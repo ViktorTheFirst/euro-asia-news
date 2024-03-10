@@ -26,11 +26,10 @@ const ShopingItemsList = () => {
         sx={{
           width: '100%',
           overflowX: 'hidden',
-          overflowY: 'scroll',
           height: '72vh',
         }}
       >
-        {!!shopList.length ? (
+        {!!shopList?.length ? (
           shopList.map((item: ShopListItem, index: number) => {
             const labelId = `checkbox-list-label-${item.title}`;
 

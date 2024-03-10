@@ -32,7 +32,7 @@ const AddShopingItem = () => {
     >
       <TextField
         id='add item input'
-        label='Add item name'
+        label='Add item'
         size='small'
         variant='outlined'
         margin='none'

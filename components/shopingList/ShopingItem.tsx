@@ -47,8 +47,6 @@ const ShopingItem = ({
   const handleDotsClick = (event: any) => {
     setAnchorEl(event.currentTarget);
     event.stopPropagation();
-    console.log('handleDotsClick - item ', item);
-    console.log('handleDotsClick - index', index);
   };
 
   const handleRemoveItemClick = () => {
@@ -116,7 +114,6 @@ const ShopingItem = ({
   return (
     <ListItem
       key={`${item.title}_${index}`}
-      //role={undefined}
       divider={index !== itemsAmount}
       onClick={handleItemClick}
     >
@@ -167,7 +164,9 @@ const ShopingItem = ({
         onClose={handleClose}
         transitionDuration={300}
       >
-        <MenuItem onClick={() => {}}>Add to favorites</MenuItem>
+        <MenuItem disabled onClick={() => {}}>
+          Add to favorites
+        </MenuItem>
         <MenuItem onClick={handleEditItemClick}>Edit</MenuItem>
         <MenuItem onClick={handleRemoveItemClick}>Remove</MenuItem>
       </Menu>

@@ -5,7 +5,8 @@ import {
   removeShopListItemAction,
   editShopListItemAction,
   setIsShopListChangedAction,
-  deleteShopListAction,
+  setShopListAction,
+  setInitialShopListAction,
 } from './shopListActions';
 
 export const shopListSlice = createSlice({
@@ -17,6 +18,13 @@ export const shopListSlice = createSlice({
       .addCase(addShopListItemAction, (state, action) => {
         let newList = state.shopList;
         newList.push(action.payload);
+
+        if (JSON.stringify(newList) !== JSON.stringify(state.initialList)) {
+          state.isChanged = true;
+        } else {
+          state.isChanged = false;
+        }
+
         state.shopList = newList;
       })
       .addCase(removeShopListItemAction, (state, action) => {
@@ -25,19 +33,41 @@ export const shopListSlice = createSlice({
         );
         const newList = state.shopList;
         index !== -1 && newList.splice(index, 1);
+
+        if (JSON.stringify(newList) !== JSON.stringify(state.initialList)) {
+          state.isChanged = true;
+        } else {
+          state.isChanged = false;
+        }
+
         state.shopList = newList;
       })
       .addCase(editShopListItemAction, (state, action) => {
+        //console.log('EDIT', JSON.parse(JSON.stringify(state.shopList)));
+        //console.log('EDIT', action.payload);
+
         const index = state.shopList.findIndex(
-          (item) => item.title === action.payload.title
+          (item) => item._id === action.payload._id
         );
         const newList = state.shopList;
         index !== -1 && newList.splice(index, 1, action.payload);
+
+        if (JSON.stringify(newList) !== JSON.stringify(state.initialList)) {
+          state.isChanged = true;
+        } else {
+          state.isChanged = false;
+        }
+
         state.shopList = newList;
       })
-      .addCase(deleteShopListAction, (state, action) => {
-        state.shopList = [];
-        state.initialList = [];
+      .addCase(setShopListAction, (state, action) => {
+        state.shopList = action.payload;
+      })
+      .addCase(setInitialShopListAction, (state, action) => {
+        state.initialList = action.payload;
+      })
+      .addCase(setIsShopListChangedAction, (state, action) => {
+        state.isChanged = action.payload;
       });
   },
 });

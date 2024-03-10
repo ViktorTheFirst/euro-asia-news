@@ -17,6 +17,7 @@ import {
 } from '@/store/Bills';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
+import { setIsShopListChangedAction } from '@/store/ShopList';
 
 const AppBar = () => {
   const router = useRouter();
@@ -32,6 +33,7 @@ const AppBar = () => {
     dispatch(resetSelectedBillInfoAction());
     dispatch(resetCreationBillInfoAction());
     dispatch(setBillsByTypeAction([]));
+    dispatch(setIsShopListChangedAction(false));
   };
 
   const onLogoutClick = async () => {

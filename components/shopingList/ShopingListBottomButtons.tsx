@@ -2,18 +2,48 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup } from '@mui/material';
 
-import { deleteShopListAction, getShopList } from '@/store/ShopList';
+import {
+  setShopListAction,
+  getShopList,
+  setInitialShopListAction,
+  isShopListChanged,
+  getInitialShopList,
+  setIsShopListChangedAction,
+} from '@/store/ShopList';
 import DeleteItemModal from '../modal/DeleteItemModal';
+import { deleteShopListAPI, saveShopListAPI } from '@/api/shopList/shopListAPI';
+import { getHouseholdId } from '@/store/Auth';
 
-const ShopingListBottomButtons = () => {
+interface ShopingListButtonsProps {
+  householdId: string;
+}
+
+const ShopingListBottomButtons = ({ householdId }: ShopingListButtonsProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const shopList = useSelector(getShopList);
+  const initialShopList = useSelector(getInitialShopList);
+  const isListChanged = useSelector(isShopListChanged);
+
   const dispatch = useDispatch();
 
-  const onDeleteShopList = () => {
-    // TODO: send delete list order to BE and after that delete it on front
-    dispatch(deleteShopListAction());
+  const onDeleteShopList = async () => {
+    await deleteShopListAPI(householdId);
+    dispatch(setShopListAction([]));
+    dispatch(setInitialShopListAction([]));
     setIsDeleteModalOpen(false);
+  };
+
+  const onSaveShopList = async () => {
+    saveShopListAPI(shopList, householdId).then((result) => {
+      dispatch(setInitialShopListAction(result?.data?.list?.shopList));
+      dispatch(setIsShopListChangedAction(false));
+    });
+  };
+
+  const onCancelChanges = () => {
+    dispatch(setShopListAction(initialShopList));
+    dispatch(setIsShopListChangedAction(false));
   };
 
   return (
@@ -30,10 +60,20 @@ const ShopingListBottomButtons = () => {
         >
           Delete List
         </Button>
-        <Button variant='contained' color='warning' disabled>
+        <Button
+          variant='contained'
+          color='warning'
+          disabled={!isListChanged}
+          onClick={onCancelChanges}
+        >
           Cancel
         </Button>
-        <Button variant='contained' color='success' disabled>
+        <Button
+          variant='contained'
+          color='success'
+          disabled={!isListChanged}
+          onClick={onSaveShopList}
+        >
           Save
         </Button>
       </ButtonGroup>
