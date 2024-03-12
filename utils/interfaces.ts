@@ -24,6 +24,20 @@ export interface UserRegistrationData extends UserLoginData {
   partnerEmail: string;
 }
 
+export interface ValidationError {
+  type: string;
+  error: string;
+}
+
+export enum ValidationFields {
+  name = 'name',
+  partnerName = 'partnerName',
+  email = 'email',
+  partnerEmail = 'partnerEmail',
+  password = 'password',
+  passwordAgain = 'passwordAgain',
+}
+
 // -------------- BILLS INTERFACES ---------------------
 export interface MonthInfo {
   confirmationNumber: string | null;
@@ -58,7 +72,7 @@ export type MonthDictionary = {
   [month in Month]: boolean;
 };
 
-// -------------- SJOPLIST INTERFACES ---------------------
+// -------------- SHOPLIST INTERFACES ---------------------
 
 export interface ShopListItem {
   _id?: string;

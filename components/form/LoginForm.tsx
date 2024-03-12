@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { ValidationError, ValidationFields } from '@/utils/interfaces';
 
 interface LoginFormProps {
   userEmail: string;
   password: string;
+  errors: ValidationError[];
+  loading: boolean;
   emailChangeHandler: (event: any) => void;
   passwordChangeHandler: (event: any) => void;
   onLogin: () => void;
@@ -13,10 +16,17 @@ interface LoginFormProps {
 const LoginForm = ({
   userEmail,
   password,
+  errors,
+  loading,
   emailChangeHandler,
   passwordChangeHandler,
   onLogin,
 }: LoginFormProps) => {
+  const emailErr = errors.find((err) => err.type === ValidationFields.email);
+  const passwordErr = errors.find(
+    (err) => err.type === ValidationFields.password
+  );
+
   return (
     <Box
       component={Box}
@@ -41,7 +51,8 @@ const LoginForm = ({
       >
         <TextField
           id='userEmail'
-          label='Email'
+          label={!!emailErr ? emailErr.error : 'Email'}
+          error={!!emailErr}
           variant='outlined'
           margin='normal'
           type='email'
@@ -49,9 +60,11 @@ const LoginForm = ({
           onChange={emailChangeHandler}
           sx={{ width: '40%' }}
         />
+
         <TextField
           id='userPassword'
-          label='Password'
+          label={!!passwordErr ? passwordErr.error : 'Password'}
+          error={!!passwordErr}
           variant='outlined'
           margin='normal'
           type='password'
@@ -77,9 +90,15 @@ const LoginForm = ({
         >
           Register
         </Button>
-        <Button variant='contained' color='secondary' onClick={onLogin}>
+        <LoadingButton
+          variant='contained'
+          color='secondary'
+          onClick={onLogin}
+          disabled={!!passwordErr || !!emailErr}
+          loading={loading}
+        >
           Login
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );

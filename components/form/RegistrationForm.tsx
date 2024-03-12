@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { ValidationError, ValidationFields } from '@/utils/interfaces';
 
 const InputStyle = {
   width: '40%',
@@ -13,6 +15,8 @@ interface RegistrationFormProps {
   partnerEmail: string;
   password: string;
   passwordAgain: string;
+  errors: ValidationError[];
+  loading: boolean;
   nameChangeHandler: (event: any) => void;
   emailChangeHandler: (event: any) => void;
   partnerNameChangeHandler: (event: any) => void;
@@ -20,7 +24,6 @@ interface RegistrationFormProps {
   passwordChangeHandler: (event: any) => void;
   passwordAgainChangeHandler: (event: any) => void;
   onRegister: () => void;
-  onAlreadyRegistered: () => void;
 }
 
 const RegistrationForm = ({
@@ -30,6 +33,8 @@ const RegistrationForm = ({
   partnerEmail,
   password,
   passwordAgain,
+  errors,
+  loading,
   nameChangeHandler,
   emailChangeHandler,
   partnerNameChangeHandler,
@@ -37,8 +42,22 @@ const RegistrationForm = ({
   passwordChangeHandler,
   passwordAgainChangeHandler,
   onRegister,
-  onAlreadyRegistered,
 }: RegistrationFormProps) => {
+  const nameErr = errors.find((err) => err.type === ValidationFields.name);
+  const emailErr = errors.find((err) => err.type === ValidationFields.email);
+  const partnerNameErr = errors.find(
+    (err) => err.type === ValidationFields.partnerName
+  );
+  const partnerEmailErr = errors.find(
+    (err) => err.type === ValidationFields.partnerEmail
+  );
+  const passwordErr = errors.find(
+    (err) => err.type === ValidationFields.password
+  );
+  const passwordAgainErr = errors.find(
+    (err) => err.type === ValidationFields.passwordAgain
+  );
+
   return (
     <Box
       component={Box}
@@ -63,7 +82,8 @@ const RegistrationForm = ({
       >
         <TextField
           id='userName'
-          label='Name'
+          label={!!nameErr ? nameErr.error : 'Name'}
+          error={!!nameErr}
           variant='outlined'
           margin='normal'
           value={userName}
@@ -73,7 +93,8 @@ const RegistrationForm = ({
 
         <TextField
           id='userEmail'
-          label='Email'
+          label={!!emailErr ? emailErr.error : 'Email'}
+          error={!!emailErr}
           variant='outlined'
           margin='normal'
           type='email'
@@ -92,7 +113,8 @@ const RegistrationForm = ({
       >
         <TextField
           id='partnersName'
-          label='Partners name'
+          label={!!partnerNameErr ? partnerNameErr.error : 'Partner name'}
+          error={!!partnerNameErr}
           variant='outlined'
           margin='normal'
           value={partnerName}
@@ -102,7 +124,8 @@ const RegistrationForm = ({
 
         <TextField
           id='partnersEmail'
-          label='Partners email'
+          label={!!partnerEmailErr ? partnerEmailErr.error : 'Partner email'}
+          error={!!partnerEmailErr}
           variant='outlined'
           margin='normal'
           type='email'
@@ -120,7 +143,8 @@ const RegistrationForm = ({
       >
         <TextField
           id='userPassword'
-          label='Password'
+          label={!!passwordErr ? passwordErr.error : 'Password'}
+          error={!!passwordErr}
           variant='outlined'
           margin='normal'
           type='password'
@@ -130,7 +154,8 @@ const RegistrationForm = ({
         />
         <TextField
           id='userPasswordAgain'
-          label='Password again'
+          label={!!passwordAgainErr ? passwordAgainErr.error : 'Password again'}
+          error={!!passwordAgainErr}
           variant='outlined'
           margin='normal'
           type='password'
@@ -149,21 +174,22 @@ const RegistrationForm = ({
         <Button
           variant='text'
           color='primary'
-          onClick={onAlreadyRegistered}
           component={Link}
           href='/login'
           sx={{ width: '100%' }}
         >
           Already registered?
         </Button>
-        <Button
+        <LoadingButton
           variant='contained'
           color='secondary'
           onClick={onRegister}
           sx={{ width: '100%' }}
+          disabled={!!emailErr || !!passwordErr}
+          loading={loading}
         >
           Register
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );

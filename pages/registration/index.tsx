@@ -7,11 +7,15 @@ import RegistrationForm from '@/components/form/RegistrationForm';
 import { registrationAPI } from '@/api/auth/authAPI';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import { setUserInfoAction } from '@/store/Users';
+import useValidation from '@/hooks/useValidation';
+import { ValidationFields } from '@/utils/interfaces';
 
 const RegistrationPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [errors, validate] = useValidation();
 
+  const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [partnerName, setPartnerName] = useState('');
@@ -21,29 +25,36 @@ const RegistrationPage = () => {
 
   const handleUserNameChange = (event: any) => {
     setUserName(event.target.value);
+    validate(event.target.value, ValidationFields.name);
   };
 
   const handleUserEmailChange = (event: any) => {
     setUserEmail(event.target.value);
+    validate(event.target.value, ValidationFields.email);
   };
 
   const handlePartnerNameChange = (event: any) => {
     setPartnerName(event.target.value);
+    validate(event.target.value, ValidationFields.partnerName);
   };
 
   const handlePartnerEmailChange = (event: any) => {
     setPartnerEmail(event.target.value);
+    validate(event.target.value, ValidationFields.partnerEmail);
   };
 
   const handlePasswordChange = (event: any) => {
     setPassword(event.target.value);
+    validate(event.target.value, ValidationFields.password);
   };
 
   const handlePasswordAgainChange = (event: any) => {
     setPasswordAgain(event.target.value);
+    validate(event.target.value, ValidationFields.passwordAgain);
   };
 
   const onRegister = async () => {
+    setLoading(true);
     try {
       registrationAPI({
         name: userName,
@@ -68,16 +79,9 @@ const RegistrationPage = () => {
     } catch (err) {
       console.warn('Error while registering user ' + err);
     }
+    setLoading(false);
   };
 
-  const onAlreadyRegistered = () => {};
-  /* 
-height: 100vh;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-*/
   return (
     <Box
       component={Box}
@@ -97,6 +101,8 @@ height: 100vh;
         partnerEmail={partnerEmail}
         password={password}
         passwordAgain={passwordAgain}
+        errors={errors}
+        loading={loading}
         nameChangeHandler={handleUserNameChange}
         emailChangeHandler={handleUserEmailChange}
         partnerNameChangeHandler={handlePartnerNameChange}
@@ -104,7 +110,6 @@ height: 100vh;
         passwordChangeHandler={handlePasswordChange}
         passwordAgainChangeHandler={handlePasswordAgainChange}
         onRegister={onRegister}
-        onAlreadyRegistered={onAlreadyRegistered}
       />
     </Box>
   );
