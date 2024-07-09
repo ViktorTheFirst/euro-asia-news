@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { ValidationError, ValidationFields } from '@/utils/interfaces';
+import { useMemo } from 'react';
 
 interface LoginFormProps {
   userEmail: string;
@@ -26,6 +27,10 @@ const LoginForm = ({
   const passwordErr = errors.find(
     (err) => err.type === ValidationFields.password
   );
+
+  const isDisabled = useMemo(() => {
+    return !!emailErr || !!passwordErr || !userEmail.length || !password.length;
+  }, [emailErr, passwordErr, userEmail, password]);
 
   return (
     <Box
@@ -94,7 +99,7 @@ const LoginForm = ({
           variant='contained'
           color='secondary'
           onClick={onLogin}
-          disabled={!!passwordErr || !!emailErr}
+          disabled={isDisabled}
           loading={loading}
         >
           Login

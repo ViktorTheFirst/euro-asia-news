@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { UserLoginData, UserRegistrationData } from '@/utils/interfaces';
+import { LoginResponse } from '../interfaces';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -24,7 +25,9 @@ export const registrationAPI = async (userData: UserRegistrationData) => {
   }
 };
 
-export const loginAPI = async (userData: UserLoginData) => {
+export const loginAPI = async (
+  userData: UserLoginData
+): Promise<LoginResponse> => {
   try {
     const result = await instance({
       method: 'post',
@@ -35,8 +38,9 @@ export const loginAPI = async (userData: UserLoginData) => {
       },
     });
 
-    return result;
-  } catch (err) {
+    return result.data;
+  } catch (err: any) {
     console.warn('User login failed on FE ' + err);
+    throw err as AxiosError;
   }
 };

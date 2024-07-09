@@ -18,6 +18,7 @@ import {
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
 import { setIsShopListChangedAction } from '@/store/ShopList';
+import { setUserInfoAction } from '@/store/Users';
 
 const AppBar = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const AppBar = () => {
 
   const onLogoutClick = async () => {
     dispatch(setHouseholdIdAction(''));
+    dispatch(setUserInfoAction({ name: '', email: '', profileImage: '' }));
     dispatch(setTokenAction(''));
     router.push('/login');
   };

@@ -35,7 +35,7 @@ const ShopingItem = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [selected, setSelected] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(item.isDone);
 
   const dispatch = useDispatch();
 
