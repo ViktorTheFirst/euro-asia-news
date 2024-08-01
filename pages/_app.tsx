@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <Layout>
           <Head>
-            <title>Teremok</title>
+            <title>Euro-Asia News</title>
             <meta
               name='viewport'
               content='width=device-width, initial-scale=1'

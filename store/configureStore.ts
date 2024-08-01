@@ -13,7 +13,7 @@ function configureStoreDev() {
     reducer: rootReducer,
 
     devTools: {
-      name: 'Teremok Redux',
+      name: 'EuroAsiaNews Redux',
     },
   });
 }

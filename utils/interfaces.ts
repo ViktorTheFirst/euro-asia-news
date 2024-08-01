@@ -87,3 +87,44 @@ export interface ShopListData {
   shopList: ShopListItem[];
   isChanged: boolean;
 }
+
+// -------------- NEWS INTERFACES ---------------------
+
+export enum PragraphRole {
+  lead = 'lead',
+  quote = 'quote',
+  regular = 'regular',
+}
+export interface IParagraph {
+  role: PragraphRole;
+  text: string;
+}
+
+export type IArticlePreview = Pick<
+  IArticle,
+  | 'previewImageURL'
+  | 'previewImageAlt'
+  | 'h1'
+  | 'itemId'
+  | 'tags'
+  | 'h1Paragraphs'
+>;
+
+export interface IArticle {
+  itemId: string;
+  previewImageURL: string;
+  previewImageAlt: string;
+  h1: string;
+  date: Date;
+  h1Paragraphs: IParagraph[];
+  h2: string;
+  h2Paragraphs: IParagraph[];
+  h3: string;
+  h3Paragraphs: IParagraph[];
+  imageURL: string;
+  imageAlt: string;
+  authorh4: string;
+  authorParagraph: IParagraph;
+  authorMedia: string[];
+  tags: string[];
+}

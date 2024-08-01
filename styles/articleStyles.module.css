@@ -1,0 +1,122 @@
+.article {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 20px;
+}
+
+.articleImageContainer {
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.articleImageContainer img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease-out;
+}
+
+.articleImageContainer img:hover {
+  transform: scale(1.1);
+}
+
+.mainHeader {
+  cursor: pointer;
+  caret-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.articleText {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #999999;
+  font-size: 20px;
+  line-height: 22px;
+  max-height: 330px;
+  min-height: fit-content;
+  overflow: hidden;
+}
+
+.tagsContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.tags {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.tag {
+  margin-right: 10px;
+  font-weight: normal;
+  font-family: 'muli-regular', sans-serif;
+}
+
+.articlePageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.articlePageImageContainer {
+  margin: 40px 0;
+}
+
+.articlePageHeaderContainer {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.articlePageHeaderContainer h1 {
+  margin-bottom: 20px;
+}
+
+.date {
+  color: #999999;
+  margin-right: 30px;
+  font-family: 'muli-regular', sans-serif;
+}
+
+.articlePageH1ParagraphContainer {
+  width: 50%;
+  padding: 20px;
+}
+
+.leadPragraph {
+  font-family: 'roboto-light', sans-serif;
+  line-height: 35px;
+  font-size: larger;
+  color: #666666;
+  margin-bottom: 25px;
+}
+
+.regularParagraph {
+  font-family: 'muli-regular', sans-serif;
+  line-height: 28px;
+  font-size: 19px;
+  margin-bottom: 25px;
+}
+
+.quoteParagraph {
+  font-family: 'muli-regular', sans-serif;
+  font-style: italic;
+  line-height: 28px;
+  font-size: 19px;
+  margin-bottom: 25px;
+}
+
+.quoteContainer {
+  background-color: #c3c0c03b;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}

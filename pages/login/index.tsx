@@ -23,7 +23,6 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const result = await loginAPI({ email: userEmail, password });
-      console.log('result', result);
 
       const { name, email, token, householdId } = result;
       dispatch(setHouseholdIdAction(householdId));

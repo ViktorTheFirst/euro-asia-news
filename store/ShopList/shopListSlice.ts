@@ -43,9 +43,6 @@ export const shopListSlice = createSlice({
         state.shopList = newList;
       })
       .addCase(editShopListItemAction, (state, action) => {
-        //console.log('EDIT', JSON.parse(JSON.stringify(state.shopList)));
-        //console.log('EDIT', action.payload);
-
         const index = state.shopList.findIndex(
           (item) => item._id === action.payload._id
         );

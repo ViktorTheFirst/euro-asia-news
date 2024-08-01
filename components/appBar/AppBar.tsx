@@ -9,7 +9,6 @@ import {
   Toolbar,
 } from '@mui/material';
 
-import { getNavbarHeader, isEmptyObject } from '@/utils/functions';
 import {
   resetCreationBillInfoAction,
   resetSelectedBillInfoAction,
@@ -23,12 +22,6 @@ import { setUserInfoAction } from '@/store/Users';
 const AppBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const routeString = useMemo(() => {
-    return isEmptyObject(router.query)
-      ? router.route
-      : (router.query.billType as string);
-  }, [router]);
 
   const onHomeClick = () => {
     dispatch(resetSelectedBillInfoAction());
@@ -64,6 +57,7 @@ const AppBar = () => {
         position='static'
         sx={{
           height: (theme) => `${theme.appBarHeight}vh`,
+          minHeight: '64px',
         }}
       >
         <Toolbar
@@ -85,7 +79,7 @@ const AppBar = () => {
           >
             Home
           </MuiLink>
-          <div>{getNavbarHeader(routeString)}</div>
+          <div>Euro - Asia - News</div>
 
           <UserImageComponent
             onUserImageClick={onUserImageClick}
