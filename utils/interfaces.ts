@@ -95,6 +95,14 @@ export enum PragraphRole {
   quote = 'quote',
   regular = 'regular',
 }
+
+export enum ArticleType {
+  main = 'main',
+  image = 'image',
+  video = 'video',
+  audio = 'audio',
+  regular = 'regular',
+}
 export interface IParagraph {
   role: PragraphRole;
   text: string;
@@ -108,10 +116,12 @@ export type IArticlePreview = Pick<
   | 'itemId'
   | 'tags'
   | 'h1Paragraphs'
+  | 'articleType'
 >;
 
 export interface IArticle {
   itemId: string;
+  articleType: ArticleType;
   previewImageURL: string;
   previewImageAlt: string;
   h1: string;

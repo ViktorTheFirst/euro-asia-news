@@ -11,6 +11,7 @@ import { IArticle, IParagraph, PragraphRole } from '@/utils/interfaces';
 import { formatDate, getUrlFromArticle } from '@/utils/functions';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 interface NewsItemProps {
   newsItem: IArticle;
 }
@@ -18,7 +19,6 @@ interface NewsItemProps {
 const NewsItem = ({
   newsItem,
 }: NewsItemProps): InferGetStaticPropsType<typeof getStaticProps> => {
-  console.log('newsItem in PROPS', newsItem);
   const {
     previewImageURL,
     previewImageAlt,
@@ -32,6 +32,9 @@ const NewsItem = ({
     h2Paragraphs,
     h3,
     h3Paragraphs,
+    authorh4,
+    authorParagraph,
+    authorMedia,
   } = newsItem;
 
   const getParagraphRoleClass = (role: PragraphRole): string => {
@@ -52,10 +55,15 @@ const NewsItem = ({
       {/* ---------------------------------first-image------------------------------- */}
       <div className={articleStyles.articlePageImageContainer}>
         <Image
-          src={previewImageURL}
+          src={baseUrl + previewImageURL}
           alt={previewImageAlt}
-          width={800}
-          height={500}
+          className={articleStyles.mainImage}
+          placeholder='blur'
+          blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
+          loading='lazy'
+          fill
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          style={{ objectFit: 'contain' }}
         />
       </div>
       {/* ---------------------------------h1------------------------------- */}
@@ -63,13 +71,21 @@ const NewsItem = ({
         <h1>{h1}</h1>
         <div className='row'>
           <div className={articleStyles.date}>{formatDate(date)}</div>
-          <div className={articleStyles.tags}>
+          {/* <div className={articleStyles.tags}>
             {tags.map((tag: string, index: number) => (
               <h5 key={tag} className={articleStyles.tag}>
                 {index < tags.length - 1 ? `${tag},` : tag}
               </h5>
             ))}
-          </div>
+          </div> */}
+          <span style={{ marginRight: '5px' }}>By</span>
+          <h4 className={articleStyles.articleAuthorHeader}>{authorh4}</h4>
+
+          {authorMedia.map((media: string, index: number) => (
+            <h5 key={media} className={articleStyles.tag}>
+              {index < authorMedia.length - 1 ? `${media},` : media}
+            </h5>
+          ))}
         </div>
       </div>
       {/* ---------------------------------h1-text------------------------------- */}
@@ -86,7 +102,16 @@ const NewsItem = ({
 
       {/* ---------------------------------second-image------------------------------- */}
       <div className={articleStyles.articlePageImageContainer}>
-        <Image src={imageURL} alt={imageAlt} width={800} height={500} />
+        <Image
+          src={baseUrl + imageURL}
+          alt={imageAlt}
+          placeholder='blur'
+          blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
+          loading='lazy'
+          fill
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          style={{ objectFit: 'contain' }}
+        />
       </div>
       {/* ---------------------------------h2------------------------------- */}
       <h2>{h2}</h2>

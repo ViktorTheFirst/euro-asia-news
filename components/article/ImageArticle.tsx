@@ -6,7 +6,9 @@ import Image from 'next/image';
 import { Link as MuiLink } from '@mui/material';
 import { getUrlFromArticle } from '@/utils/functions';
 
-const ArticleComponent = (props: IArticlePreview) => {
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+const ImageArticleComponent = (props: IArticlePreview) => {
   const { itemId, previewImageURL, previewImageAlt, tags, h1, h1Paragraphs } =
     props;
 
@@ -28,7 +30,7 @@ const ArticleComponent = (props: IArticlePreview) => {
           onClick={onArticleClickLogs}
         >
           <Image
-            src={previewImageURL}
+            src={baseUrl + previewImageURL}
             alt={previewImageAlt}
             width={350}
             height={350}
@@ -62,4 +64,4 @@ const ArticleComponent = (props: IArticlePreview) => {
   );
 };
 
-export default ArticleComponent;
+export default ImageArticleComponent;

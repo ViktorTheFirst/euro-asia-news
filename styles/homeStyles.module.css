@@ -1,0 +1,40 @@
+.articlesContainer {
+  background-color: #f5f5f5;
+  column-gap: 25px;
+  padding: 20px;
+  /* margin: 0 auto;
+  columns: 4;
+  background-color: #f5f5f5;
+  column-gap: 25px;
+  padding: 15px; */
+}
+
+@media (min-width: 1701px) {
+  .articlesContainer {
+    columns: 5;
+  }
+}
+
+@media (min-width: 1301px) and (max-width: 1700px) {
+  .articlesContainer {
+    columns: 4;
+  }
+}
+
+@media (min-width: 851px) and (max-width: 1300px) {
+  .articlesContainer {
+    columns: 3;
+  }
+}
+
+@media (min-width: 550px) and (max-width: 850px) {
+  .articlesContainer {
+    columns: 2;
+  }
+}
+
+@media (max-width: 430px) {
+  .articlesContainer {
+    columns: 1;
+  }
+}

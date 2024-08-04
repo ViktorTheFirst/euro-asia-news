@@ -8,8 +8,9 @@ import { UserInfo, getUserInfo, setUserInfoAction } from '@/store/Users';
 import { getUserAPI } from '@/api/users/usersAPI';
 import myTheme from '@/theme';
 import { getNewsAPI } from '@/api/news/newsAPI';
-import { IArticle, IArticlePreview } from '@/utils/interfaces';
-import ArticleComponent from '@/components/article/Article';
+import { ArticleType, IArticle, IArticlePreview } from '@/utils/interfaces';
+import ImageArticleComponent from '@/components/article/ImageArticle';
+import homeStyles from '../styles/homeStyles.module.css';
 
 interface HomePageProps {
   news: IArticle[];
@@ -18,6 +19,7 @@ interface HomePageProps {
 }
 
 const HomePage = ({ news, sessionHouseholdId, user }: HomePageProps) => {
+  console.log('news', news);
   const dispatch = useDispatch();
   const householdId = useSelector(getHouseholdId);
   const userInfo = useSelector(getUserInfo);
@@ -34,17 +36,24 @@ const HomePage = ({ news, sessionHouseholdId, user }: HomePageProps) => {
   }, [user, userInfo.profileImage, dispatch]);
 
   return (
-    <Box
-      component={Box}
-      display='flex'
-      flexWrap={'wrap'}
-      sx={{
-        backgroundColor: '#f5f5f5',
-        height: (theme) => `calc(100vh - ${theme.appBarHeight}vh)`,
-      }}
-    >
+    <Box component={Box} className={homeStyles.articlesContainer}>
       {news.map((article: IArticlePreview) => {
-        return <ArticleComponent key={article.h1} {...article} />;
+        switch (article.articleType) {
+          case ArticleType.image:
+            return <ImageArticleComponent key={article.h1} {...article} />;
+
+          case ArticleType.main:
+          // return main article component
+          case ArticleType.video:
+          // return video article component
+          case ArticleType.audio:
+          // return audio article component
+          case ArticleType.regular:
+          // return regular article component
+          default:
+            return;
+          // return regular article component
+        }
       })}
     </Box>
   );
