@@ -100,6 +100,7 @@
   width: 40%;
   flex-direction: column;
   margin-bottom: 20px;
+  align-items: center;
 }
 
 .date {
@@ -111,6 +112,15 @@
 .articlePageH1ParagraphContainer {
   width: 50%;
   padding: 20px;
+}
+
+.mainArticle {
+  background-color: white;
+  height: auto;
+  overflow: auto;
+  margin-bottom: 20px;
+  width: 750px;
+  column-count: 2;
 }
 
 .leadPragraph {
@@ -160,7 +170,7 @@
 
 @media (min-width: 851px) and (max-width: 1300px) {
   .articlePageHeaderContainer {
-    width: 75%;
+    width: 70%;
   }
   .articlePageH1ParagraphContainer {
     width: 65%;

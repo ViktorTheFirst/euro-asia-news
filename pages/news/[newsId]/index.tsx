@@ -57,7 +57,6 @@ const NewsItem = ({
         <Image
           src={baseUrl + previewImageURL}
           alt={previewImageAlt}
-          className={articleStyles.mainImage}
           placeholder='blur'
           blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
           loading='lazy'

@@ -11,6 +11,7 @@ import { getNewsAPI } from '@/api/news/newsAPI';
 import { ArticleType, IArticle, IArticlePreview } from '@/utils/interfaces';
 import ImageArticleComponent from '@/components/article/ImageArticle';
 import homeStyles from '../styles/homeStyles.module.css';
+import MainArticleComponent from '@/components/article/MainArticle';
 
 interface HomePageProps {
   news: IArticle[];
@@ -23,6 +24,9 @@ const HomePage = ({ news, sessionHouseholdId, user }: HomePageProps) => {
   const dispatch = useDispatch();
   const householdId = useSelector(getHouseholdId);
   const userInfo = useSelector(getUserInfo);
+  const mainArticle = news.find(
+    (article: IArticlePreview) => article.articleType === ArticleType.main
+  );
 
   useEffect(() => {
     if (sessionHouseholdId && !householdId)
@@ -37,13 +41,12 @@ const HomePage = ({ news, sessionHouseholdId, user }: HomePageProps) => {
 
   return (
     <Box component={Box} className={homeStyles.articlesContainer}>
+      {mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
       {news.map((article: IArticlePreview) => {
         switch (article.articleType) {
           case ArticleType.image:
             return <ImageArticleComponent key={article.h1} {...article} />;
 
-          case ArticleType.main:
-          // return main article component
           case ArticleType.video:
           // return video article component
           case ArticleType.audio:
