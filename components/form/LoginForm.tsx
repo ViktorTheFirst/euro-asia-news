@@ -1,8 +1,12 @@
+import { useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+
 import { ValidationError, ValidationFields } from '@/utils/interfaces';
-import { useMemo } from 'react';
+import loginRegisterStyles from '../../styles/loginRegisterStyles.module.css';
+import svgLogo from '../../public/assets/svgs/news-logo3.png';
 
 interface LoginFormProps {
   userEmail: string;
@@ -33,19 +37,23 @@ const LoginForm = ({
   }, [emailErr, passwordErr, userEmail, password]);
 
   return (
-    <Box
-      component={Box}
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
-      alignItems='center'
-      sx={{
-        width: '70%',
-        height: '60vh',
-        margin: '0 70px',
-      }}
-    >
-      <Typography variant='h4'>Login</Typography>
+    <div className={loginRegisterStyles.loginContainer}>
+      <Image
+        src={svgLogo}
+        alt='news-logo'
+        width={300}
+        height={300}
+        style={{ borderRadius: 10, margin: '20px 0 40px 0' }}
+      />
+      <Typography
+        variant='h4'
+        sx={{
+          color: (theme) => theme.palette.secondary.main,
+          fontWeight: 'bold',
+        }}
+      >
+        Login
+      </Typography>
 
       <Box
         component={Box}
@@ -55,6 +63,7 @@ const LoginForm = ({
         sx={{ width: '100%' }}
       >
         <TextField
+          className={loginRegisterStyles.textField}
           id='userEmail'
           label={!!emailErr ? emailErr.error : 'Email'}
           error={!!emailErr}
@@ -63,10 +72,10 @@ const LoginForm = ({
           type='email'
           value={userEmail}
           onChange={emailChangeHandler}
-          sx={{ width: '40%' }}
         />
 
         <TextField
+          className={loginRegisterStyles.textField}
           id='userPassword'
           label={!!passwordErr ? passwordErr.error : 'Password'}
           error={!!passwordErr}
@@ -75,18 +84,9 @@ const LoginForm = ({
           type='password'
           value={password}
           onChange={passwordChangeHandler}
-          sx={{ width: '40%' }}
         />
       </Box>
-      <Box
-        component={Box}
-        display='flex'
-        flexDirection='column'
-        justifyContent='center'
-        sx={{
-          width: '30%',
-        }}
-      >
+      <div className={loginRegisterStyles.buttonsContainer}>
         <Button
           variant='text'
           color='primary'
@@ -104,8 +104,8 @@ const LoginForm = ({
         >
           Login
         </LoadingButton>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

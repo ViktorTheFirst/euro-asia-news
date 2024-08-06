@@ -2,10 +2,14 @@ import type {} from '@mui/lab/themeAugmentation';
 import { colors, createTheme } from '@mui/material';
 
 const myTheme = createTheme({
-  appBarHeight: 7,
+  appBarHeight: 10,
+  backgroundColor: '#cfcfcf',
   palette: {
+    primary: {
+      main: '#333333',
+    },
     secondary: {
-      main: colors.orange[500],
+      main: '#ff7030',
     },
   },
   breakpoints: {
@@ -36,10 +40,12 @@ const myTheme = createTheme({
 declare module '@mui/material/styles' {
   interface Theme {
     appBarHeight?: number;
+    backgroundColor?: string;
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
     appBarHeight?: number;
+    backgroundColor?: string;
   }
 }
 

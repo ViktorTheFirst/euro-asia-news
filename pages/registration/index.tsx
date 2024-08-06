@@ -18,8 +18,6 @@ const RegistrationPage = () => {
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [partnerName, setPartnerName] = useState('');
-  const [partnerEmail, setPartnerEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordAgain, setPasswordAgain] = useState('');
 
@@ -31,16 +29,6 @@ const RegistrationPage = () => {
   const handleUserEmailChange = (event: any) => {
     setUserEmail(event.target.value);
     validate(event.target.value, ValidationFields.email);
-  };
-
-  const handlePartnerNameChange = (event: any) => {
-    setPartnerName(event.target.value);
-    validate(event.target.value, ValidationFields.partnerName);
-  };
-
-  const handlePartnerEmailChange = (event: any) => {
-    setPartnerEmail(event.target.value);
-    validate(event.target.value, ValidationFields.partnerEmail);
   };
 
   const handlePasswordChange = (event: any) => {
@@ -59,8 +47,6 @@ const RegistrationPage = () => {
       registrationAPI({
         name: userName,
         email: userEmail,
-        partnerName,
-        partnerEmail,
         password,
       }).then((result) => {
         if (result?.data.token) {
@@ -97,16 +83,12 @@ const RegistrationPage = () => {
       <RegistrationForm
         userName={userName}
         userEmail={userEmail}
-        partnerName={partnerName}
-        partnerEmail={partnerEmail}
         password={password}
         passwordAgain={passwordAgain}
         errors={errors}
         loading={loading}
         nameChangeHandler={handleUserNameChange}
         emailChangeHandler={handleUserEmailChange}
-        partnerNameChangeHandler={handlePartnerNameChange}
-        partnerEmailChangeHandler={handlePartnerEmailChange}
         passwordChangeHandler={handlePasswordChange}
         passwordAgainChangeHandler={handlePasswordAgainChange}
         onRegister={onRegister}

@@ -39,9 +39,9 @@ const HomePage = ({ news, sessionHouseholdId, user }: HomePageProps) => {
     }
   }, [user, userInfo.profileImage, dispatch]);
 
+  //{mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
   return (
     <Box component={Box} className={homeStyles.articlesContainer}>
-      {mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
       {news.map((article: IArticlePreview) => {
         switch (article.articleType) {
           case ArticleType.image:

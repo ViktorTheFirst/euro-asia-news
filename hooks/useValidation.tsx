@@ -9,7 +9,6 @@ const useValidation = () => {
   const validate = (input: string, type: ValidationFields) => {
     switch (type) {
       case ValidationFields.email:
-      case ValidationFields.partnerEmail:
         {
           const isValidEmail = emailRegex.test(input);
           const errorExist = errors.find((err) => err.type === type);
@@ -39,7 +38,6 @@ const useValidation = () => {
         break;
 
       case ValidationFields.name:
-      case ValidationFields.partnerName:
         {
           const isValidLength = input.length > 1;
           const errorExist = errors.find((err) => err.type === type);

@@ -20,8 +20,6 @@ export interface UserLoginData {
 
 export interface UserRegistrationData extends UserLoginData {
   name: string;
-  partnerName: string;
-  partnerEmail: string;
 }
 
 export interface ValidationError {
@@ -31,9 +29,7 @@ export interface ValidationError {
 
 export enum ValidationFields {
   name = 'name',
-  partnerName = 'partnerName',
   email = 'email',
-  partnerEmail = 'partnerEmail',
   password = 'password',
   passwordAgain = 'passwordAgain',
 }

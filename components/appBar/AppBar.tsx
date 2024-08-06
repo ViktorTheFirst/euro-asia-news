@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   AppBar as MuiAppBar,
   Box,
@@ -18,6 +18,7 @@ import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
 import { setIsShopListChangedAction } from '@/store/ShopList';
 import { setUserInfoAction } from '@/store/Users';
+import svgLogo from '../../public/assets/svgs/news-logo3.png';
 
 const AppBar = () => {
   const router = useRouter();
@@ -75,11 +76,17 @@ const AppBar = () => {
               caretColor: 'transparent',
               textDecoration: 'none',
               color: 'inherit',
+              marginTop: 4,
             }}
           >
-            Home
+            <Image
+              src={svgLogo}
+              alt='news-logo'
+              width={100}
+              height={100}
+              style={{ borderRadius: 10 }}
+            />
           </MuiLink>
-          <div>Euro - Asia - News</div>
 
           <UserImageComponent
             onUserImageClick={onUserImageClick}

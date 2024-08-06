@@ -40,13 +40,20 @@ const UserImageComponent = ({
       justifyContent='center'
       alignItems='center'
     >
-      <Typography sx={{ cursor: 'pointer' }} onClick={handleClick}>
+      <Typography
+        sx={{ cursor: 'pointer', color: '#ff7030' }}
+        onClick={handleClick}
+      >
         {userInfo.name}
       </Typography>
       <PortraitIcon
-        fontSize='large'
         aria-controls='user-image-menu'
-        sx={{ cursor: 'pointer', marginLeft: '5px' }}
+        sx={{
+          cursor: 'pointer',
+          marginLeft: '5px',
+          fontSize: '50px',
+          color: '#ff7030',
+        }}
         onClick={handleClick}
       />
       <Menu
