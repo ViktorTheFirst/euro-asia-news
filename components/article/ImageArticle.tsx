@@ -1,9 +1,10 @@
 import React from 'react';
-import { IArticlePreview } from '@/utils/interfaces';
-import articleStyles from '../../styles/articleStyles.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Link as MuiLink } from '@mui/material';
+
+import { IArticlePreview } from '@/utils/interfaces';
+import articleStyles from '../../styles/articleStyles.module.css';
 import { getUrlFromArticle } from '@/utils/functions';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -13,11 +14,10 @@ const ImageArticleComponent = (props: IArticlePreview) => {
     props;
 
   if (!h1) return null;
-  //const itemUrl = `news/${h1.replace(/ /g, '_').toLowerCase()}+${itemId}`;
   const itemUrl = `news/${getUrlFromArticle(h1, itemId)}`;
 
   const onArticleClickLogs = () => {
-    console.log('article clicked', props);
+    //console.log('article clicked', props);
   };
 
   return (

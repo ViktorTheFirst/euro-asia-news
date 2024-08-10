@@ -6,7 +6,6 @@ import { Box, Button, TextField } from '@mui/material';
 
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { UserInfo, setUserInfoAction } from '@/store/Users';
-import { getHouseholdId } from '@/store/Auth';
 import { editUserAPI, getUserAPI } from '@/api/users/usersAPI';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -15,13 +14,11 @@ interface ProfileProps {
   user: UserInfo;
 }
 
-const ProfilePage = ({ user }: ProfileProps) => {
+const ProfilePage = () => {
   const [file, setFile] = useState<Blob | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const pickImageRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-
-  const householdId = useSelector(getHouseholdId);
 
   useEffect(() => {
     if (!file) return;
@@ -43,7 +40,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
     }
   };
 
-  const confirmProfileImageChange = async () => {
+  /* const confirmProfileImageChange = async () => {
     if (!user.id || !file) return;
     const formData = new FormData();
 
@@ -69,7 +66,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
     } catch (err) {
       console.warn('Failed changing profile image ' + err);
     }
-  };
+  }; */
 
   const cancelProfileImageChange = () => {
     setPreview(null);
@@ -109,7 +106,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
             label='Name'
             variant='outlined'
             margin='normal'
-            value={user.name}
+            value={''}
             onChange={() => {}}
             disabled={false}
             sx={{ width: '50%' }}
@@ -119,7 +116,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
             label='Email'
             variant='outlined'
             margin='normal'
-            value={user.email}
+            value={''}
             onChange={() => {}}
             disabled={false}
             sx={{ width: '50%' }}
@@ -130,7 +127,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
             label='Household ID'
             variant='outlined'
             margin='normal'
-            value={householdId}
+            value={''}
             onChange={() => {}}
             disabled={true}
             sx={{ width: '50%' }}
@@ -165,12 +162,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
             }}
           >
             <Image
-              src={
-                preview ??
-                (user.profileImage
-                  ? baseUrl + '/' + user.profileImage
-                  : profilePicPlaceHolder)
-              }
+              src={preview ?? profilePicPlaceHolder}
               width={300}
               height={300}
               alt='User profile picture'
@@ -194,7 +186,7 @@ const ProfilePage = ({ user }: ProfileProps) => {
                 type='button'
                 variant='contained'
                 color='primary'
-                onClick={confirmProfileImageChange}
+                /* onClick={confirmProfileImageChange} */
               >
                 Confirm
               </Button>
@@ -230,25 +222,6 @@ const ProfilePage = ({ user }: ProfileProps) => {
       </Box>
     </Box>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.cookies;
-  const userData = await getUserAPI(cookies.userId!);
-  const { user } = userData?.data;
-  const { _id, name, email, profileImage } = user;
-
-  return {
-    props: {
-      user: {
-        id: _id,
-        name,
-        email,
-        profileImage,
-      },
-    },
-    notFound: !userData?.data?.user,
-  };
 };
 
 export default ProfilePage;

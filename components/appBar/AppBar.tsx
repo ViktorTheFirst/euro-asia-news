@@ -9,27 +9,14 @@ import {
   Toolbar,
 } from '@mui/material';
 
-import {
-  resetCreationBillInfoAction,
-  resetSelectedBillInfoAction,
-  setBillsByTypeAction,
-} from '@/store/Bills';
 import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
-import { setIsShopListChangedAction } from '@/store/ShopList';
 import { setUserInfoAction } from '@/store/Users';
 import svgLogo from '../../public/assets/svgs/news-logo3.png';
 
 const AppBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const onHomeClick = () => {
-    dispatch(resetSelectedBillInfoAction());
-    dispatch(resetCreationBillInfoAction());
-    dispatch(setBillsByTypeAction([]));
-    dispatch(setIsShopListChangedAction(false));
-  };
 
   const onLogoutClick = async () => {
     dispatch(setHouseholdIdAction(''));
@@ -69,7 +56,6 @@ const AppBar = () => {
         >
           <MuiLink
             component={Link}
-            onClick={onHomeClick}
             href='/'
             sx={{
               cursor: 'pointer',

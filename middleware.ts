@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest, response: NextResponse) {
-  const token = request.cookies.get('token');
+  console.log('OUTGOING REQUESTS', request.nextUrl);
+  return NextResponse.next();
+  /* const token = request.cookies.get('token');
 
   // If the user is authenticated, continue as normal
   if (token) {
@@ -15,7 +17,7 @@ export function middleware(request: NextRequest, response: NextResponse) {
     return NextResponse.next();
   }
   // Redirect to login page if not authenticated
-  return NextResponse.redirect(new URL('/login', request.url));
+  return NextResponse.redirect(new URL('/login', request.url)); */
 }
 
 // TODO: match the paths that need autorization

@@ -24,7 +24,7 @@ const MainArticleComponent = (props: IArticle) => {
   const itemUrl = `news/${getUrlFromArticle(h1, itemId)}`;
 
   const onArticleClickLogs = () => {
-    console.log('article clicked', props);
+    //console.log('article clicked', props);
   };
 
   return (

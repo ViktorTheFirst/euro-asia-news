@@ -14,8 +14,20 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
+        hostname: 'viktor-indie.com',
+        port: '',
+        //pathname: '**',
+      },
+      {
+        protocol: 'http',
         hostname: 'localhost',
         port: '5000',
+        //pathname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '192.168.1.246',
+        port: '2905',
         //pathname: '**',
       },
     ],

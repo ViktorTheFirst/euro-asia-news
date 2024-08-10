@@ -50,9 +50,8 @@ const RegistrationPage = () => {
         password,
       }).then((result) => {
         if (result?.data.token) {
-          const { name, email, token, householdId } = result?.data;
-          dispatch(setHouseholdIdAction(householdId));
-          dispatch(setTokenAction(token));
+          const { name, email } = result?.data;
+
           dispatch(
             setUserInfoAction({
               name,

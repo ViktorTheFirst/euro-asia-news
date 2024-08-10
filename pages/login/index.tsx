@@ -24,9 +24,7 @@ const LoginPage = () => {
     try {
       const result = await loginAPI({ email: userEmail, password });
 
-      const { name, email, token, householdId } = result;
-      dispatch(setHouseholdIdAction(householdId));
-      dispatch(setTokenAction(token));
+      const { name, email } = result;
       dispatch(
         setUserInfoAction({
           name,

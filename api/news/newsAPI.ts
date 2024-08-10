@@ -8,7 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const addArticleAPI = async (article: IArticle) => {
   try {
-    const createdArticle = await instance({
+    const createdArticle = await axios({
       method: 'post',
       url: `${baseUrl}/api/news/addArticle`,
       data: article,
@@ -23,26 +23,9 @@ export const addArticleAPI = async (article: IArticle) => {
   }
 };
 
-/* export const editBillAPI = async (billInfo: BillInfo) => {
-  try {
-    const editedBill = await instance({
-      method: 'post',
-      url: `${baseUrl}/api/bills/${billInfo._id}`,
-      data: billInfo,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return editedBill;
-  } catch (err) {
-    console.warn('Bill edition failed on FE ' + err);
-  }
-}; */
-
 export const getNewsAPI = async () => {
   try {
-    const allNews = await instance({
+    const allNews = await axios({
       method: 'get',
       url: `${baseUrl}/api/news/getNews`,
       headers: {
@@ -58,7 +41,7 @@ export const getNewsAPI = async () => {
 
 export const getNewsItemAPI = async (newsId: string) => {
   try {
-    const allNews = await instance({
+    const allNews = await axios({
       method: 'get',
       url: `${baseUrl}/api/news/${newsId}`,
       headers: {
@@ -71,19 +54,3 @@ export const getNewsItemAPI = async (newsId: string) => {
     console.warn('Fetching news item failed on FE ' + err);
   }
 };
-
-/* export const deleteBillByIdAPI = async (billId: string) => {
-  try {
-    const deletedBill = await instance({
-      method: 'delete',
-      url: `${baseUrl}/api/bills/${billId}`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return deletedBill;
-  } catch (err) {
-    console.warn('Bill deletion failed on FE ' + err);
-  }
-}; */

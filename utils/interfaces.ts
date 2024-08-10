@@ -34,56 +34,6 @@ export enum ValidationFields {
   passwordAgain = 'passwordAgain',
 }
 
-// -------------- BILLS INTERFACES ---------------------
-export interface MonthInfo {
-  confirmationNumber: string | null;
-  payedAmount: string | null;
-}
-
-export type Month =
-  | 'January'
-  | 'February'
-  | 'March'
-  | 'April'
-  | 'May'
-  | 'June'
-  | 'July'
-  | 'August'
-  | 'September'
-  | 'October'
-  | 'November'
-  | 'December';
-
-export interface BillInfo {
-  _id: string;
-  householdId: string;
-  billType: string;
-  year: string;
-  months: Month[];
-  confirmationNumber: string;
-  payedAmount: string;
-}
-
-export type MonthDictionary = {
-  [month in Month]: boolean;
-};
-
-// -------------- SHOPLIST INTERFACES ---------------------
-
-export interface ShopListItem {
-  _id?: string;
-  title: string;
-  amount: number;
-  isDone: boolean;
-}
-
-export interface ShopListData {
-  householdId: string;
-  initialList: ShopListItem[];
-  shopList: ShopListItem[];
-  isChanged: boolean;
-}
-
 // -------------- NEWS INTERFACES ---------------------
 
 export enum PragraphRole {
