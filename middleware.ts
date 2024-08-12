@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest, response: NextResponse) {
-  console.log('OUTGOING REQUESTS', request.nextUrl);
   return NextResponse.next();
   /* const token = request.cookies.get('token');
 
