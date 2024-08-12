@@ -13,7 +13,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'viktor-indie.com',
         port: '',
         //pathname: '**',
