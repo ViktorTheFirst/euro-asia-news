@@ -46,7 +46,7 @@ const HomePage = ({ news }: HomePageProps) => {
             alignItems: 'center',
           }}
         >
-          No news
+          No newss
         </div>
       )}
     </Box>
