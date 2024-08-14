@@ -24,6 +24,7 @@ export const addArticleAPI = async (article: IArticle) => {
 };
 
 export const getNewsAPI = async () => {
+  console.log('`${baseUrl}/api/news/getNews`', `${baseUrl}/api/news/getNews`);
   try {
     const allNews = await axios({
       method: 'get',
