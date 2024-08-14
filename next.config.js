@@ -13,6 +13,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'viktor-indie.com',
+        port: '',
+        //pathname: '**',
+      },
+      {
         protocol: 'https',
         hostname: 'viktor-indie.com',
         port: '',
@@ -21,7 +27,13 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
-        port: '5000',
+        port: '5001',
+        //pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '5001',
         //pathname: '**',
       },
       {
@@ -31,8 +43,22 @@ const nextConfig = {
         //pathname: '**',
       },
       {
+        protocol: 'https',
+        hostname: '192.168.1.246',
+        port: '2905',
+        //pathname: '**',
+      },
+      {
         protocol: 'http',
-        hostname: '127.0.0.1',
+        hostname:
+          'euroasianewsbe-backend-45a6cf-bcf6f8-92-113-25-137.traefik.me',
+        port: '2905',
+        //pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname:
+          'euroasianewsbe-backend-45a6cf-bcf6f8-92-113-25-137.traefik.me',
         port: '2905',
         //pathname: '**',
       },
