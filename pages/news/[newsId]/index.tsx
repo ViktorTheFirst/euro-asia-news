@@ -25,6 +25,7 @@ const NewsItem = ({
     h1,
     date,
     tags,
+    views,
     h1Paragraphs,
     imageURL,
     imageAlt,
@@ -32,10 +33,11 @@ const NewsItem = ({
     h2Paragraphs,
     h3,
     h3Paragraphs,
-    authorh4,
-    authorParagraph,
+    author,
     authorMedia,
   } = newsItem;
+
+  console.log('newsItem', newsItem);
 
   const getParagraphRoleClass = (role: PragraphRole): string => {
     switch (role) {
@@ -78,13 +80,13 @@ const NewsItem = ({
             ))}
           </div> */}
           <span style={{ marginRight: '5px' }}>By</span>
-          <h4 className={articleStyles.articleAuthorHeader}>{authorh4}</h4>
+          <h4 className={articleStyles.articleAuthorHeader}>{author}</h4>
 
-          {authorMedia.map((media: string, index: number) => (
+          {/* {authorMedia.map((media: string, index: number) => (
             <h5 key={media} className={articleStyles.tag}>
               {index < authorMedia.length - 1 ? `${media},` : media}
             </h5>
-          ))}
+          ))} */}
         </div>
       </div>
       {/* ---------------------------------h1-text------------------------------- */}
@@ -170,7 +172,7 @@ const NewsItem = ({
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
   const newsResponse = await getNewsAPI();
-  const news: IArticle[] = newsResponse?.data;
+  const news: IArticle[] = newsResponse?.data?.news;
   const ids = news.map((newsItem: IArticle) =>
     getUrlFromArticle(newsItem.h1, newsItem.itemId)
   );
@@ -187,7 +189,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const extractedId = (params?.newsId as string).split('+')[1];
   const newsItem = await getNewsItemAPI(extractedId);
   return {
-    props: { newsItem: newsItem?.data },
+    props: { newsItem: newsItem?.data?.article },
   };
 };
 

@@ -29,7 +29,6 @@ export const loginAPI = async (
   userData: UserLoginData
 ): Promise<LoginResponse> => {
   try {
-    console.log('`${baseUrl}/api/users/login`', `${baseUrl}/api/users/login`);
     const result = await axios({
       method: 'post',
       url: `${baseUrl}/api/users/login`,

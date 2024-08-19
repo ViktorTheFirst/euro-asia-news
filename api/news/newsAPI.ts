@@ -24,7 +24,6 @@ export const addArticleAPI = async (article: IArticle) => {
 };
 
 export const getNewsAPI = async () => {
-  console.log('`${baseUrl}/api/news/getNews`', `${baseUrl}/api/news/getNews`);
   try {
     const allNews = await axios({
       method: 'get',
@@ -33,7 +32,6 @@ export const getNewsAPI = async () => {
         'Content-Type': 'application/json',
       },
     });
-
     return allNews;
   } catch (err) {
     console.warn('Fetching news failed on FE ' + err);
@@ -42,7 +40,7 @@ export const getNewsAPI = async () => {
 
 export const getNewsItemAPI = async (newsId: string) => {
   try {
-    const allNews = await axios({
+    const result = await axios({
       method: 'get',
       url: `${baseUrl}/api/news/${newsId}`,
       headers: {
@@ -50,7 +48,7 @@ export const getNewsItemAPI = async (newsId: string) => {
       },
     });
 
-    return allNews;
+    return result;
   } catch (err) {
     console.warn('Fetching news item failed on FE ' + err);
   }

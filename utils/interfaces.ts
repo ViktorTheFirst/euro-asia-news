@@ -79,8 +79,8 @@ export interface IArticle {
   h3Paragraphs: IParagraph[];
   imageURL: string;
   imageAlt: string;
-  authorh4: string;
-  authorParagraph: IParagraph;
-  authorMedia: string[];
+  author: string;
+  authorMedia: { type: string; url: string }[];
   tags: string[];
+  views: number;
 }

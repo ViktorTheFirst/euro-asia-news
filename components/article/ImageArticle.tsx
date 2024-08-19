@@ -16,10 +16,6 @@ const ImageArticleComponent = (props: IArticlePreview) => {
   if (!h1) return null;
   const itemUrl = `news/${getUrlFromArticle(h1, itemId)}`;
 
-  const onArticleClickLogs = () => {
-    //console.log('article clicked', props);
-  };
-
   return (
     <article className={articleStyles.article}>
       <div className={articleStyles.articleImageContainer}>
@@ -27,7 +23,7 @@ const ImageArticleComponent = (props: IArticlePreview) => {
           component={Link}
           href={itemUrl}
           className={articleStyles.mainHeader}
-          onClick={onArticleClickLogs}
+          //prefetch={false}
         >
           <Image
             src={baseUrl + previewImageURL}
@@ -52,7 +48,7 @@ const ImageArticleComponent = (props: IArticlePreview) => {
             component={Link}
             href={itemUrl}
             className={articleStyles.mainHeader}
-            onClick={onArticleClickLogs}
+            //prefetch={false}
           >
             <h1>{h1}</h1>
           </MuiLink>

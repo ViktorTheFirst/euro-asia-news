@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { GetServerSideProps } from 'next';
 import { Box } from '@mui/material';
 
@@ -20,23 +21,25 @@ const HomePage = ({ news }: HomePageProps) => {
   //{mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
   return (
     <Box component={Box} className={homeStyles.articlesContainer}>
-      {news &&
-        news.map((article: IArticlePreview) => {
-          switch (article.articleType) {
-            case ArticleType.image:
-              return <ImageArticleComponent key={article.h1} {...article} />;
+      <Suspense fallback={<div>Loading...</div>}>
+        {news &&
+          news.map((article: IArticlePreview) => {
+            switch (article.articleType) {
+              case ArticleType.image:
+                return <ImageArticleComponent key={article.h1} {...article} />;
 
-            case ArticleType.video:
-            // return video article component
-            case ArticleType.audio:
-            // return audio article component
-            case ArticleType.regular:
-            // return regular article component
-            default:
-              return;
-            // return regular article component
-          }
-        })}
+              case ArticleType.video:
+              // return video article component
+              case ArticleType.audio:
+              // return audio article component
+              case ArticleType.regular:
+              // return regular article component
+              default:
+                return;
+              // return regular article component
+            }
+          })}
+      </Suspense>
       {!news && (
         <div
           style={{
@@ -55,7 +58,8 @@ const HomePage = ({ news }: HomePageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const newsResponse = await getNewsAPI();
-  const news: IArticle[] | null = newsResponse?.data ?? null;
+
+  const news: IArticle[] | null = newsResponse?.data?.news ?? null;
 
   return {
     props: {

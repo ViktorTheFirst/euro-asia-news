@@ -23,10 +23,6 @@ const MainArticleComponent = (props: IArticle) => {
   if (!h1) return null;
   const itemUrl = `news/${getUrlFromArticle(h1, itemId)}`;
 
-  const onArticleClickLogs = () => {
-    //console.log('article clicked', props);
-  };
-
   return (
     <article className={articleStyles.mainArticle}>
       <CarouselComponent

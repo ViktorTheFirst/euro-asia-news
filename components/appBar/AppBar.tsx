@@ -9,7 +9,6 @@ import {
   Toolbar,
 } from '@mui/material';
 
-import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import UserImageComponent from './UserImage';
 import { setUserInfoAction } from '@/store/Users';
 import svgLogo from '../../public/assets/svgs/news-logo3.png';
@@ -19,13 +18,12 @@ const AppBar = () => {
   const dispatch = useDispatch();
 
   const onLogoutClick = async () => {
-    dispatch(setHouseholdIdAction(''));
     dispatch(setUserInfoAction({ name: '', email: '', profileImage: '' }));
-    dispatch(setTokenAction(''));
     router.push('/login');
   };
-
-  const onUserImageClick = () => {};
+  const onLoginClick = async () => {
+    router.push('/login');
+  };
 
   const onUserProfileClick = () => {
     router.push('/profile');
@@ -75,8 +73,8 @@ const AppBar = () => {
           </MuiLink>
 
           <UserImageComponent
-            onUserImageClick={onUserImageClick}
             onLogoutClick={onLogoutClick}
+            onLoginClick={onLoginClick}
             onUserProfileClick={onUserProfileClick}
           />
         </Toolbar>

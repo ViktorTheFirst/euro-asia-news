@@ -6,14 +6,14 @@ import PortraitIcon from '@mui/icons-material/Portrait';
 import { getUserInfo } from '@/store/Users';
 
 interface UserImageProps {
-  onUserImageClick: () => void;
   onLogoutClick: () => void;
+  onLoginClick: () => void;
   onUserProfileClick: () => void;
 }
 
 const UserImageComponent = ({
-  onUserImageClick,
   onLogoutClick,
+  onLoginClick,
   onUserProfileClick,
 }: UserImageProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,7 +21,6 @@ const UserImageComponent = ({
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
-    onUserImageClick();
   };
 
   const handleProfileClick = () => {
@@ -64,8 +63,14 @@ const UserImageComponent = ({
         onClose={handleClose}
         transitionDuration={300}
       >
-        <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-        <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+        <MenuItem disabled onClick={handleProfileClick}>
+          Profile
+        </MenuItem>
+        {!userInfo.email ? (
+          <MenuItem onClick={onLoginClick}>Login</MenuItem>
+        ) : (
+          <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+        )}
       </Menu>
     </Box>
   );
