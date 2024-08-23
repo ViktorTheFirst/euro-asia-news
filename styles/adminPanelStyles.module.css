@@ -1,0 +1,33 @@
+.adminPanelContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  background-color: pink;
+}
+
+/* ----------------------ADD ARTICLE----------------------- */
+
+.addArticleContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  background-color: rgb(105, 167, 89);
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+  flex: 1;
+}
+
+.previewContainer {
+  display: flex;
+  background-color: coral;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}

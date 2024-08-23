@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { Box, Button, TextField } from '@mui/material';
 
 import profilePicPlaceHolder from './../../public/assets/images/profile_placeholder.jpg';
 import { UserInfo, setUserInfoAction } from '@/store/Users';
-import { editUserAPI, getUserAPI } from '@/api/users/usersAPI';
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface ProfileProps {
   user: UserInfo;
@@ -39,34 +35,6 @@ const ProfilePage = () => {
       setFile(pickedFile);
     }
   };
-
-  /* const confirmProfileImageChange = async () => {
-    if (!user.id || !file) return;
-    const formData = new FormData();
-
-    try {
-      formData.append('name', user.name);
-      formData.append('email', user.email);
-      formData.append('image', file);
-
-      await editUserAPI(user.id, formData).then((result) => {
-        if (result?.data?.user) {
-          const { name, email, profileImage } = result.data.user;
-          dispatch(
-            setUserInfoAction({
-              name,
-              email,
-              profileImage: profileImage.toString(),
-            })
-          );
-          setPreview(baseUrl + '/' + profileImage);
-          setFile(null);
-        }
-      });
-    } catch (err) {
-      console.warn('Failed changing profile image ' + err);
-    }
-  }; */
 
   const cancelProfileImageChange = () => {
     setPreview(null);

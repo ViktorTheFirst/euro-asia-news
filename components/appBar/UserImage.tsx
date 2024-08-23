@@ -9,12 +9,14 @@ interface UserImageProps {
   onLogoutClick: () => void;
   onLoginClick: () => void;
   onUserProfileClick: () => void;
+  onAdminPanelClick: () => void;
 }
 
 const UserImageComponent = ({
   onLogoutClick,
   onLoginClick,
   onUserProfileClick,
+  onAdminPanelClick,
 }: UserImageProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const userInfo = useSelector(getUserInfo);
@@ -25,6 +27,11 @@ const UserImageComponent = ({
 
   const handleProfileClick = () => {
     onUserProfileClick();
+    handleClose();
+  };
+
+  const handleAdminPanelClick = () => {
+    onAdminPanelClick();
     handleClose();
   };
 
@@ -66,6 +73,7 @@ const UserImageComponent = ({
         <MenuItem disabled onClick={handleProfileClick}>
           Profile
         </MenuItem>
+        <MenuItem onClick={handleAdminPanelClick}>Admin panel</MenuItem>
         {!userInfo.email ? (
           <MenuItem onClick={onLoginClick}>Login</MenuItem>
         ) : (

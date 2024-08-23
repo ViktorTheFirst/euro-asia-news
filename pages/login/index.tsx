@@ -5,7 +5,6 @@ import { Alert, Box, Snackbar, Typography } from '@mui/material';
 
 import { loginAPI } from '@/api/auth/authAPI';
 import LoginForm from '@/components/form/LoginForm';
-import { setHouseholdIdAction, setTokenAction } from '@/store/Auth';
 import { setUserInfoAction } from '@/store/Users';
 import useValidation from '@/hooks/useValidation';
 import { ValidationFields } from '../../utils/interfaces';

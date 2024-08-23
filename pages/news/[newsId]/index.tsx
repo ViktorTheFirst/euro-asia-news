@@ -37,7 +37,7 @@ const NewsItem = ({
     authorMedia,
   } = newsItem;
 
-  console.log('newsItem', newsItem);
+  //console.log('newsItem', newsItem);
 
   const getParagraphRoleClass = (role: PragraphRole): string => {
     switch (role) {

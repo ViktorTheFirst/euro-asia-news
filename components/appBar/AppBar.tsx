@@ -29,6 +29,10 @@ const AppBar = () => {
     router.push('/profile');
   };
 
+  const onAdminPanelClick = () => {
+    router.push('/admin-panel');
+  };
+
   return (
     <Box
       component={Box}
@@ -76,6 +80,7 @@ const AppBar = () => {
             onLogoutClick={onLogoutClick}
             onLoginClick={onLoginClick}
             onUserProfileClick={onUserProfileClick}
+            onAdminPanelClick={onAdminPanelClick}
           />
         </Toolbar>
       </MuiAppBar>
