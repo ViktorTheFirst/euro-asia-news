@@ -53,3 +53,44 @@ export const getNewsItemAPI = async (newsId: string) => {
     console.warn('Fetching news item failed on FE ' + err);
   }
 };
+
+export const uploadImageAPI = async (
+  articleId: string,
+  imageData: FormData
+) => {
+  console.log(
+    'uploadImageAPI {baseUrl}/api/news/upload-image',
+    `${baseUrl}/api/news/upload-image/${articleId}`
+  );
+  try {
+    const user = await axios({
+      method: 'post',
+      url: `${baseUrl}/api/news/upload-image/${articleId}`,
+      data: imageData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('user in API', user);
+
+    return user;
+  } catch (err) {
+    console.warn('Uploading image failed on FE ' + err);
+  }
+};
+
+export const getNextArticleIdAPI = async () => {
+  try {
+    const result = await axios({
+      method: 'get',
+      url: `${baseUrl}/api/news/getNextArticleId`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return result;
+  } catch (err) {
+    console.warn('Fetching next article id failed on FE ' + err);
+  }
+};

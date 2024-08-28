@@ -8,6 +8,11 @@ export const getAddArticleData = createSelector(
   (adminSelector) => adminSelector.addArticleData
 );
 
+export const getNextArticleIdSelector = createSelector(
+  [adminSelector],
+  (adminSelector) => adminSelector.nextArticleId
+);
+
 /* export const getUserInfo = createSelector([usersSelector], (usersSelector) => {
   const { name, email, profileImage } = usersSelector;
   return {

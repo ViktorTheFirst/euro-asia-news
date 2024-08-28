@@ -8,6 +8,7 @@ import {
   setAddArticleH2ParagraphRoleAction,
   setAddArticleH3ParagraphAction,
   setAddArticleH3ParagraphRoleAction,
+  setNextArticleIdAction,
 } from './adminActions';
 
 export const adminSlice = createSlice({
@@ -18,19 +19,14 @@ export const adminSlice = createSlice({
     builder.addCase(setAddArticleDataAction, (state, action) => {
       state.addArticleData = action.payload;
     }),
+      builder.addCase(setNextArticleIdAction, (state, action) => {
+        state.nextArticleId = action.payload;
+      }),
       builder.addCase(setAddArticleH1ParagraphRoleAction, (state, action) => {
-        console.log('action.payload', action.payload);
         state.addArticleData.h1Paragraphs[action.payload.pIndex].role =
           action.payload.pRole;
-
-        /* let newState = state.addArticleData;
-        newState.h1Paragraphs[action.payload.pIndex].role =
-          action.payload.pRole;
-
-        return { ...state, addArticleData: newState }; */
       }),
       builder.addCase(setAddArticleH1ParagraphAction, (state, action) => {
-        console.log('action.payload', action.payload);
         state.addArticleData.h1Paragraphs[action.payload.pIndex].text =
           action.payload.pText;
       }),

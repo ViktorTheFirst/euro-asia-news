@@ -11,46 +11,51 @@ import {
   Typography,
 } from '@mui/material';
 
-import {
-  getAddArticleData,
-  setAddArticleDataAction,
-  setAddArticleH1ParagraphAction,
-  setAddArticleH1ParagraphRoleAction,
-} from '@/store/Admin';
+import { getAddArticleData, setAddArticleDataAction } from '@/store/Admin';
 import { PragraphRole } from '@/utils/interfaces';
 
+interface AddArticleProps {
+  hType: 'h1' | 'h2' | 'h3';
+  addParagraphRoleAction: any; // TODO: change the any
+  addParagraphTextAction: any;
+}
+
 // consists of h1 + 3 paragraphs
-const SectionComponent = () => {
+const SectionComponent = ({
+  hType,
+  addParagraphRoleAction,
+  addParagraphTextAction,
+}: AddArticleProps) => {
   const dispatch = useDispatch();
   const articleData = useSelector(getAddArticleData);
 
   return (
     <div>
-      {/* ------------------------------h1------------------------------- */}
+      {/* ------------------------------heading------------------------------- */}
       <Accordion>
         <AccordionSummary expandIcon={<ArrowDownward />}>
-          <Typography>h1 heading</Typography>
+          <Typography>{`${hType} heading`}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TextField
             variant='outlined'
             type='text'
-            value={articleData.h1}
+            value={articleData[hType]}
             onChange={(event) =>
               dispatch(
                 setAddArticleDataAction({
                   ...articleData,
-                  h1: event.target.value,
+                  [hType]: event.target.value,
                 })
               )
             }
           />
         </AccordionDetails>
       </Accordion>
-      {/* ------------------------------h1 PARAGRAPHS------------------------------- */}
+      {/* ------------------------------PARAGRAPHS------------------------------- */}
       <Accordion>
         <AccordionSummary expandIcon={<ArrowDownward />}>
-          <Typography>h1 paragraphs</Typography>
+          <Typography>{`${hType} paragraphs`}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           {/* ------------------------p1------------------------- */}
@@ -62,10 +67,10 @@ const SectionComponent = () => {
               {/*  TODO: debounce */}
               <Select
                 label='role'
-                value={articleData.h1Paragraphs[0].role}
+                value={articleData[`${hType}Paragraphs`][0].role}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphRoleAction({
+                    addParagraphRoleAction({
                       pIndex: 0,
                       pRole: event.target.value as PragraphRole,
                     })
@@ -81,10 +86,10 @@ const SectionComponent = () => {
                 multiline
                 variant='outlined'
                 type='text'
-                value={articleData.h1Paragraphs[0].text}
+                value={articleData[`${hType}Paragraphs`][0].text}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphAction({
+                    addParagraphTextAction({
                       pIndex: 0,
                       pText: event.target.value,
                     })
@@ -103,10 +108,10 @@ const SectionComponent = () => {
               {/*  TODO: debounce */}
               <Select
                 label='role'
-                value={articleData.h1Paragraphs[1].role}
+                value={articleData[`${hType}Paragraphs`][1].role}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphRoleAction({
+                    addParagraphRoleAction({
                       pIndex: 1,
                       pRole: event.target.value as PragraphRole,
                     })
@@ -122,10 +127,10 @@ const SectionComponent = () => {
                 multiline
                 variant='outlined'
                 type='text'
-                value={articleData.h1Paragraphs[1].text}
+                value={articleData[`${hType}Paragraphs`][1].text}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphAction({
+                    addParagraphTextAction({
                       pIndex: 1,
                       pText: event.target.value,
                     })
@@ -144,10 +149,10 @@ const SectionComponent = () => {
               {/*  TODO: debounce */}
               <Select
                 label='role'
-                value={articleData.h1Paragraphs[2].role}
+                value={articleData[`${hType}Paragraphs`][2].role}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphRoleAction({
+                    addParagraphRoleAction({
                       pIndex: 2,
                       pRole: event.target.value as PragraphRole,
                     })
@@ -163,10 +168,10 @@ const SectionComponent = () => {
                 multiline
                 variant='outlined'
                 type='text'
-                value={articleData.h1Paragraphs[2].text}
+                value={articleData[`${hType}Paragraphs`][2].text}
                 onChange={(event) =>
                   dispatch(
-                    setAddArticleH1ParagraphAction({
+                    addParagraphTextAction({
                       pIndex: 2,
                       pText: event.target.value,
                     })

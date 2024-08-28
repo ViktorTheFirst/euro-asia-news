@@ -5,6 +5,10 @@ export const setAddArticleDataAction = createAction<IArticle>(
   'admin/setAddArticleDataAction'
 );
 
+export const setNextArticleIdAction = createAction<number>(
+  'admin/setNextArticleIdAction'
+);
+
 export const setAddArticleH1ParagraphRoleAction = createAction<{
   pRole: PragraphRole;
   pIndex: number;

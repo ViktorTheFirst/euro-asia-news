@@ -2,6 +2,7 @@ import { ArticleType, PragraphRole } from '@/utils/interfaces';
 import { AddArticleInitialState } from './interfaces';
 
 export const initialState: AddArticleInitialState = {
+  nextArticleId: 0,
   addArticleData: {
     itemId: '',
     articleType: ArticleType.image,
