@@ -1,9 +1,7 @@
 import React from 'react';
 import { IArticle } from '@/utils/interfaces';
 import articleStyles from '../../styles/articleStyles.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Link as MuiLink } from '@mui/material';
+
 import { getUrlFromArticle } from '@/utils/functions';
 import CarouselComponent from '../carousel/Carousel';
 
@@ -16,8 +14,8 @@ const MainArticleComponent = (props: IArticle) => {
     previewImageAlt,
     h1,
     h1Paragraphs,
-    imageURL,
-    imageAlt,
+    articleImageURL,
+    articleImageAlt,
   } = props;
 
   if (!h1) return null;
@@ -28,7 +26,7 @@ const MainArticleComponent = (props: IArticle) => {
       <CarouselComponent
         images={[
           { src: previewImageURL, alt: previewImageAlt },
-          { src: imageURL, alt: imageAlt },
+          { src: articleImageURL, alt: articleImageAlt },
         ]}
       />
       {/* <div className={articleStyles.articleImageContainer}>

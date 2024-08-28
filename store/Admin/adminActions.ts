@@ -1,4 +1,4 @@
-import { IArticle, PragraphRole } from '@/utils/interfaces';
+import { AuthorMediaType, IArticle, PragraphRole } from '@/utils/interfaces';
 import { createAction } from '@reduxjs/toolkit';
 
 export const setAddArticleDataAction = createAction<IArticle>(
@@ -8,6 +8,16 @@ export const setAddArticleDataAction = createAction<IArticle>(
 export const setNextArticleIdAction = createAction<number>(
   'admin/setNextArticleIdAction'
 );
+
+export const setAuthorMediaTypeAction = createAction<{
+  mType: AuthorMediaType;
+  mIndex: number;
+}>('admin/setAuthorMediaTypeAction');
+
+export const setAuthorMediaURLAction = createAction<{
+  mURL: string;
+  mIndex: number;
+}>('admin/setAuthorMediaURLAction');
 
 export const setAddArticleH1ParagraphRoleAction = createAction<{
   pRole: PragraphRole;

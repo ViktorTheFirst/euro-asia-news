@@ -9,6 +9,8 @@ import {
   setAddArticleH3ParagraphAction,
   setAddArticleH3ParagraphRoleAction,
   setNextArticleIdAction,
+  setAuthorMediaTypeAction,
+  setAuthorMediaURLAction,
 } from './adminActions';
 
 export const adminSlice = createSlice({
@@ -22,6 +24,16 @@ export const adminSlice = createSlice({
       builder.addCase(setNextArticleIdAction, (state, action) => {
         state.nextArticleId = action.payload;
       }),
+      /* ----------------------------AUTHOR MEDIA------------------------- */
+      builder.addCase(setAuthorMediaTypeAction, (state, action) => {
+        state.addArticleData.authorMedia[action.payload.mIndex].type =
+          action.payload.mType;
+      }),
+      builder.addCase(setAuthorMediaURLAction, (state, action) => {
+        state.addArticleData.authorMedia[action.payload.mIndex].url =
+          action.payload.mURL;
+      }),
+      /* ---------------------------------H1--------------------------------- */
       builder.addCase(setAddArticleH1ParagraphRoleAction, (state, action) => {
         state.addArticleData.h1Paragraphs[action.payload.pIndex].role =
           action.payload.pRole;
@@ -30,6 +42,7 @@ export const adminSlice = createSlice({
         state.addArticleData.h1Paragraphs[action.payload.pIndex].text =
           action.payload.pText;
       }),
+      /* ---------------------------------H2--------------------------------- */
       builder.addCase(setAddArticleH2ParagraphRoleAction, (state, action) => {
         state.addArticleData.h2Paragraphs[action.payload.pIndex].role =
           action.payload.pRole;
@@ -38,6 +51,7 @@ export const adminSlice = createSlice({
         state.addArticleData.h2Paragraphs[action.payload.pIndex].text =
           action.payload.pText;
       }),
+      /* ---------------------------------H3--------------------------------- */
       builder.addCase(setAddArticleH3ParagraphRoleAction, (state, action) => {
         state.addArticleData.h3Paragraphs[action.payload.pIndex].role =
           action.payload.pRole;

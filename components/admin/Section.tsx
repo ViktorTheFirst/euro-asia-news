@@ -14,7 +14,7 @@ import {
 import { getAddArticleData, setAddArticleDataAction } from '@/store/Admin';
 import { PragraphRole } from '@/utils/interfaces';
 
-interface AddArticleProps {
+interface SectionProps {
   hType: 'h1' | 'h2' | 'h3';
   addParagraphRoleAction: any; // TODO: change the any
   addParagraphTextAction: any;
@@ -25,7 +25,7 @@ const SectionComponent = ({
   hType,
   addParagraphRoleAction,
   addParagraphTextAction,
-}: AddArticleProps) => {
+}: SectionProps) => {
   const dispatch = useDispatch();
   const articleData = useSelector(getAddArticleData);
 

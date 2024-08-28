@@ -49,6 +49,14 @@ export enum ArticleType {
   audio = 'audio',
   regular = 'regular',
 }
+
+export enum AuthorMediaType {
+  facebook = 'facebook',
+  X = 'X',
+  instegram = 'instegram',
+  substack = 'substack',
+  linkedIn = 'linkedin',
+}
 export interface IParagraph {
   role: PragraphRole;
   text: string;
@@ -77,8 +85,8 @@ export interface IArticle {
   h2Paragraphs: IParagraph[];
   h3: string;
   h3Paragraphs: IParagraph[];
-  imageURL: string;
-  imageAlt: string;
+  articleImageURL: string;
+  articleImageAlt: string;
   author: string;
   authorMedia: { type: string; url: string }[];
   tags: string[];

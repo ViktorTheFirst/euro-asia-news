@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const newsResponse = await getNewsAPI();
 
   const news: IArticle[] | null = newsResponse?.data?.news ?? null;
-
+  console.group('news in home', news);
   return {
     props: {
       news,

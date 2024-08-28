@@ -27,8 +27,8 @@ const NewsItem = ({
     tags,
     views,
     h1Paragraphs,
-    imageURL,
-    imageAlt,
+    articleImageURL,
+    articleImageAlt,
     h2,
     h2Paragraphs,
     h3,
@@ -37,7 +37,7 @@ const NewsItem = ({
     authorMedia,
   } = newsItem;
 
-  //console.log('newsItem', newsItem);
+  console.log('newsItem', newsItem);
 
   const getParagraphRoleClass = (role: PragraphRole): string => {
     switch (role) {
@@ -104,8 +104,8 @@ const NewsItem = ({
       {/* ---------------------------------second-image------------------------------- */}
       <div className={articleStyles.articlePageImageContainer}>
         <Image
-          src={baseUrl + imageURL}
-          alt={imageAlt}
+          src={baseUrl + articleImageURL}
+          alt={articleImageAlt}
           placeholder='blur'
           blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
           loading='lazy'
