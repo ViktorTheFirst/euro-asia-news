@@ -51,7 +51,6 @@ const NewsItem = ({
         return articleStyles.regularParagraph;
     }
   };
-
   return (
     <div className={articleStyles.articlePageContainer}>
       {/* ---------------------------------first-image------------------------------- */}

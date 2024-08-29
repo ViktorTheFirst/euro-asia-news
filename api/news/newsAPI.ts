@@ -66,7 +66,6 @@ export const uploadImageAPI = async (
         'Content-Type': 'multipart/form-data',
       },
     });
-
     return result;
   } catch (err) {
     console.warn('Uploading image failed on FE ' + err);

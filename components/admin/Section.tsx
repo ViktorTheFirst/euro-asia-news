@@ -39,6 +39,7 @@ const SectionComponent = ({
         <AccordionDetails>
           <TextField
             variant='outlined'
+            multiline
             type='text'
             value={articleData[hType]}
             onChange={(event) =>

@@ -64,24 +64,25 @@ export const ImageSectionComponent = ({ imageType }: ImageSectionProps) => {
 
       await uploadImageAPI(nextArticleId.toString(), formData).then(
         (result) => {
-          console.log('result.data', result?.data);
           if (result?.data?.fileName) {
+            const formatedImagePath = result?.data?.fileName;
+
             if (imageType === 'preview') {
               dispatch(
                 setAddArticleDataAction({
                   ...articleData,
-                  previewImageURL: result?.data?.fileName,
+                  previewImageURL: formatedImagePath,
                 })
               );
             } else {
               dispatch(
                 setAddArticleDataAction({
                   ...articleData,
-                  articleImageURL: result?.data?.fileName,
+                  articleImageURL: formatedImagePath,
                 })
               );
             }
-            setPreview(baseUrl + result?.data?.fileName);
+            setPreview(baseUrl + formatedImagePath);
             setFile(null);
           }
         }
@@ -95,7 +96,6 @@ export const ImageSectionComponent = ({ imageType }: ImageSectionProps) => {
     setPreview(null);
     setFile(null);
   };
-
   return (
     <div>
       {/* -----------------------PREVIEW IMAGE---------------------- */}
