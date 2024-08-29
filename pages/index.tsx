@@ -1,4 +1,5 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import { Box } from '@mui/material';
 
@@ -8,12 +9,18 @@ import { ArticleType, IArticle, IArticlePreview } from '@/utils/interfaces';
 import ImageArticleComponent from '@/components/article/ImageArticle';
 import homeStyles from '../styles/homeStyles.module.css';
 import MainArticleComponent from '@/components/article/MainArticle';
+import { setNextArticleIdAction } from '@/store/Admin';
 
 interface HomePageProps {
   news: IArticle[] | null;
 }
 
 const HomePage = ({ news }: HomePageProps) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    news && dispatch(setNextArticleIdAction(news.length + 1));
+  }, []);
   /* const mainArticle = news.find(
     (article: IArticlePreview) => article.articleType === ArticleType.main
   ); */
@@ -60,7 +67,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const newsResponse = await getNewsAPI();
 
   const news: IArticle[] | null = newsResponse?.data?.news ?? null;
-  console.group('news in home', news);
   return {
     props: {
       news,

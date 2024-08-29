@@ -6,7 +6,7 @@ export const initialState: AddArticleInitialState = {
   addArticleData: {
     itemId: '',
     articleType: ArticleType.image,
-    date: new Date(),
+    date: new Date().toISOString().split('T')[0] as unknown as Date,
     author: '',
     authorMedia: [
       { type: '', url: '' },

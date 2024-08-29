@@ -37,8 +37,6 @@ const NewsItem = ({
     authorMedia,
   } = newsItem;
 
-  console.log('newsItem', newsItem);
-
   const getParagraphRoleClass = (role: PragraphRole): string => {
     switch (role) {
       case PragraphRole.lead:
@@ -156,14 +154,37 @@ const NewsItem = ({
 
       {/* ---------------------------------h3-text------------------------------- */}
       <div className={articleStyles.articlePageH1ParagraphContainer}>
-        {h3Paragraphs.map((p: IParagraph, index: number) => (
-          <p
-            key={`${p.role}-${index}`}
-            className={getParagraphRoleClass(p.role)}
-          >
-            {p.text}
-          </p>
-        ))}
+        {h3Paragraphs.map((p: IParagraph, index: number) => {
+          const hasQuoteParagraph = p.role === PragraphRole.quote;
+          if (hasQuoteParagraph) {
+            return (
+              <div
+                key={`${p.role}-${index}`}
+                className={articleStyles.quoteContainer}
+              >
+                <FormatQuoteIcon
+                  fontSize='large'
+                  sx={{ fontSize: '60px', color: '#999999' }}
+                />
+                <p
+                  key={`${p.role}-${index}`}
+                  className={getParagraphRoleClass(p.role)}
+                >
+                  {p.text}
+                </p>
+              </div>
+            );
+          }
+
+          return (
+            <p
+              key={`${p.role}-${index}`}
+              className={getParagraphRoleClass(p.role)}
+            >
+              {p.text}
+            </p>
+          );
+        })}
       </div>
     </div>
   );

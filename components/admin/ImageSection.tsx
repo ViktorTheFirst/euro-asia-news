@@ -17,7 +17,9 @@ import {
   getNextArticleIdSelector,
   setAddArticleDataAction,
 } from '@/store/Admin';
-import profilePicPlaceHolder from '../../public/assets/images/profile_placeholder.jpg';
+import imagePlaceholder from '../../public/assets/images/placehold.jpg';
+import { capitalizeFirstLetter } from '@/utils/functions';
+import S from '../../styles/adminPanelStyles.module.css';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -61,7 +63,6 @@ export const ImageSectionComponent = ({ imageType }: ImageSectionProps) => {
 
     try {
       formData.append('image', file);
-
       await uploadImageAPI(nextArticleId.toString(), formData).then(
         (result) => {
           if (result?.data?.fileName) {
@@ -99,67 +100,91 @@ export const ImageSectionComponent = ({ imageType }: ImageSectionProps) => {
   return (
     <div>
       {/* -----------------------PREVIEW IMAGE---------------------- */}
-      <Accordion>
+      <Accordion
+        disableGutters
+        sx={{
+          backgroundColor: imageType === 'preview' ? 'pink' : 'greenyellow',
+        }}
+      >
         <AccordionSummary expandIcon={<ArrowDownward />}>
-          <Typography>{`${imageType} image`}</Typography>
+          <Typography>{`${capitalizeFirstLetter(imageType)} image`}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Button
-            type='button'
-            variant='contained'
-            color='primary'
-            onClick={pickImageHandler}
-            sx={{ marginTop: '10px' }}
-          >
-            Upload image
-          </Button>
+          <div className={S.previewImageContainer}>
+            <Button
+              type='button'
+              variant='contained'
+              color='primary'
+              onClick={pickImageHandler}
+              sx={{ marginTop: '10px' }}
+            >
+              {articleData[`${imageType}ImageURL`]
+                ? 're-upload image'
+                : 'upload image'}
+            </Button>
 
-          <input
-            id='user-image'
-            ref={pickImageRef}
-            style={{ display: 'none' }}
-            accept='image/*'
-            type='file'
-            onChange={pickedImageHandler}
-          />
+            <input
+              id='user-image'
+              ref={pickImageRef}
+              style={{ display: 'none' }}
+              accept='image/*'
+              type='file'
+              onChange={pickedImageHandler}
+            />
 
-          <Image
-            src={preview || profilePicPlaceHolder}
-            width={300}
-            height={300}
-            alt='uploaded image'
-            style={{
-              borderRadius: '10px',
-            }}
-          />
+            <Image
+              src={preview || imagePlaceholder}
+              width={300}
+              height={300}
+              alt='uploaded image'
+              style={{
+                borderRadius: '10px',
+                margin: '15px 0',
+              }}
+            />
 
-          <Button
-            type='button'
-            variant='contained'
-            color='primary'
-            onClick={confirmProfileImageChange}
-          >
-            Confirm
-          </Button>
-          <Button
-            type='button'
-            variant='contained'
-            color='secondary'
-            onClick={cancelProfileImageChange}
-          >
-            Cancel
-          </Button>
+            <div className='row'>
+              <Button
+                type='button'
+                variant='contained'
+                color='primary'
+                onClick={cancelProfileImageChange}
+                disabled={!file}
+              >
+                Cancel
+              </Button>
+              <Button
+                type='button'
+                variant='contained'
+                color='secondary'
+                onClick={confirmProfileImageChange}
+                sx={{ marginLeft: '10px' }}
+                disabled={!file}
+              >
+                Confirm
+              </Button>
+            </div>
+          </div>
         </AccordionDetails>
       </Accordion>
       {/* -----------------------PREVIEW IMAGE ALT---------------------- */}
-      <Accordion>
+      <Accordion
+        disableGutters
+        sx={{
+          backgroundColor: imageType === 'preview' ? 'pink' : 'greenyellow',
+        }}
+      >
         <AccordionSummary expandIcon={<ArrowDownward />}>
-          <Typography>{`${imageType} image alt`}</Typography>
+          <Typography>{`${capitalizeFirstLetter(
+            imageType
+          )} image alt`}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TextField
             variant='outlined'
+            sx={{ backgroundColor: 'white', width: '100%' }}
             type='text'
+            placeholder='image alt'
             value={articleData[`${imageType}ImageAlt`]}
             onChange={(event) => {
               if (imageType === 'preview') {

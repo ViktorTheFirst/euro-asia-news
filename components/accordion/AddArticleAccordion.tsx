@@ -28,8 +28,8 @@ import {
 } from '@/store/Admin';
 import { ArticleType, AuthorMediaType } from '@/utils/interfaces';
 import SectionComponent from '../admin/Section';
-
 import ImageSectionComponent from '../admin/ImageSection';
+import S from '../../styles/adminPanelStyles.module.css';
 
 // TODO: relocate to BE
 const existingTags = [
@@ -55,15 +55,17 @@ const AddArticleAccordion = ({}: AccordionProps) => {
       display='flex'
       flexDirection='column'
       sx={{ width: '100%' }}
+      className={S.accordionContainer}
     >
       {/* ------------------------------TYPE------------------------------ */}
-      <Accordion>
+      <Accordion disableGutters sx={{ backgroundColor: '#008080' }}>
         <AccordionSummary expandIcon={<ArrowDownward />}>
           <Typography>Article type</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Select
             value={articleData.articleType}
+            sx={{ backgroundColor: 'white' }}
             onChange={(event) =>
               dispatch(
                 setAddArticleDataAction({
@@ -81,8 +83,34 @@ const AddArticleAccordion = ({}: AccordionProps) => {
           </Select>
         </AccordionDetails>
       </Accordion>
+      {/* -----------------------PREVIEW IMAGE SECTION---------------------- */}
+      <ImageSectionComponent key={1} imageType='preview' />
+      {/* -----------------------ARTICLE IMAGE SECTION---------------------- */}
+      <ImageSectionComponent key={2} imageType='article' />
+
+      {/* ------------------------------SECTION 1------------------------------- */}
+      <SectionComponent
+        key={1}
+        hType='h1'
+        addParagraphRoleAction={setAddArticleH1ParagraphRoleAction}
+        addParagraphTextAction={setAddArticleH1ParagraphAction}
+      />
+      {/* ------------------------------SECTION 2------------------------------- */}
+      <SectionComponent
+        key={2}
+        hType='h2'
+        addParagraphRoleAction={setAddArticleH2ParagraphRoleAction}
+        addParagraphTextAction={setAddArticleH2ParagraphAction}
+      />
+      {/* ------------------------------SECTION 3------------------------------- */}
+      <SectionComponent
+        key={3}
+        hType='h3'
+        addParagraphRoleAction={setAddArticleH3ParagraphRoleAction}
+        addParagraphTextAction={setAddArticleH3ParagraphAction}
+      />
       {/* ------------------------------DATE------------------------------- */}
-      <Accordion>
+      <Accordion disableGutters>
         <AccordionSummary expandIcon={<ArrowDownward />}>
           <Typography>Article date</Typography>
         </AccordionSummary>
@@ -102,19 +130,17 @@ const AddArticleAccordion = ({}: AccordionProps) => {
           />
         </AccordionDetails>
       </Accordion>
-      {/* -----------------------PREVIEW IMAGE SECTION---------------------- */}
-      <ImageSectionComponent key={1} imageType='preview' />
-      {/* -----------------------ARTICLE IMAGE SECTION---------------------- */}
-      <ImageSectionComponent key={2} imageType='article' />
       {/* ------------------------------AUTHOR------------------------------- */}
-      <Accordion>
+      <Accordion disableGutters>
         <AccordionSummary expandIcon={<ArrowDownward />}>
           <Typography>Article author</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <TextField
             variant='outlined'
+            sx={{ width: '60%' }}
             type='text'
+            placeholder='author name'
             value={articleData.author}
             onChange={(event) =>
               dispatch(
@@ -128,75 +154,84 @@ const AddArticleAccordion = ({}: AccordionProps) => {
         </AccordionDetails>
       </Accordion>
       {/* ---------------------------AUTHOR-MEDIA--------------------------- */}
-      <Accordion>
+      <Accordion disableGutters>
         <AccordionSummary expandIcon={<ArrowDownward />}>
           <Typography>Author media</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Select
-            value={articleData.authorMedia[0].type}
-            onChange={(event) =>
-              dispatch(
-                setAuthorMediaTypeAction({
-                  mIndex: 0,
-                  mType: event.target.value as AuthorMediaType,
-                })
-              )
-            }
-          >
-            <MenuItem value={AuthorMediaType.X}>X</MenuItem>
-            <MenuItem value={AuthorMediaType.facebook}>Facebook</MenuItem>
-            <MenuItem value={AuthorMediaType.instegram}>Instegram</MenuItem>
-            <MenuItem value={AuthorMediaType.substack}>Substack</MenuItem>
-            <MenuItem value={AuthorMediaType.linkedIn}>LinkedIn</MenuItem>
-          </Select>
-          <TextField
-            variant='outlined'
-            type='text'
-            value={articleData.authorMedia[0].url}
-            onChange={(event) =>
-              dispatch(
-                setAuthorMediaURLAction({
-                  mIndex: 0,
-                  mURL: event.target.value,
-                })
-              )
-            }
-          />
-          <Select
-            value={articleData.authorMedia[1].type}
-            onChange={(event) =>
-              dispatch(
-                setAuthorMediaTypeAction({
-                  mIndex: 1,
-                  mType: event.target.value as AuthorMediaType,
-                })
-              )
-            }
-          >
-            <MenuItem value={AuthorMediaType.X}>X</MenuItem>
-            <MenuItem value={AuthorMediaType.facebook}>Facebook</MenuItem>
-            <MenuItem value={AuthorMediaType.instegram}>Instegram</MenuItem>
-            <MenuItem value={AuthorMediaType.substack}>Substack</MenuItem>
-            <MenuItem value={AuthorMediaType.linkedIn}>LinkedIn</MenuItem>
-          </Select>
-          <TextField
-            variant='outlined'
-            type='text'
-            value={articleData.authorMedia[1].url}
-            onChange={(event) =>
-              dispatch(
-                setAuthorMediaURLAction({
-                  mIndex: 1,
-                  mURL: event.target.value,
-                })
-              )
-            }
-          />
+          <div className='row'>
+            <Select
+              value={articleData.authorMedia[0].type}
+              sx={{ width: '30%', margin: '0 15px 15px 0' }}
+              onChange={(event) =>
+                dispatch(
+                  setAuthorMediaTypeAction({
+                    mIndex: 0,
+                    mType: event.target.value as AuthorMediaType,
+                  })
+                )
+              }
+            >
+              <MenuItem value={AuthorMediaType.X}>X</MenuItem>
+              <MenuItem value={AuthorMediaType.facebook}>Facebook</MenuItem>
+              <MenuItem value={AuthorMediaType.instegram}>Instegram</MenuItem>
+              <MenuItem value={AuthorMediaType.substack}>Substack</MenuItem>
+              <MenuItem value={AuthorMediaType.linkedIn}>LinkedIn</MenuItem>
+            </Select>
+            <TextField
+              variant='outlined'
+              type='text'
+              placeholder='platform url'
+              value={articleData.authorMedia[0].url}
+              onChange={(event) =>
+                dispatch(
+                  setAuthorMediaURLAction({
+                    mIndex: 0,
+                    mURL: event.target.value,
+                  })
+                )
+              }
+            />
+          </div>
+
+          <div className='row'>
+            <Select
+              value={articleData.authorMedia[1].type}
+              sx={{ width: '30%', margin: '0 15px 15px 0' }}
+              onChange={(event) =>
+                dispatch(
+                  setAuthorMediaTypeAction({
+                    mIndex: 1,
+                    mType: event.target.value as AuthorMediaType,
+                  })
+                )
+              }
+            >
+              <MenuItem value={AuthorMediaType.X}>X</MenuItem>
+              <MenuItem value={AuthorMediaType.facebook}>Facebook</MenuItem>
+              <MenuItem value={AuthorMediaType.instegram}>Instegram</MenuItem>
+              <MenuItem value={AuthorMediaType.substack}>Substack</MenuItem>
+              <MenuItem value={AuthorMediaType.linkedIn}>LinkedIn</MenuItem>
+            </Select>
+            <TextField
+              variant='outlined'
+              type='text'
+              value={articleData.authorMedia[1].url}
+              placeholder='platform url'
+              onChange={(event) =>
+                dispatch(
+                  setAuthorMediaURLAction({
+                    mIndex: 1,
+                    mURL: event.target.value,
+                  })
+                )
+              }
+            />
+          </div>
         </AccordionDetails>
       </Accordion>
       {/* ------------------------------TAGS------------------------------- */}
-      <Accordion>
+      <Accordion disableGutters>
         <AccordionSummary expandIcon={<ArrowDownward />}>
           <Typography>Article tags</Typography>
         </AccordionSummary>
@@ -221,27 +256,6 @@ const AddArticleAccordion = ({}: AccordionProps) => {
           />
         </AccordionDetails>
       </Accordion>
-      {/* ------------------------------SECTION 1------------------------------- */}
-      <SectionComponent
-        key={1}
-        hType='h1'
-        addParagraphRoleAction={setAddArticleH1ParagraphRoleAction}
-        addParagraphTextAction={setAddArticleH1ParagraphAction}
-      />
-      {/* ------------------------------SECTION 2------------------------------- */}
-      <SectionComponent
-        key={2}
-        hType='h2'
-        addParagraphRoleAction={setAddArticleH2ParagraphRoleAction}
-        addParagraphTextAction={setAddArticleH2ParagraphAction}
-      />
-      {/* ------------------------------SECTION 3------------------------------- */}
-      <SectionComponent
-        key={3}
-        hType='h3'
-        addParagraphRoleAction={setAddArticleH3ParagraphRoleAction}
-        addParagraphTextAction={setAddArticleH3ParagraphAction}
-      />
     </Box>
   );
 };

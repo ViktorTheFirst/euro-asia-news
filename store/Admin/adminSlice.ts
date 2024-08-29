@@ -11,6 +11,7 @@ import {
   setNextArticleIdAction,
   setAuthorMediaTypeAction,
   setAuthorMediaURLAction,
+  clearAddArticleDataAction,
 } from './adminActions';
 
 export const adminSlice = createSlice({
@@ -21,6 +22,9 @@ export const adminSlice = createSlice({
     builder.addCase(setAddArticleDataAction, (state, action) => {
       state.addArticleData = action.payload;
     }),
+      builder.addCase(clearAddArticleDataAction, (state, action) => {
+        state.addArticleData = initialState.addArticleData;
+      }),
       builder.addCase(setNextArticleIdAction, (state, action) => {
         state.nextArticleId = action.payload;
       }),

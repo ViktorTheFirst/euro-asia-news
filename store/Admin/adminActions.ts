@@ -5,6 +5,10 @@ export const setAddArticleDataAction = createAction<IArticle>(
   'admin/setAddArticleDataAction'
 );
 
+export const clearAddArticleDataAction = createAction(
+  'admin/clearAddArticleDataAction'
+);
+
 export const setNextArticleIdAction = createAction<number>(
   'admin/setNextArticleIdAction'
 );
