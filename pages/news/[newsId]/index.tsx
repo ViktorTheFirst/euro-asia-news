@@ -208,6 +208,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
   const extractedId = (params?.newsId as string).split('+')[1];
   const newsItem = await getNewsItemAPI(extractedId);
+  //console.log('ITEMMM', newsItem?.data?.article);
   return {
     props: { newsItem: newsItem?.data?.article },
   };

@@ -37,11 +37,18 @@ const ImageArticleComponent = (props: IArticlePreview) => {
       <div>
         <div className={articleStyles.tagsContainer}>
           <div className={articleStyles.tags}>
-            {tags.map((tag: string, index: number) => (
-              <h5 key={tag} className={articleStyles.tag}>
-                {index < tags.length - 1 ? `${tag},` : tag}
-              </h5>
-            ))}
+            {/* 
+            TODO: add tag component use it here and inside atricle 
+            TODO: when ? appears in h1 it fails to load article
+            */}
+            {tags.map((tag: string, index: number) => {
+              if (!tag) return;
+              return (
+                <h5 key={tag} className={articleStyles.tag}>
+                  {index < tags.length - 1 ? `${tag},` : tag}
+                </h5>
+              );
+            })}
           </div>
 
           <MuiLink

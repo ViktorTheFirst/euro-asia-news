@@ -1,7 +1,6 @@
 import { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import { Box } from '@mui/material';
 
 import myTheme from '@/theme';
 import { getNewsAPI } from '@/api/news/newsAPI';
@@ -10,6 +9,8 @@ import ImageArticleComponent from '@/components/article/ImageArticle';
 import homeStyles from '../styles/homeStyles.module.css';
 import MainArticleComponent from '@/components/article/MainArticle';
 import { setNextArticleIdAction } from '@/store/Admin';
+import { Divider } from '@mui/material';
+import { existingTags } from '@/utils/constants';
 
 interface HomePageProps {
   news: IArticle[] | null;
@@ -27,8 +28,31 @@ const HomePage = ({ news }: HomePageProps) => {
 
   //{mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
   return (
-    <Box component={Box} className={homeStyles.articlesContainer}>
-      <Suspense fallback={<div>Loading...</div>}>
+    <div className={homeStyles.homeContainer}>
+      <div className={homeStyles.tagsContainer}>
+        {existingTags.map((tag, index) => {
+          if (index < existingTags.length - 1) {
+            return (
+              <>
+                <div className={homeStyles.tag} key={`${tag} + ${index}`}>
+                  {tag}
+                </div>
+                <Divider
+                  orientation='vertical'
+                  sx={{ backgroundColor: '#ff7030' }}
+                  key={`${tag} + ${index}`}
+                />
+              </>
+            );
+          }
+          return (
+            <div className={homeStyles.tag} key={`${tag} + ${index}`}>
+              {tag}
+            </div>
+          );
+        })}
+      </div>
+      <div className={homeStyles.articlesContainer}>
         {news &&
           news.map((article: IArticlePreview) => {
             switch (article.articleType) {
@@ -46,20 +70,20 @@ const HomePage = ({ news }: HomePageProps) => {
               // return regular article component
             }
           })}
-      </Suspense>
-      {!news && (
-        <div
-          style={{
-            height: '200vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          No newss
-        </div>
-      )}
-    </Box>
+        {!news && (
+          <div
+            style={{
+              height: '200vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            No news
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

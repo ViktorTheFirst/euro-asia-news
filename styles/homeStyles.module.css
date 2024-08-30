@@ -1,9 +1,30 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tagsContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: calc(70% - 40px);
+  background-color: #333333;
+  height: 50px;
+  padding: 10px;
+  margin-top: 40px;
+}
+
 .articlesContainer {
   background-color: #cfcfcf;
   column-gap: 25px;
   padding: 20px;
   margin-top: 20px;
   width: 70%;
+}
+
+.tag {
+  color: #ff7030;
 }
 
 @media (min-width: 1701px) {

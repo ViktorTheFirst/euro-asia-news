@@ -6,8 +6,6 @@ import {
   AccordionSummary,
   Autocomplete,
   Box,
-  Button,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -27,21 +25,10 @@ import {
   setAuthorMediaURLAction,
 } from '@/store/Admin';
 import { ArticleType, AuthorMediaType } from '@/utils/interfaces';
+import { existingTags } from '@/utils/constants';
 import SectionComponent from '../admin/Section';
 import ImageSectionComponent from '../admin/ImageSection';
 import S from '../../styles/adminPanelStyles.module.css';
-
-// TODO: relocate to BE
-const existingTags = [
-  'war',
-  'politics',
-  'health',
-  'fasion',
-  'art',
-  'computers',
-];
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface AccordionProps {}
 
