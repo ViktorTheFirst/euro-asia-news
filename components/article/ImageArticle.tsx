@@ -6,6 +6,7 @@ import { Link as MuiLink } from '@mui/material';
 import { IArticlePreview } from '@/utils/interfaces';
 import articleStyles from '../../styles/articleStyles.module.css';
 import { getUrlFromArticle } from '@/utils/functions';
+import TagComponent from '../tag/Tag';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -38,14 +39,17 @@ const ImageArticleComponent = (props: IArticlePreview) => {
         <div className={articleStyles.tagsContainer}>
           <div className={articleStyles.tags}>
             {/* 
-            TODO: add tag component use it here and inside atricle 
+            TODO: add tag component to inside of article  
             TODO: when ? appears in h1 it fails to load article
+            TODO: when % appears in h1 it fails to load article
+            TODO: when ' appears in any text it fails to add the article
             */}
             {tags.map((tag: string, index: number) => {
-              if (!tag) return;
+              // TODO: change the 'undefined' incoming from be
+              if (tag === 'undefined') return;
               return (
                 <h5 key={tag} className={articleStyles.tag}>
-                  {index < tags.length - 1 ? `${tag},` : tag}
+                  <TagComponent value={tag} />
                 </h5>
               );
             })}

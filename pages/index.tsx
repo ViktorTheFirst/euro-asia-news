@@ -11,6 +11,8 @@ import MainArticleComponent from '@/components/article/MainArticle';
 import { setNextArticleIdAction } from '@/store/Admin';
 import { Divider } from '@mui/material';
 import { existingTags } from '@/utils/constants';
+import TagComponent from '@/components/tag/Tag';
+import { useRouter } from 'next/router';
 
 interface HomePageProps {
   news: IArticle[] | null;
@@ -18,6 +20,7 @@ interface HomePageProps {
 
 const HomePage = ({ news }: HomePageProps) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     news && dispatch(setNextArticleIdAction(news.length + 1));
@@ -29,29 +32,16 @@ const HomePage = ({ news }: HomePageProps) => {
   //{mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
   return (
     <div className={homeStyles.homeContainer}>
-      <div className={homeStyles.tagsContainer}>
-        {existingTags.map((tag, index) => {
-          if (index < existingTags.length - 1) {
-            return (
-              <>
-                <div className={homeStyles.tag} key={`${tag} + ${index}`}>
-                  {tag}
-                </div>
-                <Divider
-                  orientation='vertical'
-                  sx={{ backgroundColor: '#ff7030' }}
-                  key={`${tag} + ${index}`}
-                />
-              </>
-            );
-          }
-          return (
-            <div className={homeStyles.tag} key={`${tag} + ${index}`}>
-              {tag}
-            </div>
-          );
-        })}
-      </div>
+      {/* -----------------------------TAGS------------------------------ */}
+      {router.query.viewport !== 'mobile' && (
+        <div className={homeStyles.tagsContainer}>
+          {existingTags.map((tag, index) => (
+            <TagComponent value={tag} key={`${index} - ${tag}`} />
+          ))}
+        </div>
+      )}
+
+      {/* -----------------------------ARTICLES------------------------------ */}
       <div className={homeStyles.articlesContainer}>
         {news &&
           news.map((article: IArticlePreview) => {

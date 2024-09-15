@@ -9,7 +9,7 @@ import {
   Toolbar,
 } from '@mui/material';
 
-import UserImageComponent from './UserImage';
+import MenuComponent from './Menu';
 import { setUserInfoAction } from '@/store/Users';
 import svgLogo from '../../public/assets/svgs/news-logo3.png';
 
@@ -76,7 +76,7 @@ const AppBar = () => {
             />
           </MuiLink>
 
-          <UserImageComponent
+          <MenuComponent
             onLogoutClick={onLogoutClick}
             onLoginClick={onLoginClick}
             onUserProfileClick={onUserProfileClick}
