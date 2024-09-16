@@ -50,12 +50,13 @@ const RegistrationPage = () => {
         password,
       }).then((result) => {
         if (result?.data.token) {
-          const { name, email } = result?.data;
+          const { name, email, role } = result?.data;
 
           dispatch(
             setUserInfoAction({
               name,
               email,
+              role,
             })
           );
           router.push('/');

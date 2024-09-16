@@ -18,7 +18,9 @@ const AppBar = () => {
   const dispatch = useDispatch();
 
   const onLogoutClick = async () => {
-    dispatch(setUserInfoAction({ name: '', email: '', profileImage: '' }));
+    dispatch(
+      setUserInfoAction({ name: '', email: '', profileImage: '', role: '' })
+    );
     router.push('/login');
   };
   const onLoginClick = async () => {

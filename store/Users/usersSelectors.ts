@@ -9,10 +9,11 @@ export const getProfileImage = createSelector(
 );
 
 export const getUserInfo = createSelector([usersSelector], (usersSelector) => {
-  const { name, email, profileImage } = usersSelector;
+  const { name, email, profileImage, role } = usersSelector;
   return {
     name,
     email,
     profileImage,
+    role,
   };
 });

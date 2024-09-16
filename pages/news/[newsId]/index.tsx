@@ -10,6 +10,7 @@ import { getNewsAPI, getNewsItemAPI } from '@/api/news/newsAPI';
 import { IArticle, IParagraph, PragraphRole } from '@/utils/interfaces';
 import { formatDate, getUrlFromArticle } from '@/utils/functions';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import TagComponent from '@/components/tag/Tag';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 interface NewsItemProps {
@@ -67,24 +68,31 @@ const NewsItem = ({
       {/* ---------------------------------h1------------------------------- */}
       <div className={articleStyles.articlePageHeaderContainer}>
         <h1>{h1}</h1>
-        <div className='row'>
-          <div className={articleStyles.date}>{formatDate(date)}</div>
-          {/* <div className={articleStyles.tags}>
-            {tags.map((tag: string, index: number) => (
-              <h5 key={tag} className={articleStyles.tag}>
-                {index < tags.length - 1 ? `${tag},` : tag}
+        <div className={articleStyles.tags}>
+          {tags.map((tag: string, index: number) => {
+            if (tag === 'undefined') return;
+            return (
+              <h5 key={`${tag}-${index}`} className={articleStyles.tag}>
+                <TagComponent value={tag} />
               </h5>
-            ))}
-          </div> */}
-          <span style={{ marginRight: '5px' }}>By</span>
+            );
+          })}
+        </div>
+        <div style={{ marginBottom: '10px' }} className='row'>
+          <div className={articleStyles.date}>{formatDate(date)}</div>
+        </div>
+        <div style={{ marginBottom: '10px' }} className='row'>
+          <span style={{ marginRight: '5px', fontWeight: 'bold' }}>By:</span>
           <h4 className={articleStyles.articleAuthorHeader}>{author}</h4>
+        </div>
 
-          {/* {authorMedia.map((media: string, index: number) => (
+        {/* TODO: show the author media according to source
+        
+        {authorMedia.map((media: string, index: number) => (
             <h5 key={media} className={articleStyles.tag}>
               {index < authorMedia.length - 1 ? `${media},` : media}
             </h5>
           ))} */}
-        </div>
       </div>
       {/* ---------------------------------h1-text------------------------------- */}
       <div className={articleStyles.articlePageH1ParagraphContainer}>

@@ -6,6 +6,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.mainArticle {
+  display: flex;
+  height: auto;
+  overflow: auto;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .articleImageContainer {
   overflow: hidden;
   display: inline-block;
@@ -65,18 +73,25 @@
 }
 
 .articlePageContainer h1 {
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .articlePageContainer h2 {
+  width: 80%;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .articlePageContainer h3 {
+  width: 80%;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .articlePageContainer h4 {
+  width: 90%;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -91,7 +106,6 @@
   font-weight: 900;
   line-height: 20px;
   letter-spacing: -0.25px;
-  color: #036;
   margin-right: 7px;
 }
 
@@ -112,15 +126,6 @@
 .articlePageH1ParagraphContainer {
   width: 50%;
   padding: 20px;
-}
-
-.mainArticle {
-  background-color: white;
-  height: auto;
-  overflow: auto;
-  margin-bottom: 20px;
-  width: 750px;
-  column-count: 2;
 }
 
 .leadPragraph {
@@ -165,6 +170,13 @@
   }
   .articlePageH1ParagraphContainer {
     width: 50%;
+  }
+  .articleData {
+    flex: 2;
+  }
+
+  .carousel {
+    flex: 3;
   }
 }
 

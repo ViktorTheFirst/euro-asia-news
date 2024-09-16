@@ -8,7 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const addArticleAPI = async (article: IArticle) => {
   try {
-    const createdArticle = await axios({
+    const createdArticle = await instance({
       method: 'post',
       url: `${baseUrl}/api/news/addArticle`,
       data: article,
@@ -25,7 +25,7 @@ export const addArticleAPI = async (article: IArticle) => {
 
 export const getNewsAPI = async () => {
   try {
-    const allNews = await axios({
+    const allNews = await instance({
       method: 'get',
       url: `${baseUrl}/api/news/getNews`,
       headers: {
@@ -40,7 +40,7 @@ export const getNewsAPI = async () => {
 
 export const getNewsItemAPI = async (newsId: string) => {
   try {
-    const result = await axios({
+    const result = await instance({
       method: 'get',
       url: `${baseUrl}/api/news/${newsId}`,
       headers: {
@@ -58,7 +58,7 @@ export const uploadImageAPI = async (
   imageData: FormData
 ) => {
   try {
-    const result = await axios({
+    const result = await instance({
       method: 'post',
       url: `${baseUrl}/api/news/upload-image/${articleId}`,
       data: imageData,
@@ -74,7 +74,7 @@ export const uploadImageAPI = async (
 
 export const getNextArticleIdAPI = async () => {
   try {
-    const result = await axios({
+    const result = await instance({
       method: 'get',
       url: `${baseUrl}/api/news/getNextArticleId`,
       headers: {

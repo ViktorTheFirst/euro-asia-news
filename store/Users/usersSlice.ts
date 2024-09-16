@@ -14,6 +14,7 @@ export const usersSlice = createSlice({
       .addCase(setUserInfoAction, (state, action) => {
         state.name = action.payload.name;
         state.email = action.payload.email;
+        state.role = action.payload.role;
         state.profileImage = action.payload.profileImage || '';
       });
   },

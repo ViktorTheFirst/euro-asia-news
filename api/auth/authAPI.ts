@@ -10,7 +10,7 @@ const instance = axios.create({
 
 export const registrationAPI = async (userData: UserRegistrationData) => {
   try {
-    const createdUser = await axios({
+    const createdUser = await instance({
       method: 'post',
       url: `${baseUrl}/api/users/signup`,
       data: userData,
@@ -29,7 +29,7 @@ export const loginAPI = async (
   userData: UserLoginData
 ): Promise<LoginResponse> => {
   try {
-    const result = await axios({
+    const result = await instance({
       method: 'post',
       url: `${baseUrl}/api/users/login`,
       data: userData,

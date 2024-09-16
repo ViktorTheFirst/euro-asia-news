@@ -15,12 +15,36 @@
   margin-top: 40px;
 }
 
+.mainArticleContainer {
+  background-color: rgb(255, 255, 255);
+  margin-top: 40px;
+  width: calc(70% - 40px);
+}
+
 .articlesContainer {
   background-color: #cfcfcf;
   column-gap: 25px;
   padding: 20px;
   margin-top: 20px;
   width: 70%;
+}
+
+.mainHeaderContainer {
+  padding: 20px;
+}
+
+.articleData {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.carousel {
+  display: flex;
+  height: 100%;
+  flex: 3;
 }
 
 .tag {
@@ -31,6 +55,9 @@
   .articlesContainer {
     columns: 4;
     width: 70%;
+  }
+  .articleData {
+    flex: 2;
   }
 }
 
@@ -46,12 +73,27 @@
     columns: 3;
     width: 80%;
   }
+  .mainArticleContainer {
+    width: calc(80% - 40px);
+  }
+  .tagsContainer {
+    width: calc(80% - 40px);
+  }
 }
 
 @media (min-width: 651px) and (max-width: 1000px) {
   .articlesContainer {
     columns: 2;
     width: 90%;
+  }
+  .mainArticleContainer {
+    width: calc(90% - 40px);
+  }
+  .articleData {
+    display: none;
+  }
+  .tagsContainer {
+    display: none;
   }
 }
 
@@ -60,11 +102,29 @@
     columns: 1;
     width: 65%;
   }
+  .articleData {
+    display: none;
+  }
+  .mainArticleContainer {
+    width: calc(90% - 40px);
+  }
+  .tagsContainer {
+    display: none;
+  }
 }
 
 @media (max-width: 450px) {
   .articlesContainer {
     columns: 1;
     width: 90%;
+  }
+  .articleData {
+    display: none;
+  }
+  .mainArticleContainer {
+    width: calc(90% - 40px);
+  }
+  .tagsContainer {
+    display: none;
   }
 }

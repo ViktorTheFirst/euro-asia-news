@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GetServerSideProps } from 'next';
 
 import myTheme from '@/theme';
@@ -13,21 +13,33 @@ import { Divider } from '@mui/material';
 import { existingTags } from '@/utils/constants';
 import TagComponent from '@/components/tag/Tag';
 import { useRouter } from 'next/router';
+import { getUserAPI } from '@/api/users/usersAPI';
+import { getUserInfo, setUserInfoAction, UserInfo } from '@/store/Users';
 
 interface HomePageProps {
   news: IArticle[] | null;
+  user?: UserInfo;
 }
 
-const HomePage = ({ news }: HomePageProps) => {
+const HomePage = ({ news, user }: HomePageProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const userInfo = useSelector(getUserInfo);
 
   useEffect(() => {
     news && dispatch(setNextArticleIdAction(news.length + 1));
   }, []);
-  /* const mainArticle = news.find(
+
+  useEffect(() => {
+    if (!userInfo.email && user) {
+      dispatch(setUserInfoAction(user));
+    }
+  }, [user, userInfo.email, dispatch]);
+
+  const mainArticle = news?.find(
     (article: IArticlePreview) => article.articleType === ArticleType.main
-  ); */
+  );
 
   //{mainArticle ? <MainArticleComponent {...mainArticle} /> : null}
   return (
@@ -42,6 +54,11 @@ const HomePage = ({ news }: HomePageProps) => {
       )}
 
       {/* -----------------------------ARTICLES------------------------------ */}
+      {mainArticle ? (
+        <div className={homeStyles.mainArticleContainer}>
+          <MainArticleComponent {...mainArticle} />
+        </div>
+      ) : null}
       <div className={homeStyles.articlesContainer}>
         {news &&
           news.map((article: IArticlePreview) => {
@@ -79,11 +96,22 @@ const HomePage = ({ news }: HomePageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const newsResponse = await getNewsAPI();
+  const cookies = context.req.cookies;
+  const userData = await getUserAPI(cookies.userId!);
+
+  const { user } = userData?.data;
+
+  const { username, email, role } = user;
 
   const news: IArticle[] | null = newsResponse?.data?.news ?? null;
   return {
     props: {
       news,
+      user: {
+        name: username,
+        email,
+        role,
+      },
     },
   };
 };

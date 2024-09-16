@@ -6,17 +6,20 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface CarouseleProps {
   images: { src: string; alt: string }[];
+  isMobile: boolean;
 }
 
-const CarouselComponent = ({ images }: CarouseleProps) => {
+const CarouselComponent = ({ images, isMobile }: CarouseleProps) => {
   return (
     <Carousel
       showArrows={true}
       autoPlay
-      centerMode
+      centerMode={false}
+      interval={5000}
       infiniteLoop
       showStatus={false}
       showThumbs={false}
+      showIndicators={false}
     >
       {images.map((image, index) => (
         <div key={index}>
@@ -26,10 +29,8 @@ const CarouselComponent = ({ images }: CarouseleProps) => {
             placeholder='blur'
             blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
             width={300}
-            height={400}
+            height={isMobile ? 300 : 350}
           />
-
-          <p className='legend'>{image.alt}</p>
         </div>
       ))}
     </Carousel>

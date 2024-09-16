@@ -23,11 +23,12 @@ const LoginPage = () => {
     try {
       const result = await loginAPI({ email: userEmail, password });
 
-      const { name, email } = result;
+      const { name, email, role } = result;
       dispatch(
         setUserInfoAction({
           name,
           email,
+          role,
         })
       );
       router.push('/');
