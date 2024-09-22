@@ -22,7 +22,7 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const result = await loginAPI({ email: userEmail, password });
-
+      console.log('LOGIN result', result);
       const { name, email, role } = result;
       dispatch(
         setUserInfoAction({
@@ -31,7 +31,7 @@ const LoginPage = () => {
           role,
         })
       );
-      router.push('/');
+      router.push('https://euro-asia-news.com/' || '/');
     } catch (err) {
       setApiError('Wrong credentials');
       console.warn('Error while login user ' + err);
