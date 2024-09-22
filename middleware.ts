@@ -27,10 +27,10 @@ export function middleware(request: NextRequest, response: NextResponse) {
     //return NextResponse.next();
   }
   // Redirect to login page if not authenticated
-  if (!token) {
+  /* if (!token) {
     console.log('REDIRECTING TO LOGIN');
     return NextResponse.redirect(new URL('/login', request.url));
-  }
+  } */
 
   const isProtectedRoute = protectedRoutes.includes(url.pathname);
 
