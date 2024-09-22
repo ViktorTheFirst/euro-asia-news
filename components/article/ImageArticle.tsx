@@ -7,6 +7,7 @@ import { IArticlePreview } from '@/utils/interfaces';
 import articleStyles from '../../styles/articleStyles.module.css';
 import { getUrlFromArticle } from '@/utils/functions';
 import TagComponent from '../tag/Tag';
+import { useRouter } from 'next/router';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -14,6 +15,9 @@ const ImageArticleComponent = (props: IArticlePreview) => {
   const { itemId, previewImageURL, previewImageAlt, tags, h1, h1Paragraphs } =
     props;
 
+  const router = useRouter();
+
+  const isMobile = router.query.viewport === 'mobile';
   if (!h1) return null;
   const itemUrl = `news/${getUrlFromArticle(h1, itemId)}`;
 
@@ -31,7 +35,7 @@ const ImageArticleComponent = (props: IArticlePreview) => {
             alt={previewImageAlt}
             priority
             width={350}
-            height={350}
+            height={isMobile ? 300 : 350}
           />
         </MuiLink>
       </div>

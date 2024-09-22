@@ -18,12 +18,18 @@ export function middleware(request: NextRequest, response: NextResponse) {
   console.log('request.cookies in MIDDLEWARE', request.cookies);
 
   // If the user is authenticated, attach its token to response cookies
+  const res = NextResponse.next();
   if (token) {
-    const res = NextResponse.next();
-
     res.cookies.set({
       name: 'token',
       value: token,
+      httpOnly: true,
+    });
+  }
+  if (role) {
+    res.cookies.set({
+      name: 'userRole',
+      value: role,
       httpOnly: true,
     });
 

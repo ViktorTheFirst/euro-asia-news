@@ -1,9 +1,13 @@
 import axios from 'axios';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+const instance = axios.create({
+  withCredentials: true,
+});
+
 export const getUsersAPI = async () => {
   try {
-    const users = await axios({
+    const users = await instance({
       method: 'get',
       url: `${baseUrl}/api/users/getAllUsers`,
       headers: {
@@ -19,7 +23,7 @@ export const getUsersAPI = async () => {
 
 export const editUserAPI = async (userId: string, userData: FormData) => {
   try {
-    const user = await axios({
+    const user = await instance({
       method: 'post',
       url: `${baseUrl}/api/users/${userId}`,
       data: userData,
@@ -36,7 +40,7 @@ export const editUserAPI = async (userId: string, userData: FormData) => {
 
 export const getUserAPI = async (userId: string) => {
   try {
-    const user = await axios({
+    const user = await instance({
       method: 'get',
       url: `${baseUrl}/api/users/${userId}`,
       headers: {
