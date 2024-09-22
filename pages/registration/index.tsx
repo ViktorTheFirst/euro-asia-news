@@ -49,8 +49,8 @@ const RegistrationPage = () => {
         email: userEmail,
         password,
       }).then((result) => {
-        if (result?.data.token) {
-          const { name, email, role } = result?.data;
+        if (result?.data.id) {
+          const { name, email, role, id } = result?.data;
 
           dispatch(
             setUserInfoAction({

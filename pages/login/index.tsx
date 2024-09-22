@@ -31,7 +31,7 @@ const LoginPage = () => {
           role,
         })
       );
-      router.push('https://euro-asia-news.com/' || '/');
+      router.push('/');
     } catch (err) {
       setApiError('Wrong credentials');
       console.warn('Error while login user ' + err);
