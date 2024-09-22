@@ -21,7 +21,6 @@ import {
 
 import { existingTags } from '@/utils/constants';
 import { getUserInfo } from '@/store/Users';
-import Link from 'next/link';
 
 interface MenuProps {
   onLogoutClick: () => void;
@@ -130,13 +129,3 @@ const MenuComponent = ({
 };
 
 export default MenuComponent;
-
-/* 
-
-{ <MenuItem onClick={handleAdminPanelClick}>
-            <ListItemIcon>
-              <AdminIcon />
-            </ListItemIcon>
-            <ListItemText>Admin Panel</ListItemText>
-          </MenuItem> 
-*/

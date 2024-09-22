@@ -59,8 +59,9 @@ const NewsItem = ({
           alt={previewImageAlt}
           placeholder='blur'
           blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAI0lEQVR42mP8z/C/HwMDAwMjI+P/AAz+'
-          loading='lazy'
+          //loading='lazy'
           fill
+          priority
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           style={{ objectFit: 'contain' }}
         />

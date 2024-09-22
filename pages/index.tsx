@@ -21,6 +21,7 @@ interface HomePageProps {
 }
 
 const HomePage = ({ news, user }: HomePageProps) => {
+  console.log('#########@##### VERSION: 1 ####################');
   const dispatch = useDispatch();
   const router = useRouter();
 

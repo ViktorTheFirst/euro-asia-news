@@ -8,13 +8,14 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const { device } = userAgent(request);
   const viewport = device.type === 'mobile' ? 'mobile' : 'desktop';
   url.searchParams.set('viewport', viewport);
+  NextResponse.rewrite(url);
   // --------------------------------------------------------------
 
   const token = request.cookies.get('token')?.value;
   const role = request.cookies.get('userRole')?.value;
 
-  //console.log('token in MIDDLEWARE', token);
-  //console.log('url in MIDDLEWARE', url);
+  console.log('role in MIDDLEWARE', role);
+  console.log('url in MIDDLEWARE', url);
 
   // If the user is authenticated, attach its token to response cookies
   if (token) {
@@ -37,10 +38,12 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const isProtectedRoute = protectedRoutes.includes(url.pathname);
 
   if (isProtectedRoute && role !== 'admin') {
+    console.log('INSIDE PROTECTEDDDDDDDDD');
     return NextResponse.redirect(new URL('/', request.nextUrl));
   }
 
-  return NextResponse.rewrite(url);
+  console.log('NextResponse.next() in MIDDLEWARE', NextResponse.next());
+  return NextResponse.next();
 }
 
 // TODO: match the paths that need autorization

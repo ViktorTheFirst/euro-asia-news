@@ -29,6 +29,7 @@ const ImageArticleComponent = (props: IArticlePreview) => {
           <Image
             src={baseUrl + previewImageURL}
             alt={previewImageAlt}
+            priority
             width={350}
             height={350}
           />
