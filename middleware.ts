@@ -13,17 +13,19 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const token = request.cookies.get('token')?.value;
   const role = request.cookies.get('userRole')?.value;
 
-  console.log('token in MIDDLEWARE', token);
-  console.log('url in MIDDLEWARE', url);
+  //console.log('token in MIDDLEWARE', token);
+  //console.log('url in MIDDLEWARE', url);
 
-  // If the user is authenticated, continue as normal
+  // If the user is authenticated, attach its token to response cookies
   if (token) {
     const res = NextResponse.next();
+
     res.cookies.set({
       name: 'token',
       value: token,
       httpOnly: true,
     });
+
     //return NextResponse.next();
   }
   // Redirect to login page if not authenticated

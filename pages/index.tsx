@@ -9,7 +9,6 @@ import ImageArticleComponent from '@/components/article/ImageArticle';
 import homeStyles from '../styles/homeStyles.module.css';
 import MainArticleComponent from '@/components/article/MainArticle';
 import { setNextArticleIdAction } from '@/store/Admin';
-import { Divider } from '@mui/material';
 import { existingTags } from '@/utils/constants';
 import TagComponent from '@/components/tag/Tag';
 import { useRouter } from 'next/router';
@@ -18,7 +17,7 @@ import { getUserInfo, setUserInfoAction, UserInfo } from '@/store/Users';
 
 interface HomePageProps {
   news: IArticle[] | null;
-  user?: UserInfo;
+  user: UserInfo | null;
 }
 
 const HomePage = ({ news, user }: HomePageProps) => {
@@ -96,22 +95,30 @@ const HomePage = ({ news, user }: HomePageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const newsResponse = await getNewsAPI();
+  let incomingUser = null;
+
   const cookies = context.req.cookies;
-  const userData = await getUserAPI(cookies.userId!);
 
-  const { user } = userData?.data;
+  if (cookies.userId) {
+    const userData = await getUserAPI(cookies.userId);
 
-  const { username, email, role } = user;
+    const { user } = userData?.data;
+
+    if (user) {
+      incomingUser = {
+        name: user.username,
+        email: user.email,
+        role: user.role,
+      };
+    }
+  }
 
   const news: IArticle[] | null = newsResponse?.data?.news ?? null;
+
   return {
     props: {
       news,
-      user: {
-        name: username,
-        email,
-        role,
-      },
+      user: incomingUser,
     },
   };
 };
