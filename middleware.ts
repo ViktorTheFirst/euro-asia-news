@@ -15,7 +15,7 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const role = request.cookies.get('userRole')?.value;
 
   console.log('role in MIDDLEWARE', role);
-  console.log('url in MIDDLEWARE', url);
+  console.log('request.cookies in MIDDLEWARE', request.cookies);
 
   // If the user is authenticated, attach its token to response cookies
   if (token) {
