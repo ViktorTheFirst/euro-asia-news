@@ -13,6 +13,9 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const token = request.cookies.get('token')?.value;
   const role = request.cookies.get('userRole')?.value;
 
+  console.log('token in MIDDLEWARE', token);
+  console.log('url in MIDDLEWARE', url);
+
   // If the user is authenticated, continue as normal
   if (token) {
     const res = NextResponse.next();
@@ -25,6 +28,7 @@ export function middleware(request: NextRequest, response: NextResponse) {
   }
   // Redirect to login page if not authenticated
   if (!token) {
+    console.log('REDIRECTING TO LOGIN');
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
