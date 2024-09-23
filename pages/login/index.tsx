@@ -22,7 +22,6 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const result = await loginAPI({ email: userEmail, password });
-      console.log('LOGIN result', result);
       const { name, email, role } = result;
       dispatch(
         setUserInfoAction({

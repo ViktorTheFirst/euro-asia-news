@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+
 import {
   AppBar as MuiAppBar,
   Box,
@@ -12,12 +13,14 @@ import {
 import MenuComponent from './Menu';
 import { setUserInfoAction } from '@/store/Users';
 import svgLogo from '../../public/assets/svgs/news-logo3.png';
+import { logoutAPI } from '@/api/auth/authAPI';
 
 const AppBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const onLogoutClick = async () => {
+    await logoutAPI();
     dispatch(
       setUserInfoAction({ name: '', email: '', profileImage: '', role: '' })
     );

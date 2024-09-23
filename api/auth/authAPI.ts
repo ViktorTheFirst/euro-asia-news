@@ -44,3 +44,20 @@ export const loginAPI = async (
     throw err as AxiosError;
   }
 };
+
+export const logoutAPI = async () => {
+  try {
+    const result = await axios({
+      method: 'post',
+      url: `${baseUrl}/api/users/logout`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return result.data;
+  } catch (err: any) {
+    console.warn('User logout failed on FE ' + err);
+    throw err as AxiosError;
+  }
+};
