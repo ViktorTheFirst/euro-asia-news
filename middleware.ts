@@ -51,10 +51,10 @@ export function middleware(request: NextRequest, response: NextResponse) {
 
   const isProtectedRoute = protectedRoutes.includes(url.pathname);
 
-  if (isProtectedRoute && role !== 'admin') {
+  /* if (isProtectedRoute && role !== 'admin') {
     console.log('INSIDE PROTECTEDDDDDDDDD');
     return NextResponse.redirect(new URL('/', request.nextUrl));
-  }
+  } */
 
   console.log('----------------------RESPONSE------------------');
   console.log('response.cookies in MIDDLEWARE', response.cookies);

@@ -16,6 +16,10 @@ function App({ Component, pageProps }: AppProps) {
           <Head>
             <title>Euro-Asia News</title>
             <meta
+              name='description'
+              content='news from the euroasia geographic location'
+            />
+            <meta
               name='viewport'
               content='width=device-width, initial-scale=1'
             />
