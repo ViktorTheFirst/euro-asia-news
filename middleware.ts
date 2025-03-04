@@ -15,14 +15,6 @@ export function middleware(request: NextRequest, response: NextResponse) {
   const token = request.cookies.get('token')?.value;
   const role = request.cookies.get('userRole')?.value;
 
-  console.log('token-----', token);
-  console.log('role-----', role);
-
-  console.log('----------------------REQUEST------------------');
-  console.log('request.cookies in MIDDLEWARE', request.cookies);
-  console.log('request.nextUrl in MIDDLEWARE', request.nextUrl);
-  console.log('-----------------------------------------------');
-
   // If the user is authenticated, attach its token to response cookies
   const res = NextResponse.next();
 
@@ -51,17 +43,6 @@ export function middleware(request: NextRequest, response: NextResponse) {
 
   const isProtectedRoute = protectedRoutes.includes(url.pathname);
 
-  /* if (isProtectedRoute && role !== 'admin') {
-    console.log('INSIDE PROTECTEDDDDDDDDD');
-    return NextResponse.redirect(new URL('/', request.nextUrl));
-  } */
-
-  console.log('----------------------RESPONSE------------------');
-  console.log('response.cookies in MIDDLEWARE', response.cookies);
-  console.log('response.url in MIDDLEWARE', response.url);
-  console.log('-----------------------------------------------');
-
-  console.log('res', res);
   return res;
 }
 
